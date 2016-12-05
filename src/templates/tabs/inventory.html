@@ -1,0 +1,119 @@
+<header class="tab-header">
+  
+  <div class="left">
+    <h1 class="tab-title">
+      Inventário (estoque)
+    </h1>
+  </div>
+  
+  <div class="right">
+    <md-button>Perda de produto</md-button>
+    <md-button>Correção</md-button>
+  </div>
+</header>
+
+<section class="tab-body">
+  
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Produtos em estoque</th>
+        <th>Validade</th>
+        <th>Em estoque</th>
+        <th>À chegar</th>
+        <th>À distribuir</th>
+        <th>À sair</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <h1>Arroz integral</h1>
+          <dl>
+            <div>
+              <dt>peso líq.</dt>
+              <dd>0,4kg</dd>
+            </div>
+            <div>
+              <dt>peso br.</dt>
+              <dd>0,5kg</dd>
+            </div>
+          </dl>
+        </td>
+        <td>
+          20 Out 2016
+        </td>
+        <td>
+          500 sacos
+        </td>
+        <td>
+          <dl>
+            <div>
+              <dt>11 Out:</dt>
+              <dd>100</dd>
+            </div>
+            <div>
+              <dt>12 Out:</dt>
+              <dd>50</dd>
+            </div>
+          </dl>
+        </td>
+        <td>
+          <dl>
+            <div>
+              <dt>Hoje:</dt>
+              <dd>450</dd>
+            </div>
+            <div>
+              <dt>12 Out:</dt>
+              <dd>100</dd>
+            </div>
+          </dl>
+        </td>
+        <td>
+          <dl>
+            <div>
+              <dt>Hoje:</dt>
+              <dd>450</dd>
+            </div>
+            <div>
+              <dt>12 Out:</dt>
+              <dd>100</dd>
+            </div>
+          </dl>
+        </td>
+        <td>
+          <!-- actions -->
+          <md-menu>
+            <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
+              <md-icon md-menu-origin md-svg-icon="call:phone"></md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button ng-click="redial($event)">
+                  <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+                  Redial
+                </md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button disabled="disabled" ng-click="checkVoicemail()">
+                  <md-icon md-svg-icon="call:voicemail"></md-icon>
+                  Check voicemail
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button ng-click="ctrl.toggleNotifications()">
+                  <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
+                  {{ctrl.notificationsEnabled ? 'Disable' : 'Enable' }} notifications
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+</section>

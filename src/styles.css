@@ -1,0 +1,15 @@
+/* variables */
+@import 'styles/variables.css';
+
+/* reset */
+@import 'styles/reset.css';
+
+/* modules */
+@import 'styles/modules/tabs.css';
+@import 'styles/modules/product-table.css';
+
+/* sections */
+@import 'styles/app-header.css';
+@import 'styles/app-body.css';
+
+/* tabs */

@@ -1,0 +1,27 @@
+.tab-header {
+  background-color: var(--purple);
+  color: white;
+  
+  height: 60px;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tab-header > .left {
+  padding-left: 40px;
+}
+
+.tab-header > .left > h1.tab-title {
+  font-weight: normal;
+}
+
+.tab-header > .right {
+  
+}
+
+.tab-body {
+  
+}

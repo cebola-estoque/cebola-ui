@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="cebola" ng-cloak>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Cebola</title>
+
+    <!-- meta tag from ionic -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <!-- build:css styles.css -->
+    <link rel="stylesheet" type="text/css" href="styles-built.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <!-- endbuild -->
+    
+  </head>
+  <body>
+    
+    <header id="app-header">
+      <div id="app-header-left">
+        <a href="#/home">
+          <img class="logo" src="resources/img/logo.png" alt="">
+        </a>
+      
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="#/inventario"
+                ui-sref="inventory"
+                ui-sref-active="active">
+                Inventário
+              </a>
+            </li>
+            <li>
+              <a
+                href="#/entradas"
+                ui-sref="entry-allocations"
+                ui-sref-active="active">
+                Previsão entrada
+              </a>
+            </li>
+            <li>
+              <a href="#/saidas">
+                Previsão saída
+              </a>
+            </li>
+            <li>
+              <a href="#/produtos">
+                Produtos
+              </a>
+            </li>
+            <li>
+              <a href="#/fornecedores">
+                Fornecedores
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      
+      <div id="app-header-right">
+        <a href="#/conta">
+          nome do usuário
+        </a>
+      </div>
+    </header>
+    
+    <section id="app-body" ui-view>
+      
+      
+    </section>
+    
+    <!-- config -->
+    <script>
+      window.CONFIG = {
+        ebApiURI: 'http://104.196.65.249',
+        // ebApiURI: 'http://localhost:4000'
+      };
+    </script>
+
+    <!-- build:js scripts.js -->
+    <!-- libraries -->
+    <script src="bower_components/angular/angular.js" charset="utf-8"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+
+
+    <!-- services -->
+    <script src="scripts/services/index.js"></script>
+
+    <!-- directives -->
+    <script src="scripts/directives/index.js"></script>
+
+    <!-- controllers -->
+    <script src="scripts/controllers/index.js"></script>
+    <!-- controllers:tabs -->
+    <script src="scripts/controllers/tabs/inventory.js"></script>
+    
+    <!-- application -->
+    <script src="scripts/app.js"></script>
+    <!-- endbuild -->
+    
+  </body>
+</html>

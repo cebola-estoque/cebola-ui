@@ -1,0 +1,23 @@
+{
+  "name": "cebola-ui",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Simon <simonxd@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.9",
+    "angular-ui-router": "^0.3.2",
+    "angular-material": "^1.1.1"
+  }
+}
