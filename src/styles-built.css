@@ -49,10 +49,29 @@ h6 {
 
 .product-table {
   width: 100%;
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
+  border-collapse: collapse;
 }
 
-.product-table tr {
-  border-bottom: red 1px solid !important;
+.product-table tr td {
+  /* tr borders cannot be styled directly */
+  border-bottom: lightgray 1px solid;
+}
+
+.product-table tr td dl {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.protuct-table tr td dl div {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 /* sections */

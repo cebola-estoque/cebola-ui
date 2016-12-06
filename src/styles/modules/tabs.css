@@ -19,9 +19,17 @@
 }
 
 .tab-header > .right {
-  
+  position: relative;
+  padding-right: 40px;
+}
+
+.tab-header > .right > .md-fab {
+  transform: translateY(50%);
 }
 
 .tab-body {
-  
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
 }

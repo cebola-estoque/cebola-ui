@@ -1,0 +1,62 @@
+/**
+ * Common table styles
+ */
+table.cebola-table {
+  width: 100%;
+  
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
+  border-collapse: collapse;
+  
+  box-sizing: border-box;
+}
+
+table.cebola-table tr {
+  
+}
+
+table.cebola-table tr:hover {
+  background-color: lightgray;
+}
+
+table.cebola-table tr > td {
+  /* tr borders cannot be styled directly */
+  border: 1px magenta dashed;
+  
+  border-bottom: lightgray 1px solid;
+  position: relative;
+  
+  padding: 10px 10px;
+  
+  box-sizing: border-box;
+}
+
+table.cebola-table tr:last-child > td {
+  border-bottom: none;
+}
+
+
+table.cebola-table tr > td > h1 {
+  font-size: 14px;
+}
+
+table.cebola-table tr > td > dl {
+  display: flex;
+  flex-direction: column;
+  
+  margin: 0 0;
+}
+
+table.cebola-table tr > td > dl > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+table.cebola-table tr > td > dl > div > dt {
+  background-color: green;
+}
+
+table.cebola-table tr > td > dl > div > dd {
+  margin: 0 0;
+  background-color: red;
+}

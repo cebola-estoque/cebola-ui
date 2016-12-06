@@ -6,10 +6,12 @@
 
 /* modules */
 @import 'styles/modules/tabs.css';
-@import 'styles/modules/product-table.css';
+@import 'styles/modules/tables.css';
+@import 'styles/modules/forms.css';
 
 /* sections */
 @import 'styles/app-header.css';
 @import 'styles/app-body.css';
 
 /* tabs */
+@import 'styles/tabs/entry-allocations.css';

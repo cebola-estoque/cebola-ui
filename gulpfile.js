@@ -21,13 +21,15 @@ gulp.task('css', function () {
 });
 
 // Static Server + watching css/html files
-gulp.task('develop', ['css'], function() {
+gulp.task('develop', function() {
 
   browserSync.init({
     server: './src'
   });
 
-  gulp.watch(['src/**/*.css', '!*-built.css'], ['css']);
+  gulp.watch(['src/**/*.css'], function () {
+    gulp.src('src/**/*.css').pipe(browserSync.stream());
+  });
   gulp.watch([
     'src/**/*.html',
     'src/**/*.js'
