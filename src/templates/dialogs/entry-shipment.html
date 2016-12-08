@@ -1,0 +1,63 @@
+<div class="dialog large">
+  <header class="dialog-header">
+    
+    <div class="dialog-header-left">
+      Nova previsão de chegada
+    </div>
+    <div class="dialog-header-right">
+      <md-button
+        class="md-icon-button"
+        ng-click="cancel()">
+        <md-icon md-font-set="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </header>
+  
+  <section class="dialog-body">
+    <form accept-charset="utf-8" ng-submit="submit()">
+      <div layout-gt-sm="row">
+        <!--
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Data de chegada</label>
+          <input ng-model="user.firstName">
+        </md-input-container>
+        -->
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Data de chegada</label>
+          <input type="datetime-local">
+        </md-input-container>
+        <md-input-container flex-gt-sm>
+          <label>Fornecedor</label>
+          <md-select name="type" ng-model="project.type" required>
+            <md-option value="app">Application</md-option>
+            <md-option value="web">Website</md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+      
+      <label>Produtos</label>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Nome do produto</label>
+          <input ng-model="user.firstName">
+        </md-input-container>
+        <md-input-container flex-gt-sm>
+          <label>Data de validade</label>
+          <md-select name="type" ng-model="project.type" required>
+            <md-option value="app">Application</md-option>
+            <md-option value="web">Website</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Quantidade</label>
+          <input ng-model="user.firstName">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Unidade</label>
+          <input ng-model="user.firstName">
+        </md-input-container>
+      </div>
+      
+    </form>
+  </section>
+</div>

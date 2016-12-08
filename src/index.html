@@ -37,23 +37,32 @@
             <li>
               <a
                 href="#/entradas"
-                ui-sref="entry-allocations"
+                ui-sref="entry-shipments"
                 ui-sref-active="active">
                 Previsão entrada
               </a>
             </li>
             <li>
-              <a href="#/saidas">
+              <a
+                href="#/saidas"
+                ui-sref="exit-shipments"
+                ui-sref-active="active">
                 Previsão saída
               </a>
             </li>
             <li>
-              <a href="#/produtos">
+              <a
+                href="#/produtos"
+                ui-sref="products"
+                ui-sref-active="active">
                 Produtos
               </a>
             </li>
             <li>
-              <a href="#/fornecedores">
+              <a
+                href="#/fornecedores"
+                ui-sref="supplier-organizations"
+                ui-sref-active="active">
                 Fornecedores
               </a>
             </li>
@@ -76,8 +85,8 @@
     <!-- config -->
     <script>
       window.CONFIG = {
-        ebApiURI: 'http://104.196.65.249',
-        // ebApiURI: 'http://localhost:4000'
+        // cebolaApiURI: 'http://104.196.65.249',
+        cebolaApiURI: 'http://localhost:4000'
       };
     </script>
 
@@ -90,10 +99,12 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
 
-
     <!-- services -->
     <script src="scripts/services/index.js"></script>
-    <script src="scripts/services/dialogs/entry-allocation.js"></script>
+    <script src="scripts/services/cebola-api.js"></script>
+    <script src="scripts/services/dialogs/entry-shipment.js"></script>
+    <script src="scripts/services/dialogs/product-model.js"></script>
+    <script src="scripts/services/dialogs/supplier-organization.js"></script>
 
     <!-- directives -->
     <script src="scripts/directives/index.js"></script>
@@ -102,7 +113,10 @@
     <script src="scripts/controllers/index.js"></script>
     <!-- controllers:tabs -->
     <script src="scripts/controllers/tabs/inventory.js"></script>
-    <script src="scripts/controllers/tabs/entry-allocations.js"></script>
+    <script src="scripts/controllers/tabs/entry-shipments.js"></script>
+    <script src="scripts/controllers/tabs/exit-shipments.js"></script>
+    <script src="scripts/controllers/tabs/product-models.js"></script>
+    <script src="scripts/controllers/tabs/supplier-organizations.js"></script>
     
     <!-- application -->
     <script src="scripts/app.js"></script>

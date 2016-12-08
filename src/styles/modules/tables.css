@@ -54,9 +54,14 @@ table.cebola-table tr > td > dl > div {
 
 table.cebola-table tr > td > dl > div > dt {
   background-color: green;
+  
+  max-width: 40%;
 }
 
 table.cebola-table tr > td > dl > div > dd {
   margin: 0 0;
   background-color: red;
+  
+  max-width: 60%;
+  text-align: right;
 }

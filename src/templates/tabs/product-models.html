@@ -1,0 +1,77 @@
+<header class="tab-header">
+  
+  <div class="left">
+    <h1 class="tab-title">
+      Modelos de produto
+    </h1>
+  </div>
+  
+  <div class="right">
+    <md-button class="md-fab" ng-click="createProductModel()">
+      <md-icon md-font-set="material-icons">add</md-icon>
+    </md-button>
+  </div>
+</header>
+
+<section class="tab-body">
+  
+  <table class="cebola-table">
+    <caption>This table is...</caption>
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Descrição</th>
+        <th>
+          <!-- action placeholder -->
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="productModel in productModels">
+        <td>{{ productModel.sku }}</td>
+        <td>{{ productModel.description }}</td>
+        <td>
+          <!-- actions -->
+          <md-menu>
+            <md-button
+              class="md-icon-button"
+              ng-click="$mdOpenMenu($event)">
+              <md-icon
+                md-menu-origin
+                md-font-set="material-icons">
+                more_vert
+              </md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button
+                  ng-click="editProductModel(productModel)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    edit
+                  </md-icon>
+                  Edit
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button
+                  ng-click="deleteProductModel(productModel)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    delete
+                  </md-icon>
+                  Delete
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+</section>

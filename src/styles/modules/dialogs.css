@@ -1,0 +1,47 @@
+.dialog {
+  min-width: 400px;
+}
+
+/**
+ * Dialog header
+ */
+.dialog header.dialog-header {
+  height: 60px;
+  background-color: var(--purple);
+  color: white;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog header.dialog-header md-icon {
+  color: white;
+}
+
+.dialog header.dialog-header > .dialog-header-left {
+  padding-left: 20px;
+}
+
+/**
+ * Dialog body
+ */
+.dialog section.dialog-body {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/**
+ * Dialog footer
+ */
+.dialog footer.dialog-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+  height: 60px;
+}

@@ -1,0 +1,77 @@
+<div class="dialog large">
+  <header class="dialog-header">
+    
+    <div class="dialog-header-left">
+      Novo fornecedor
+    </div>
+    <div class="dialog-header-right">
+      <md-button
+        class="md-icon-button"
+        ng-click="cancel()">
+        <md-icon md-font-set="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </header>
+  
+  <form accept-charset="utf-8" ng-submit="submit()">
+  
+    <section class="dialog-body">
+      
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Fornecedor</label>
+          <input required ng-model="supplierOrganization.name">
+        </md-input-container>
+      </div>
+      
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Tipo de documento</label>
+          <input required ng-model="supplierOrganization.document.type">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Documento</label>
+          <input required ng-model="supplierOrganization.document.value">
+        </md-input-container>
+      </div>
+      
+      <div
+        layout-gt-sm="row"
+        ng-repeat="address in supplierOrganization.addresses">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Identificador</label>
+          <input required ng-model="address.label">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Endereço</label>
+          <input required ng-model="address.value">
+        </md-input-container>
+      </div>
+      
+      <md-button
+        type="button"
+        ng-click="addAddress()"
+      >
+        Adicionar endereço
+      </md-button>
+    </section>
+  
+    <footer class="dialog-footer">
+      <div class="dialog-footer-left">
+        
+      </div>
+      
+      <div class="dialog-footer-right">
+        <md-button
+          type="button"
+          ng-click="cancel()">
+          Cancelar
+        </md-button>
+        <md-button
+          type="submit">
+          Registrar
+        </md-button>
+      </div>
+    </footer>
+  </form>
+</div>

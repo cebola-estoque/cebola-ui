@@ -1,0 +1,87 @@
+<header class="tab-header">
+  
+  <div class="left">
+    <h1 class="tab-title">
+      Fornecedores
+    </h1>
+  </div>
+  
+  <div class="right">
+    <md-button class="md-fab" ng-click="createSupplierOrganization()">
+      <md-icon md-font-set="material-icons">add</md-icon>
+    </md-button>
+  </div>
+</header>
+
+<section class="tab-body">
+  
+  <table class="cebola-table">
+    <caption>This table is...</caption>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th colspan="2">Documento</th>
+        <th>Endereços</th>
+        <th>
+          <!-- action placeholder -->
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="supplierOrganization in supplierOrganizations">
+        <td>{{ supplierOrganization.name }}</td>
+        <td>{{ supplierOrganization.document.type }}</td>
+        <td>{{ supplierOrganization.document.value }}</td>
+        <td>
+          <dl>
+            <div ng-repeat="address in supplierOrganization.addresses">
+              <dt>{{ address.label }}</dt>
+              <dd>{{ address.value }}</dd>
+            </div>
+          </dl>
+        </td>
+        <td>
+          <!-- actions -->
+          <md-menu>
+            <md-button
+              class="md-icon-button"
+              ng-click="$mdOpenMenu($event)">
+              <md-icon
+                md-menu-origin
+                md-font-set="material-icons">
+                more_vert
+              </md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button
+                  ng-click="editSupplierOrganization(supplierOrganization)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    edit
+                  </md-icon>
+                  Edit
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button
+                  ng-click="deleteSupplierOrganization(supplierOrganization)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    delete
+                  </md-icon>
+                  Delete
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+</section>

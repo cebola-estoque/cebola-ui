@@ -27,12 +27,16 @@ gulp.task('develop', function() {
     server: './src'
   });
 
-  gulp.watch(['src/**/*.css'], function () {
+  gulp.watch([
+    'src/**/*.css',
+    '!src/bower_components'
+  ], function () {
     gulp.src('src/**/*.css').pipe(browserSync.stream());
   });
   gulp.watch([
     'src/**/*.html',
-    'src/**/*.js'
+    'src/**/*.js',
+    '!src/bower_components',
   ]).on('change', browserSync.reload);
 });
 

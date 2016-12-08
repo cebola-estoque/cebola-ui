@@ -14,8 +14,8 @@
    * Configurations
    */
   .constant('CONFIG', {
-    ebApiURI:
-      window.CONFIG.ebApiURI.replace(TRAILING_SLASH_RE, ''),
+    cebolaApiURI:
+      window.CONFIG.cebolaApiURI.replace(TRAILING_SLASH_RE, ''),
   })
   
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -28,20 +28,20 @@
         controller: 'InventoryCtrl',
         templateUrl: 'templates/tabs/inventory.html',
       })
-      .state('entry-allocations', {
+      .state('entry-shipments', {
         url: '/entradas',
-        controller: 'EntryAllocationsCtrl',
-        templateUrl: 'templates/tabs/entry-allocations.html',
+        controller: 'EntryShipmentsCtrl',
+        templateUrl: 'templates/tabs/entry-shipments.html',
       })
-      .state('exit-allocations', {
+      .state('exit-shipments', {
         url: '/saidas',
-        controller: 'ExitAllocationsCtrl',
-        templateUrl: 'templates/tabs/exit-allocations.html',
+        controller: 'ExitShipmentsCtrl',
+        templateUrl: 'templates/tabs/exit-shipments.html',
       })
       .state('products', {
         url: '/produtos',
-        controller: 'ProductsCtrl',
-        templateUrl: 'templates/tabs/products.html',
+        controller: 'ProductModelsCtrl',
+        templateUrl: 'templates/tabs/product-models.html',
       })
       .state('supplier-organizations', {
         url: '/fornecedores',
