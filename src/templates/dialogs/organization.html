@@ -2,7 +2,7 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      Novo fornecedor
+      {{ dialogTitle }}
     </div>
     <div class="dialog-header-right">
       <md-button
@@ -19,25 +19,46 @@
       
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
-          <label>Fornecedor</label>
-          <input required ng-model="supplierOrganization.name">
+          <label>Nome da organização</label>
+          <input required ng-model="organization.name">
         </md-input-container>
       </div>
       
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Tipo de documento</label>
-          <input required ng-model="supplierOrganization.document.type">
+          <input required ng-model="organization.document.type">
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Documento</label>
-          <input required ng-model="supplierOrganization.document.value">
+          <input required ng-model="organization.document.value">
         </md-input-container>
+      </div>
+      
+      <div layout="column" layout-wrap flex>
+        <div flex>
+          <label>
+            <md-checkbox
+              ng-checked="hasRole('supplier')"
+              ng-click="toggleRole('supplier')">
+              Fornecedor
+            </md-checkbox>
+          </label>
+        </div>
+        <div flex>
+          <label>
+            <md-checkbox
+              ng-checked="hasRole('receiver')"
+              ng-click="toggleRole('receiver')">
+              Receptor
+            </md-checkbox>
+          </label>
+        </div>
       </div>
       
       <div
         layout-gt-sm="row"
-        ng-repeat="address in supplierOrganization.addresses">
+        ng-repeat="address in organization.addresses">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Identificador</label>
           <input required ng-model="address.label">

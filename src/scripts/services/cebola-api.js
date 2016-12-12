@@ -75,7 +75,7 @@ angular.module('cebola.services')
     }
     
     return $http.get(API_URI + '/organizations', {
-      query: query,
+      params: query,
       headers: {
         // Authorization
       }

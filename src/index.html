@@ -60,10 +60,18 @@
             </li>
             <li>
               <a
-                href="#/fornecedores"
-                ui-sref="supplier-organizations"
+                href="#/organizações/supplier"
+                ui-sref="organizations({ role: 'supplier' })"
                 ui-sref-active="active">
                 Fornecedores
+              </a>
+            </li>
+            <li>
+              <a
+                href="#/organizações/receiver"
+                ui-sref="organizations({ role: 'receiver' })"
+                ui-sref-active="active">
+                Receptores
               </a>
             </li>
           </ul>
@@ -104,7 +112,7 @@
     <script src="scripts/services/cebola-api.js"></script>
     <script src="scripts/services/dialogs/entry-shipment.js"></script>
     <script src="scripts/services/dialogs/product-model.js"></script>
-    <script src="scripts/services/dialogs/supplier-organization.js"></script>
+    <script src="scripts/services/dialogs/organization.js"></script>
 
     <!-- directives -->
     <script src="scripts/directives/index.js"></script>
@@ -116,7 +124,7 @@
     <script src="scripts/controllers/tabs/entry-shipments.js"></script>
     <script src="scripts/controllers/tabs/exit-shipments.js"></script>
     <script src="scripts/controllers/tabs/product-models.js"></script>
-    <script src="scripts/controllers/tabs/supplier-organizations.js"></script>
+    <script src="scripts/controllers/tabs/organizations.js"></script>
     
     <!-- application -->
     <script src="scripts/app.js"></script>

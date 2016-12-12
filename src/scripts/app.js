@@ -43,10 +43,15 @@
         controller: 'ProductModelsCtrl',
         templateUrl: 'templates/tabs/product-models.html',
       })
-      .state('supplier-organizations', {
-        url: '/fornecedores',
-        controller: 'SupplierOrganizationsCtrl',
-        templateUrl: 'templates/tabs/supplier-organizations.html',
+      // .state('supplier-organizations', {
+      //   url: '/fornecedores',
+      //   controller: 'SupplierOrganizationsCtrl',
+      //   templateUrl: 'templates/tabs/supplier-organizations.html',
+      // })
+      .state('organizations', {
+        url: '/organization/:role',
+        controller: 'OrganizationsCtrl',
+        templateUrl: 'templates/tabs/organizations.html',
       })
       .state('account', {
         url: '/minha-conta',
