@@ -7,7 +7,7 @@
   </div>
   
   <div class="right">
-    <md-button class="md-fab" ng-click="openNewEntryShipment()">
+    <md-button class="md-fab" ng-click="createEntryShipment()">
       <md-icon md-font-set="material-icons">add</md-icon>
     </md-button>
   </div>
@@ -15,5 +15,43 @@
 
 <section class="tab-body">
   
+  <table class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Previsões de chegada</th>
+        <th>Fornecedor</th>
+        <th>Responsável</th>
+        <th>Contato</th>
+        <th>Status</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="entryShipment in entryShipments">
+        <td>
+          {{ entryShipment.scheduledFor | date }}
+        </td>
+        <td>
+          {{ entryShipment.supplier.name }}
+        </td>
+        <td>
+          <!-- responsavel placeholder -->
+        </td>
+        <td>
+          <!-- contato placeholder -->
+        </td>
+        <td>
+          <!-- status placeholder -->
+        </td>
+        <td>
+          <!-- actions -->
+          <a href="#/entrada/{{ entryShipment._id }}">
+            <md-icon md-font-set="material-icons">edit</md-icon>
+          </a>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
   
 </section>

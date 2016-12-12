@@ -12,52 +12,115 @@
       </md-button>
     </div>
   </header>
+    
+  <form accept-charset="utf-8" ng-submit="submit()">
+
+    <section class="dialog-body">
+        <div layout-gt-sm="row">
+          <!-- scheduledFor -->
+          <md-input-container class="md-block" flex-20>
+            <label>Data de chegada</label>
+            <input
+              required
+              ng-model="entryShipment.scheduledFor"
+              ng-min="_minScheduledFor"
+              type="datetime-local">
+          </md-input-container>
+          
+          <!-- supplier -->
+          <md-autocomplete
+            flex
+            class="md-block"
+            md-selected-item="entryShipment.supplier"
+            md-floating-label="Fornecedor"
+            required
+            
+            md-no-cache
+            md-require-match
+            md-item-text="supplier.name"
+            md-search-text="_supplierSearchText"
+            md-items="supplier in searchSuppliers(_supplierSearchText)">
+            <md-item-template>
+              {{ supplier.name }}
+            </md-item-template>
+          </md-autocomplete>
+        </div>
+        
+        <label>Produtos</label>
+        <div
+          layout-gt-sm="row"
+          ng-repeat="allocation in entryShipment.allocations">
+          
+          <!-- product.model -->
+          <md-autocomplete
+            class="md-block"
+            md-selected-item="allocation.product.model"
+            md-floating-label="Modelo de produto"
+            required
+            
+            md-no-cache
+            md-require-match
+            md-item-text="productModel.description"
+            md-search-text="_productModelSearchText"
+            md-items="productModel in searchProductModels(_productModelSearchText)">
+            <md-item-template>
+              {{ productModel.description }}
+            </md-item-template>
+          </md-autocomplete>
+          
+          <!-- product.expiry -->
+          <md-input-container flex-gt-sm>
+            <label>Data de validade</label>
+            <input
+              required
+              ng-model="allocation.product.expiry"
+              ng-min="_minScheduledFor"
+              type="date">
+          </md-input-container>
+          
+          <!-- quantity -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Quantidade</label>
+            <input
+              required
+              ng-model="allocation.quantity">
+          </md-input-container>
+          
+          <!-- product.measureUnit -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Unidade</label>
+            <input
+              required
+              ng-model="allocation.product.measureUnit">
+          </md-input-container>
+        </div>
+          
+        <md-button
+          type="button"
+          ng-click="addAllocation()"
+        >
+          Adicionar produto
+        </md-button>
+    </section>
+      
+      
   
-  <section class="dialog-body">
-    <form accept-charset="utf-8" ng-submit="submit()">
-      <div layout-gt-sm="row">
-        <!--
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Data de chegada</label>
-          <input ng-model="user.firstName">
-        </md-input-container>
-        -->
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Data de chegada</label>
-          <input type="datetime-local">
-        </md-input-container>
-        <md-input-container flex-gt-sm>
-          <label>Fornecedor</label>
-          <md-select name="type" ng-model="project.type" required>
-            <md-option value="app">Application</md-option>
-            <md-option value="web">Website</md-option>
-          </md-select>
-        </md-input-container>
+    <footer class="dialog-footer">
+      <div class="dialog-footer-left">
+        
       </div>
       
-      <label>Produtos</label>
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Nome do produto</label>
-          <input ng-model="user.firstName">
-        </md-input-container>
-        <md-input-container flex-gt-sm>
-          <label>Data de validade</label>
-          <md-select name="type" ng-model="project.type" required>
-            <md-option value="app">Application</md-option>
-            <md-option value="web">Website</md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Quantidade</label>
-          <input ng-model="user.firstName">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Unidade</label>
-          <input ng-model="user.firstName">
-        </md-input-container>
+      <div class="dialog-footer-right">
+        <md-button
+          type="button"
+          ng-click="cancel()">
+          Cancelar
+        </md-button>
+        <md-button
+          type="submit">
+          Registrar
+        </md-button>
       </div>
-      
-    </form>
-  </section>
+    </footer>
+  </form>
 </div>

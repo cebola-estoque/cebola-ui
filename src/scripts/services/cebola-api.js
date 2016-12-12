@@ -22,8 +22,11 @@ angular.module('cebola.services')
     
   };
   api.productModel.list = function (query) {
+    
+    query = query || {};
+    
     return $http.get(API_URI + '/product-models', {
-      query: query,
+      params: query,
       headers: {
         // Authorization
       }
@@ -31,6 +34,13 @@ angular.module('cebola.services')
     .then(function (res) {
       return res.data;
     });
+  };
+  api.productModel.search = function (searchText, query) {
+    query = query || {};
+    
+    query.q = searchText;
+    
+    return api.productModel.list(query);
   };
   api.productModel.update = function (productModelId, productModel) {
     return $http.put(API_URI + '/product-model/' + productModelId, productModel, {
@@ -85,6 +95,13 @@ angular.module('cebola.services')
     });
     
   };
+  api.organization.search = function (searchText, query) {
+    query = query || {};
+    
+    query.q = searchText;
+    
+    return api.organization.list(query);
+  };
   api.organization.update = function (organizationId, organizationData) {
     
     return $http.put(API_URI + '/organization/' + organizationId, organizationData, {
@@ -112,12 +129,53 @@ angular.module('cebola.services')
    * Shipments API
    */
   api.shipment = {};
-  
+  api.shipment.scheduleEntry = function (supplier, shipmentData, allocationsData) {
+    
+    shipmentData.supplier = supplier;
+    shipmentData.allocations = allocationsData;
+    
+    return $http.post(API_URI + '/shipments/entries', shipmentData, {
+      headers: {
+        // Authorization ...
+      }
+    })
+    .then(function (res) {
+      return res.data;
+    });
+    
+  };
+  api.shipment.listEntries = function (query) {
+    return $http.get(API_URI + '/shipments/entries', {
+      params: query,
+      headers: {
+        // Authorization
+      }
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.getById = function (shipmentId) {
+    return $http.get(API_URI + '/shipment/' + shipmentId, {
+      // auth
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
   
   /**
    * Inventory API
    */
   api.inventory = {};
+  api.inventory.shipmentSummary = function (shipmentId) {
+    return $http.get(API_URI + '/inventory/shipment/' + shipmentId, {
+      // auth
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
   
   return api;
   

@@ -1,0 +1,50 @@
+<header class="tab-header">
+  
+  <div class="left">
+    <h1 class="tab-title">
+      Chegada {{ shipment.scheduledFor | date }} | {{ shipment.supplier.name }}
+    </h1>
+  </div>
+  
+  <div class="right">
+    <md-button>Concluir entrada</md-button>
+  </div>
+</header>
+
+<section class="tab-body">
+  
+  <table class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Produtos agendados</th>
+        <th>Validade</th>
+        <th>Qtde prevista</th>
+        <th>Qtde efetivada</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="productSummary in entryShipmentSummary">
+        <td>
+          {{ productSummary.product.model.description }}
+        </td>
+        <td>
+          {{ productSummary.product.expiry | date }}
+        </td>
+        <td>
+          {{ productSummary.allocatedForEntry }}
+        </td>
+        <td>
+          {{ productSummary.entered }}
+        </td>
+        <td>
+          <!-- actions -->
+          <md-button ng-click="effectivateEntryAllocation(productSummary)">
+            <md-icon md-font-set="material-icons">edit</md-icon>
+          </md-button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</section>

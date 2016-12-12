@@ -33,6 +33,14 @@
         controller: 'EntryShipmentsCtrl',
         templateUrl: 'templates/tabs/entry-shipments.html',
       })
+      .state('entry-shipment-detail', {
+        url: '/entrada/:entryShipmentId',
+        controller: 'EntryShipmentDetailCtrl',
+        templateUrl: 'templates/tabs/entry-shipment-detail.html',
+        params: {
+          entryShipment: null,
+        }
+      })
       .state('exit-shipments', {
         url: '/saidas',
         controller: 'ExitShipmentsCtrl',
@@ -43,11 +51,6 @@
         controller: 'ProductModelsCtrl',
         templateUrl: 'templates/tabs/product-models.html',
       })
-      // .state('supplier-organizations', {
-      //   url: '/fornecedores',
-      //   controller: 'SupplierOrganizationsCtrl',
-      //   templateUrl: 'templates/tabs/supplier-organizations.html',
-      // })
       .state('organizations', {
         url: '/organization/:role',
         controller: 'OrganizationsCtrl',
