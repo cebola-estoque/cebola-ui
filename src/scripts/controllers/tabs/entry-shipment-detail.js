@@ -1,23 +1,31 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentDetailCtrl', function ($scope, $stateParams, cebolaAPI) {
+.controller('EntryShipmentDetailCtrl', function ($scope, $stateParams, cebolaAPI, uiAllocationDialog) {
   
   $scope.shipment = {};
+  $scope.allocations = [];
   
   $scope.loadShipment = function () {
     return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
+      
+      // shipment allocations
+      $scope.allocations = shipment.records.filter(function (record) {
+        return record.kind === 'ProductAllocation';
+      });
     });
   };
   
-  $scope.loadShipmentSummary = function () {
-    return cebolaAPI.inventory.shipmentSummary($stateParams.entryShipmentId).then(function (summary) {
-      $scope.entryShipmentSummary = summary;
-      
-      console.log(summary);
+  $scope.effectivateEntryAllocation = function (allocation) {
+    return uiAllocationDialog.effectivate(allocation)
+    .catch(function () {
+      // user cancelled
+      throw new Error('CANCELLED');
+    })
+    .then(function (effectivatedQuantity) {
+      console.log('effectivate: ', effectivatedQuantity);
     });
   };
   
   // initialize
   $scope.loadShipment();
-  $scope.loadShipmentSummary();
 });

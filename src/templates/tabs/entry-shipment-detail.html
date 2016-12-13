@@ -24,22 +24,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="productSummary in entryShipmentSummary">
+      <tr ng-repeat="allocation in allocations">
         <td>
-          {{ productSummary.product.model.description }}
+          {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ productSummary.product.expiry | date }}
+          {{ allocation.product.expiry | date }}
         </td>
         <td>
-          {{ productSummary.allocatedForEntry }}
+          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
-          {{ productSummary.entered }}
+          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
           <!-- actions -->
-          <md-button ng-click="effectivateEntryAllocation(productSummary)">
+          <md-button ng-click="effectivateEntryAllocation(allocation)">
             <md-icon md-font-set="material-icons">edit</md-icon>
           </md-button>
         </td>

@@ -1,0 +1,60 @@
+<div class="dialog large">
+  <header class="dialog-header">
+    
+    <div class="dialog-header-left">
+      Efetivar {{ allocation.type }} {{ allocation.product.model.description }}
+    </div>
+    <div class="dialog-header-right">
+      <md-button
+        class="md-icon-button"
+        ng-click="cancel()">
+        <md-icon md-font-set="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </header>
+  
+  <form accept-charset="utf-8" ng-submit="submit()">
+  
+    <section class="dialog-body">
+      
+      <div layout-gt-sm="row">
+        <label>Validade</label>
+        {{ allocation.product.expiry | date }}
+      </div>
+      
+      <div layout-gt-sm="row">
+        <label>Quantidade prevista</label>
+        {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+      </div>
+      
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Quantidade efetivada</label>
+          <input
+            type="number"
+            required
+            ng-model="quantityToEffectivate"
+            ng-max="{{ allocation.allocatedQuantity - allocation.effectivatedQuantity }}">
+        </md-input-container>
+      </div>
+    </section>
+  
+    <footer class="dialog-footer">
+      <div class="dialog-footer-left">
+        
+      </div>
+      
+      <div class="dialog-footer-right">
+        <md-button
+          type="button"
+          ng-click="cancel()">
+          Cancelar
+        </md-button>
+        <md-button
+          type="submit">
+          Registrar
+        </md-button>
+      </div>
+    </footer>
+  </form>
+</div>
