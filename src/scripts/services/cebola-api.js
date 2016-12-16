@@ -157,8 +157,118 @@ angular.module('cebola.services')
   };
   api.shipment.getById = function (shipmentId) {
     return $http.get(API_URI + '/shipment/' + shipmentId, {
+      params: {
+        withRecords: 'true'
+      },
       // auth
     })
+    .then(function (res) {
+      
+      var shipmentData = res.data;
+      
+      shipmentData.scheduledFor = new Date(shipmentData.scheduledFor);
+      
+      for (var allocationStatus in shipmentData.allocations) {
+        shipmentData.allocations[allocationStatus].forEach(function (allocation) {
+          if (!allocation.product || !allocation.product.expiry) {
+            return;
+          }
+          
+          allocation.product.expiry = new Date(allocation.product.expiry);
+        });
+      }
+      
+      for (var operationStatus in shipmentData.operations) {
+        shipmentData.operations[operationStatus].forEach(function (operation) {
+          if (!operation.product || !operation.product.expiry) {
+            return;
+          }
+          
+          operation.product.expiry = new Date(operation.product.expiry);
+        });
+      }
+      
+      return shipmentData;
+    });
+  };
+  api.shipment.update = function (shipmentId, shipmentData) {
+    return $http.put(API_URI + '/shipment/' + shipmentId, shipmentData, {
+      headers: {
+        // Authorization
+      }
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.createAllocations = function (shipmentId, allocations) {
+    return $http.post(
+      API_URI + '/shipment/' + shipmentId + '/allocations',
+      allocations,
+      {
+        headers: {
+          // Authorization
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.updateAllocations = function (shipmentId, allocations) {
+    return $http.put(
+      API_URI + '/shipment/' + shipmentId + '/allocations', allocations,
+      {
+        headers: {
+          // Authorization
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.cancelAllocations = function (shipmentId, allocations) {
+    return $http.delete(
+      API_URI + '/shipment/' + shipmentId + '/allocations',
+      {
+        data: allocations,
+        headers: {
+          // Authorization
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.effectivateAllocation = function (shipmentId, allocationId, quantity) {
+    return $http.post(
+      API_URI + '/shipment/' + shipmentId + '/allocation/' + allocationId + '/effectivate',
+      {
+        quantity: quantity
+      },
+      {
+        headers: {
+          // Autohrizaiton
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.finish = function (shipmentId, finishData) {
+    return $http.post(
+      API_URI + '/shipment/' + shipmentId + '/finish',
+      finishData,
+      {
+        headers: {
+          // Authorization
+        }
+      }
+    )
     .then(function (res) {
       return res.data;
     });

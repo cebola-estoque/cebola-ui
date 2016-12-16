@@ -10,6 +10,9 @@
 @import 'styles/modules/dialogs.css';
 @import 'styles/modules/forms.css';
 
+/* elements */
+@import 'styles/elements/entry-shipment-dialog.css';
+
 /* sections */
 @import 'styles/app-header.css';
 @import 'styles/app-body.css';

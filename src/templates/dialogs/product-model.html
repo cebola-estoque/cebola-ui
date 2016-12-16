@@ -13,7 +13,9 @@
     </div>
   </header>
   
-  <form accept-charset="utf-8" ng-submit="submit()">
+  <form
+    name="productModelForm"
+    ng-submit="productModelForm.$valid && submit()">
   
     <section class="dialog-body">
       

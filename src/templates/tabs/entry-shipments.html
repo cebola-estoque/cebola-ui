@@ -29,7 +29,10 @@
     <tbody>
       <tr ng-repeat="entryShipment in entryShipments">
         <td>
-          {{ entryShipment.scheduledFor | date }}
+          <!-- actions -->
+          <a href="#/entrada/{{ entryShipment._id }}">
+            {{ entryShipment.scheduledFor | date }}
+          </a>
         </td>
         <td>
           {{ entryShipment.supplier.name }}
@@ -41,13 +44,52 @@
           <!-- contato placeholder -->
         </td>
         <td>
-          <!-- status placeholder -->
+          {{ entryShipment.status.value }}
         </td>
         <td>
           <!-- actions -->
-          <a href="#/entrada/{{ entryShipment._id }}">
+          <md-button
+            class="md-icon-button"
+            ng-click="editEntryShipment(entryShipment)">
             <md-icon md-font-set="material-icons">edit</md-icon>
-          </a>
+          </md-button>
+          
+          <md-menu>
+            <md-button
+              class="md-icon-button"
+              ng-click="$mdOpenMenu($event)">
+              <md-icon
+                md-menu-origin
+                md-font-set="material-icons">
+                more_vert
+              </md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button
+                  ng-click="editEntryShipment(entryShipment)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    edit
+                  </md-icon>
+                  Edit
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button
+                  ng-click="cancelEntryShipment(entryShipment)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    delete
+                  </md-icon>
+                  Cancel
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
         </td>
       </tr>
 
