@@ -8,10 +8,15 @@ table.cebola-table {
   border-collapse: collapse;
   
   box-sizing: border-box;
+  box-shadow: 0px 15px 34px -8px rgba(204,204,204,1);
+}
+
+table.cebola-table a {
+  color: black;
 }
 
 table.cebola-table tr {
-  
+  background-color: white;
 }
 
 table.cebola-table tr:hover {
@@ -20,7 +25,7 @@ table.cebola-table tr:hover {
 
 table.cebola-table tr > td {
   /* tr borders cannot be styled directly */
-  border: 1px magenta dashed;
+  /* border: 1px magenta dashed; */
   
   border-bottom: lightgray 1px solid;
   position: relative;
@@ -31,7 +36,7 @@ table.cebola-table tr > td {
 }
 
 table.cebola-table tr:last-child > td {
-  border-bottom: none;
+  /* border-bottom: none; */
 }
 
 

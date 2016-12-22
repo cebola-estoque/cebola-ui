@@ -1,1 +1,1 @@
-angular.module('cebola.services', []);
+angular.module('cebola.services', [])

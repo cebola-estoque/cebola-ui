@@ -7,7 +7,11 @@
   </div>
   
   <div class="right">
-    <md-button ng-click="finishShipment()">Concluir entrada</md-button>
+    <md-button
+      ng-if="shipment.status.value !== 'finished'"
+      ng-click="finishShipment()">
+      Concluir entrada
+    </md-button>
   </div>
 </header>
 

@@ -27,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="entryShipment in entryShipments">
+      <tr ng-repeat="entryShipment in entryShipments | filter:pendingEntryShipments">
         <td>
           <!-- actions -->
           <a href="#/entrada/{{ entryShipment._id }}">
@@ -67,6 +67,7 @@
             <md-menu-content width="4">
               <md-menu-item>
                 <md-button
+                  ng-disabled="entryShipment.status.value === 'scheduled'"
                   ng-click="editEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target
@@ -79,6 +80,71 @@
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button
+                  ng-disabled="entryShipment.status.value === 'scheduled'"
+                  ng-click="cancelEntryShipment(entryShipment)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    delete
+                  </md-icon>
+                  Cancel
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  
+  <table class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Previsões de chegada encerradas</th>
+        <th>Fornecedor</th>
+        <th>Responsável</th>
+        <th>Contato</th>
+        <th>Status</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="entryShipment in entryShipments | filter:finishedEntryShipments">
+        <td>
+          <!-- actions -->
+          <a href="#/entrada/{{ entryShipment._id }}">
+            {{ entryShipment.scheduledFor | date }}
+          </a>
+        </td>
+        <td>
+          {{ entryShipment.supplier.name }}
+        </td>
+        <td>
+          <!-- responsavel placeholder -->
+        </td>
+        <td>
+          <!-- contato placeholder -->
+        </td>
+        <td>
+          {{ entryShipment.status.value }}
+        </td>
+        <td>
+          <!-- actions -->
+          <md-menu>
+            <md-button
+              class="md-icon-button"
+              ng-click="$mdOpenMenu($event)">
+              <md-icon
+                md-menu-origin
+                md-font-set="material-icons">
+                more_vert
+              </md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button
+                  ng-disabled="entryShipment.status.value === 'scheduled'"
                   ng-click="cancelEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target

@@ -95,7 +95,16 @@ angular.module('cebola.controllers')
         console.log('entry shipment cancelled', cancelledEntryShipment);
       });
   };
-
+  
+  // filters
+  $scope.pendingEntryShipments = function (entryShipment, index, array) {
+    return entryShipment.status.value === 'scheduled';
+  };
+  $scope.finishedEntryShipments = function (entryShipment, index, array) {
+    return entryShipment.status.value === 'finished' ||
+           entryShipment.status.value === 'cancelled';
+  };
+  
   // initialize
   $scope.listEntryShipments();
   
