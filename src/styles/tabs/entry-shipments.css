@@ -1,0 +1,21 @@
+/**
+ * Shared styles among both entry shipment tables
+ */
+.entry-shipments-table {
+}
+
+.entry-shipments-table .arrival-date {
+  width: 120px;
+}
+
+.entry-shipments-table .supplier {
+  width: 200px;
+}
+
+#scheduled-entry-shipments {
+  
+}
+
+#finished-entry-shipments {
+  margin-top: 30px;
+}

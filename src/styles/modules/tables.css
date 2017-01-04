@@ -15,17 +15,24 @@ table.cebola-table a {
   color: black;
 }
 
-table.cebola-table tr {
+table.cebola-table > tbody > tr {
   background-color: white;
 }
 
-table.cebola-table tr:hover {
+table.cebola-table > tbody > tr:hover {
   background-color: lightgray;
+}
+
+table.cebola-table tr > th {
+  text-align: left;
+  padding: 10px 10px;
 }
 
 table.cebola-table tr > td {
   /* tr borders cannot be styled directly */
   /* border: 1px magenta dashed; */
+  
+  text-align: left;
   
   border-bottom: lightgray 1px solid;
   position: relative;
@@ -36,7 +43,7 @@ table.cebola-table tr > td {
 }
 
 table.cebola-table tr:last-child > td {
-  /* border-bottom: none; */
+  border-bottom: none;
 }
 
 
@@ -65,15 +72,31 @@ table.cebola-table tr > td > dl > div {
 }
 
 table.cebola-table tr > td > dl > div > dt {
-  background-color: green;
+  /* background-color: green; */
   
   max-width: 40%;
 }
 
 table.cebola-table tr > td > dl > div > dd {
   margin: 0 0;
-  background-color: red;
+  /* background-color: red; */
   
   max-width: 60%;
   text-align: right;
+}
+
+table.cebola-table .table-col-100 {
+  width: 100px;
+}
+table.cebola-table .table-col-150 {
+  width: 150px;
+}
+table.cebola-table .table-col-200 {
+  width: 200px;
+}
+table.cebola-table .table-col-250 {
+  width: 250px;
+}
+table.cebola-table .table-col-300 {
+  width: 300px;
 }

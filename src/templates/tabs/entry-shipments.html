@@ -15,20 +15,22 @@
 
 <section class="tab-body">
   
-  <table class="cebola-table product-table">
+  <table
+    id="scheduled-entry-shipments"
+    class="cebola-table entry-shipments-table">
     <thead>
       <tr>
-        <th>Previsões de chegada</th>
+        <th class="table-col-150">Previsões de chegada</th>
         <th>Fornecedor</th>
         <th>Responsável</th>
         <th>Contato</th>
         <th>Status</th>
-        <th><!-- action placeholder --></th>
+        <th class="table-col-150"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="entryShipment in entryShipments | filter:pendingEntryShipments">
-        <td>
+      <tr ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment">
+        <td class="table-col-150">
           <!-- actions -->
           <a href="#/entrada/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
@@ -46,7 +48,7 @@
         <td>
           {{ entryShipment.status.value }}
         </td>
-        <td>
+        <td class="table-col-150">
           <!-- actions -->
           <md-button
             class="md-icon-button"
@@ -98,20 +100,23 @@
     </tbody>
   </table>
   
-  <table class="cebola-table product-table">
+  <table
+    id="finished-entry-shipments"
+    class="cebola-table entry-shipments-table">
     <thead>
       <tr>
-        <th>Previsões de chegada encerradas</th>
+        <th class="table-col-150">Previsões de chegada encerradas</th>
         <th>Fornecedor</th>
         <th>Responsável</th>
         <th>Contato</th>
         <th>Status</th>
-        <th><!-- action placeholder --></th>
+        <th class="table-col-150"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="entryShipment in entryShipments | filter:finishedEntryShipments">
-        <td>
+      <tr
+        ng-repeat="entryShipment in entryShipments | filter:isFinishedEntryShipment">
+        <td class="table-col-150">
           <!-- actions -->
           <a href="#/entrada/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
@@ -129,7 +134,7 @@
         <td>
           {{ entryShipment.status.value }}
         </td>
-        <td>
+        <td class="table-col-150">
           <!-- actions -->
           <md-menu>
             <md-button

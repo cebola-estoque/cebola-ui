@@ -21,7 +21,11 @@
     Status: {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt }}
   </div>
   
-  <table class="cebola-table product-table">
+  <!-- active allocations -->
+  <table
+    id="active-allocations"
+    ng-if="shipment.allocations.active.length > 0"
+    class="cebola-table product-table">
     <thead>
       <tr>
         <th>Produtos agendados</th>
@@ -108,7 +112,10 @@
   </table>
   
   <!-- finished allocations -->
-  <table class="cebola-table product-table">
+  <table
+    id="finished-allocations"
+    ng-if="shipment.allocations.finished.length > 0"
+    class="cebola-table product-table">
     <thead>
       <tr>
         <th>Produtos finalizados</th>
@@ -145,7 +152,10 @@
   <br>
   <br>
   <br>
-  <table class="cebola-table product-table">
+  <table
+    id="cancelled-allocations"
+    ng-if="shipment.allocations.active.cancelled > 0"
+    class="cebola-table product-table">
     <thead>
       <tr>
         <th>Produtos cancelados</th>

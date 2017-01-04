@@ -97,10 +97,11 @@ angular.module('cebola.controllers')
   };
   
   // filters
-  $scope.pendingEntryShipments = function (entryShipment, index, array) {
-    return entryShipment.status.value === 'scheduled';
+  $scope.isPendingEntryShipment = function (entryShipment, index, array) {
+    return entryShipment.status.value === 'scheduled' ||
+           entryShipment.status.value === 'in-progress';
   };
-  $scope.finishedEntryShipments = function (entryShipment, index, array) {
+  $scope.isFinishedEntryShipment = function (entryShipment, index, array) {
     return entryShipment.status.value === 'finished' ||
            entryShipment.status.value === 'cancelled';
   };
