@@ -4,6 +4,8 @@
 table.cebola-table {
   width: 100%;
   
+  table-layout: fixed;
+  
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
   border-collapse: collapse;
   

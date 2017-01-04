@@ -279,8 +279,19 @@ angular.module('cebola.services')
    */
   api.inventory = {};
   api.inventory.summary = function () {
-    return $http.get(API_URI + '/inventory/available-products', {
+    return $http.get(API_URI + '/inventory/summary', {
       // auth
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.inventory.availabilitySummary = function (date) {
+    return $http.get(API_URI + '/inventory/availability-summary', {
+      // auth
+      params: {
+        date: date,
+      },
     })
     .then(function (res) {
       return res.data;
