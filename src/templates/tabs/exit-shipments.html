@@ -30,30 +30,30 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment">
+      <tr ng-repeat="exitShipment in exitShipments | filter:isPendingExitShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/entrada/{{ entryShipment._id }}">
-            {{ entryShipment.scheduledFor | date }}
+          <a href="#/saida/{{ exitShipment._id }}">
+            {{ exitShipment.scheduledFor | date }}
           </a>
         </td>
         <td>
-          {{ entryShipment.supplier.name }}
+          {{ exitShipment.recipient.name }}
         </td>
         <td>
-          <!-- responsavel placeholder -->
+          {{ exitShipment.recipient.contactPoint.name }}
         </td>
         <td>
-          <!-- contato placeholder -->
+          {{ exitShipment.recipient.contactPoint.telephone }}
         </td>
         <td>
-          {{ entryShipment.status.value }}
+          {{ exitShipment.status.value }}
         </td>
         <td class="table-col-150">
           <!-- actions -->
           <md-button
             class="md-icon-button"
-            ng-click="editEntryShipment(entryShipment)">
+            ng-click="editexitShipment(exitShipment)">
             <md-icon md-font-set="material-icons">edit</md-icon>
           </md-button>
           
@@ -70,8 +70,8 @@
             <md-menu-content width="4">
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'scheduled'"
-                  ng-click="editEntryShipment(entryShipment)">
+                  ng-disabled="exitShipment.status.value === 'scheduled'"
+                  ng-click="editexitShipment(exitShipment)">
                   <md-icon
                     md-menu-align-target
                     md-font-set="material-icons">
@@ -83,8 +83,8 @@
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'scheduled'"
-                  ng-click="cancelEntryShipment(entryShipment)">
+                  ng-disabled="exitShipment.status.value === 'scheduled'"
+                  ng-click="cancelexitShipment(exitShipment)">
                   <md-icon
                     md-menu-align-target
                     md-font-set="material-icons">
@@ -116,15 +116,15 @@
     </thead>
     <tbody>
       <tr
-        ng-repeat="entryShipment in entryShipments | filter:isFinishedEntryShipment">
+        ng-repeat="exitShipment in exitShipments | filter:isFinishedExitShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/entrada/{{ entryShipment._id }}">
-            {{ entryShipment.scheduledFor | date }}
+          <a href="#/saida/{{ exitShipment._id }}">
+            {{ exitShipment.scheduledFor | date }}
           </a>
         </td>
         <td>
-          {{ entryShipment.supplier.name }}
+          {{ exitShipment.supplier.name }}
         </td>
         <td>
           <!-- responsavel placeholder -->
@@ -133,7 +133,7 @@
           <!-- contato placeholder -->
         </td>
         <td>
-          {{ entryShipment.status.value }}
+          {{ exitShipment.status.value }}
         </td>
         <td class="table-col-150">
           <!-- actions -->
@@ -150,8 +150,8 @@
             <md-menu-content width="4">
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'scheduled'"
-                  ng-click="cancelEntryShipment(entryShipment)">
+                  ng-disabled="exitShipment.status.value === 'scheduled'"
+                  ng-click="cancelexitShipment(exitShipment)">
                   <md-icon
                     md-menu-align-target
                     md-font-set="material-icons">

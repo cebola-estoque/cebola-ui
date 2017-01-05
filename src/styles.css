@@ -12,6 +12,7 @@
 
 /* elements */
 @import 'styles/elements/entry-shipment-dialog.css';
+@import 'styles/elements/shipment-dialog.css';
 
 /* sections */
 @import 'styles/app-header.css';

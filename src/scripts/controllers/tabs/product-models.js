@@ -22,10 +22,6 @@ angular.module('cebola.controllers')
    */
   $scope.editProductModel = function (sourceProductModel) {
     uiProductModelDialog.edit(sourceProductModel)
-      .catch(function () {
-        // cancelled
-        console.log('cancelled');
-      })
       .then(function (intendedProductModel) {
         return cebolaAPI.productModel.update(
           sourceProductModel._id,
@@ -36,6 +32,10 @@ angular.module('cebola.controllers')
         console.log('updated product model', updatedProductModel);
       })
       .catch(function (err) {
+        if (!err) {
+          // cancelled
+          return;
+        }
         alert('product model edit error');
         console.warn('product model edit error', err);
       });
@@ -80,10 +80,6 @@ angular.module('cebola.controllers')
    */
   $scope.createProductModel = function () {
     uiProductModelDialog.create()
-      .catch(function () {
-        // cancelled
-        console.log('cancelled');
-      })
       .then(function (productModel) {
         return cebolaAPI.productModel.create(productModel)
       })
@@ -91,9 +87,22 @@ angular.module('cebola.controllers')
         $scope.productModels.push(productModel);
       })
       .catch(function (err) {
+        if (!err) {
+          // cancelled
+          console.log('cancelled')
+          return;
+        }
+        
         alert('error creating product model')
         console.warn('error creating product model', err);
       });
+  };
+  
+  // filter-related methods
+  $scope.hasDimensions = function (productModel) {
+    return (productModel.width !== undefined) &&
+           (productModel.height !== undefined) &&
+           (productModel.depth !== undefined);
   };
   
   // initialize data loading

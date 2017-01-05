@@ -46,6 +46,11 @@
         controller: 'ExitShipmentsCtrl',
         templateUrl: 'templates/tabs/exit-shipments.html',
       })
+      .state('exit-shipment-detail', {
+        url: '/saida/:exitShipmentId',
+        controller: 'ExitShipmentDetailCtrl',
+        templateUrl: 'templates/tabs/exit-shipment-detail.html',
+      })
       .state('products', {
         url: '/produtos',
         controller: 'ProductModelsCtrl',

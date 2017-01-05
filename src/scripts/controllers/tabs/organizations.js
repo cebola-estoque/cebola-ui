@@ -4,7 +4,7 @@ angular.module('cebola.controllers')
   var TAB_ROLE = $stateParams.role;
   
   // title to be shown in the ui
-  $scope.tabTitle = TAB_ROLE === 'receiver' ? 'Receptores' : 'Fornecedores';
+  $scope.tabTitle = TAB_ROLE === 'recipient' ? 'Receptores' : 'Fornecedores';
   
   // initialize data objects
   $scope.organizations = [];
@@ -13,10 +13,6 @@ angular.module('cebola.controllers')
     
     return uiOrganizationDialog.create({
         roles: [TAB_ROLE]
-      })
-      .catch(function () {
-        // cancelled
-        console.log('cancelled')
       })
       .then(function (organization) {
         return cebolaAPI.organization.create(organization);
@@ -32,6 +28,13 @@ angular.module('cebola.controllers')
         }
       })
       .catch(function (err) {
+        
+        if (!err) {
+          // cancelled
+          console.log('cancelled')
+          return;
+        }
+        
         alert('error creating supplier organization');
         console.warn(err);
       });

@@ -6,41 +6,44 @@ angular.module('cebola.controllers')
   
   $scope.createExitShipment = function () {
     return uiDialogShipment.create('exit')
-      .catch(function () {
-        // user cancelled
-      })
       .then(function (data) {
         console.log('create exit shipment', data);
         
-        var shipment = data.shipment;
-        var supplier = data.shipment.supplier;
+        var exitShipment = data.shipment;
+        var recipient = data.shipment.recipient;
         var allocations = data.allocationsToCreate;
         
-        delete shipment.supplier;
-        // delete shipment.allocations;
+        delete exitShipment.recipient;
+        delete exitShipment.allocations;
         
-        return cebolaAPI.shipment.scheduleEntry(
-          supplier,
-          shipment,
+        return cebolaAPI.shipment.scheduleExit(
+          recipient,
+          exitShipment,
           allocations
         );
       })
-      .then(function (shipment) {
-        console.log('shipment created ', shipment);
+      .then(function (exitShipment) {
+        console.log('shipment created ', exitShipment);
         
-        $scope.exitShipments.push(shipment);
+        $scope.exitShipments.push(exitShipment);
       })
       .catch(function (err) {
-        alert('there was an error creating the entry shipment');
+        
+        if (!err) {
+          // user cancelled
+          return;
+        }
+        
+        alert('there was an error creating the exit shipment');
         console.warn(err);
       });
   };
   
-  // $scope.listExitShipments = function () {
-  //   return cebolaAPI.shipment.listExits().then(function (exitShipments) {
-  //     $scope.exitShipments = exitShipments;
-  //   });
-  // };
+  $scope.listExitShipments = function () {
+    return cebolaAPI.shipment.listExits().then(function (exitShipments) {
+      $scope.exitShipments = exitShipments;
+    });
+  };
   
   $scope.editExitShipment = function (sourceEntryShipment) {
     
@@ -89,24 +92,24 @@ angular.module('cebola.controllers')
 
   };
   
-  $scope.cancelEntryShipment = function (entryShipment) {
-    return cebolaAPI.shipment.cancel(entryShipment._id)
+  $scope.cancelEntryShipment = function (exitShipment) {
+    return cebolaAPI.shipment.cancel(exitShipment._id)
       .then(function (cancelledEntryShipment) {
         console.log('entry shipment cancelled', cancelledEntryShipment);
       });
   };
   
   // filters
-  $scope.isPendingEntryShipment = function (entryShipment, index, array) {
-    return entryShipment.status.value === 'scheduled' ||
-           entryShipment.status.value === 'in-progress';
+  $scope.isPendingExitShipment = function (exitShipment, index, array) {
+    return exitShipment.status.value === 'scheduled' ||
+           exitShipment.status.value === 'in-progress';
   };
-  $scope.isFinishedEntryShipment = function (entryShipment, index, array) {
-    return entryShipment.status.value === 'finished' ||
-           entryShipment.status.value === 'cancelled';
+  $scope.isFinishedExitShipment = function (exitShipment, index, array) {
+    return exitShipment.status.value === 'finished' ||
+           exitShipment.status.value === 'cancelled';
   };
   
   // initialize
-  // $scope.listExitShipments();
+  $scope.listExitShipments();
   
 });

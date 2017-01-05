@@ -38,8 +38,6 @@ angular.module('cebola.services')
     };
   }
   
-  
-  
   function ShipmentDialog($scope, $filter, shipmentType, shipment, $mdDialog, cebolaAPI) {
     /**
      * Auxiliary scope values
@@ -75,11 +73,21 @@ angular.module('cebola.services')
     
     $scope.submit = function () {
       
+      var currentActiveAllocations = $scope.shipment.allocations.active.map(function (allocation) {
+        // make copy in order not to modify original object
+        allocation = Object.assign({}, allocation);
+        
+        allocation.allocatedQuantity = shipmentType === 'entry' ?
+          allocation.allocatedQuantity : -1 * allocation.allocatedQuantity;
+          
+        return allocation;
+      });
+      
       // compare all allocations
       // to the original ones to compute differences
       var allocationsDiff = arrayDiff(
         originalActiveAllocations,
-        $scope.shipment.allocations.active,
+        currentActiveAllocations,
         function isSameAllocation(a, b) {
           return a._id === b._id;
         },
@@ -102,7 +110,7 @@ angular.module('cebola.services')
     
     // dialog methods
     $scope.cancel = function() {
-      $mdDialog.hide();
+      $mdDialog.cancel();
     };
     
     /**
@@ -126,9 +134,9 @@ angular.module('cebola.services')
       });
     };
     
-    $scope.completeReceivers = function (searchText) {
+    $scope.completeRecipients = function (searchText) {
       return cebolaAPI.organization.search(searchText, {
-        roles: ['receiver'],
+        roles: ['recipient'],
       });
     };
     

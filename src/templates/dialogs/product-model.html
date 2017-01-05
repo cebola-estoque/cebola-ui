@@ -32,6 +32,54 @@
           <input required ng-model="productModel.sku">
         </md-input-container>
       </div>
+      
+        <label>Peso</label>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Peso bruto (g)</label>
+          <input
+            type="number"
+            step="any"
+            ng-min="0"
+            ng-model="productModel.weight">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Peso líquido (g)</label>
+          <input
+            type="number"
+            step="any"
+            ng-min="0"
+            ng-model="productModel.netWeight">
+        </md-input-container>
+      </div>
+      
+        <label>Dimensões</label>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Altura (cm)</label>
+          <input
+            type="number"
+            step="any"
+            ng-min="0"
+            ng-model="productModel.height">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Largura (cm)</label>
+          <input
+            type="number"
+            step="any"
+            ng-min="0"
+            ng-model="productModel.width">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Profundidade (cm)</label>
+          <input
+            type="number"
+            step="any"
+            ng-min="0"
+            ng-model="productModel.depth">
+        </md-input-container>
+      </div>
     </section>
   
     <footer class="dialog-footer">

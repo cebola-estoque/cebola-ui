@@ -50,12 +50,30 @@
         <div flex>
           <label>
             <md-checkbox
-              ng-checked="hasRole('receiver')"
-              ng-click="toggleRole('receiver')">
+              ng-checked="hasRole('recipient')"
+              ng-click="toggleRole('recipient')">
               Receptor
             </md-checkbox>
           </label>
         </div>
+      </div>
+      
+      <div layout="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Responsável</label>
+          <input
+            ng-model="organization.contactPoint.name">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Telefone</label>
+          <input
+            ng-model="organization.contactPoint.telephone">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>E-mail</label>
+          <input
+            ng-model="organization.contactPoint.email">
+        </md-input-container>
       </div>
       
       <div

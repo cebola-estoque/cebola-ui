@@ -155,6 +155,30 @@ angular.module('cebola.services')
       return res.data;
     });
   };
+  api.shipment.scheduleExit = function (recipient, shipmentData, allocationsData) {
+    shipmentData.recipient = recipient;
+    shipmentData.allocations = allocationsData;
+    
+    return $http.post(API_URI + '/shipments/exits', shipmentData, {
+      headers: {
+        // Authorization ...
+      }
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.shipment.listExits = function (query) {
+    return $http.get(API_URI + '/shipments/exits', {
+      params: query,
+      headers: {
+        // Authorization
+      }
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
   api.shipment.getById = function (shipmentId) {
     return $http.get(API_URI + '/shipment/' + shipmentId, {
       params: {

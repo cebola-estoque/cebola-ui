@@ -33,16 +33,28 @@
       <tr ng-repeat="summaryProduct in summary | filter:isInStock">
         <td class="table-col-300">
           <h1>{{ summaryProduct.product.model.description }}</h1>
-          <!-- <dl>
-            <div>
+          <dl>
+            <div ng-if="summaryProduct.product.model.netWeight">
               <dt>peso líq.</dt>
-              <dd>0,4kg</dd>
+              <dd>{{ summaryProduct.product.model.netWeight / 1000 }} kg</dd>
             </div>
-            <div>
+            <div ng-if="summaryProduct.product.model.weight">
               <dt>peso br.</dt>
-              <dd>0,5kg</dd>
+              <dd>{{ summaryProduct.product.model.weight / 1000 }} kg</dd>
             </div>
-          </dl> -->
+            <div ng-if="summaryProduct.product.model.height">
+              <dt>Altura</dt>
+              <dd>{{ summaryProduct.product.model.height }} cm</dd>
+            </div>
+            <div ng-if="summaryProduct.product.model.width">
+              <dt>Largura</dt>
+              <dd>{{ summaryProduct.product.model.width }} cm</dd>
+            </div>
+            <div ng-if="summaryProduct.product.model.depth">
+              <dt>Profundidade</dt>
+              <dd>{{ summaryProduct.product.model.depth }} cm</dd>
+            </div>
+          </dl>
         </td>
         <td>
           <div>{{ summaryProduct.product.expiry | date }}</div>
@@ -77,7 +89,7 @@
         </td>
         <td>
           
-          <dl ng-if="summaryProduct.allocatedForExit > 0">
+          <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
               <dd>

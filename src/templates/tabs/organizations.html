@@ -21,6 +21,9 @@
       <tr>
         <th>Nome</th>
         <th colspan="2">Documento</th>
+        <th>Responsável</th>
+        <th>Telefone</th>
+        <th>Email</th>
         <th>Endereços</th>
         <th>
           <!-- action placeholder -->
@@ -32,6 +35,9 @@
         <td>{{ organization.name }}</td>
         <td>{{ organization.document.type }}</td>
         <td>{{ organization.document.value }}</td>
+        <td>{{ organization.contactPoint.name }}</td>
+        <td>{{ organization.contactPoint.telephone }}</td>
+        <td>{{ organization.contactPoint.email }}</td>
         <td>
           <dl>
             <div ng-repeat="address in organization.addresses">

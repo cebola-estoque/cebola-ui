@@ -1,19 +1,16 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentsCtrl', function ($scope, $q, uiDialogEntryShipment, cebolaAPI) {
+.controller('EntryShipmentsCtrl', function ($scope, $q, uiDialogShipment, cebolaAPI) {
   
   // initialize data
   $scope.entryShipments = [];
   
   $scope.createEntryShipment = function () {
-    return uiDialogEntryShipment.create()
-      .catch(function () {
-        // user cancelled
-      })
+    return uiDialogShipment.create('entry')
       .then(function (data) {
         console.log('create entryShipment', data);
         
-        var entryShipment = data.entryShipment;
-        var supplier = data.entryShipment.supplier;
+        var entryShipment = data.shipment;
+        var supplier = data.shipment.supplier;
         var allocations = data.allocationsToCreate;
         
         delete entryShipment.supplier;
@@ -31,6 +28,12 @@ angular.module('cebola.controllers')
         $scope.entryShipments.push(entryShipment);
       })
       .catch(function (err) {
+        
+        if (!err) {
+          // user canceled
+          return;
+        }
+        
         alert('there was an error creating the entry shipment');
         console.warn(err);
       });
@@ -46,7 +49,7 @@ angular.module('cebola.controllers')
     
     return cebolaAPI.shipment.getById(sourceEntryShipment._id)
       .then(function (fullSourceEntryShipment) {
-        return uiDialogEntryShipment.edit(fullSourceEntryShipment);
+        return uiDialogShipment.edit('entry', fullSourceEntryShipment);
       })
       .then(function (data) {
         console.log('data', data);

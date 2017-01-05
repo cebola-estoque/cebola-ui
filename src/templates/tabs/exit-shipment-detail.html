@@ -1,0 +1,190 @@
+<header class="tab-header">
+  
+  <div class="left">
+    <h1 class="tab-title">
+      Saída {{ shipment.scheduledFor | date }} | {{ shipment.recipient.name }}
+    </h1>
+  </div>
+  
+  <div class="right">
+    <md-button
+      ng-if="shipment.status.value !== 'finished'"
+      ng-click="finishShipment()">
+      Concluir entrada
+    </md-button>
+  </div>
+</header>
+
+<section class="tab-body">
+  
+  <div class="status-badge">
+    Status: {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt }}
+  </div>
+  
+  <!-- active allocations -->
+  <table
+    id="active-allocations"
+    ng-if="shipment.allocations.active.length > 0"
+    class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Produtos agendados</th>
+        <th>Validade</th>
+        <th>Qtde prevista</th>
+        <th>Qtde efetivada</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="allocation in shipment.allocations.active">
+        <td>
+          {{ allocation.product.model.description }}
+        </td>
+        <td>
+          {{ allocation.product.expiry | date }}
+        </td>
+        <td>
+          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+        </td>
+        <td>
+          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          <dl>
+            <div ng-repeat="op in allocation.operations.active">
+              {{ op.createdAt | date }} | {{ op.quantity }} {{ op.product.measureUnit }}
+            </div>
+          </dl>
+
+          <!-- status icons -->
+          <md-icon
+            class="status-info"
+            ng-if="allocation.allocatedQuantity === allocation.effectivatedQuantity"
+            md-font-set="material-icons">
+            check
+          </md-icon>
+          <md-icon
+            class="status-info"
+            ng-if="allocation.allocatedQuantity < allocation.effectivatedQuantity"
+            md-font-set="material-icons">
+            warning
+            <md-tooltip md-direction="top">
+              Mais itens do que o previsto
+            </md-tooltip>
+          </md-icon>
+        </td>
+        <td>
+          <!-- actions -->
+          <md-button
+            class="md-icon-button"
+            ng-click="effectivateEntryAllocation(allocation)">
+            <md-icon md-font-set="material-icons">check_circle</md-icon>
+          </md-button>
+          
+          <md-menu>
+            <md-button
+              class="md-icon-button"
+              ng-click="$mdOpenMenu($event)">
+              <md-icon
+                md-menu-origin
+                md-font-set="material-icons">
+                more_vert
+              </md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button
+                  ng-click="effectivateEntryAllocation(allocation)">
+                  Efetivar entrada
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button
+                  ng-click="">
+                  Registrar perda
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  
+  <!-- finished allocations -->
+  <table
+    id="finished-allocations"
+    ng-if="shipment.allocations.finished.length > 0"
+    class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Produtos finalizados</th>
+        <th>Validade</th>
+        <th>Qtde prevista</th>
+        <th>Qtde efetivada</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="allocation in shipment.allocations.finished">
+        <td>
+          {{ allocation.product.model.description }}
+        </td>
+        <td>
+          {{ allocation.product.expiry | date }}
+        </td>
+        <td>
+          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+        </td>
+        <td>
+          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+        </td>
+        <td>
+          <!-- actions -->
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+  <!-- cancelled allocations -->
+  <br>
+  <br>
+  <br>
+  <table
+    id="cancelled-allocations"
+    ng-if="shipment.allocations.active.cancelled > 0"
+    class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Produtos cancelados</th>
+        <th>Validade</th>
+        <th>Qtde prevista</th>
+        <th>Qtde efetivada</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="allocation in shipment.allocations.cancelled">
+        <td>
+          {{ allocation.product.model.description }}
+        </td>
+        <td>
+          {{ allocation.product.expiry | date }}
+        </td>
+        <td>
+          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+        </td>
+        <td>
+          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+        </td>
+        <td>
+          <!-- actions -->
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  
+</section>
