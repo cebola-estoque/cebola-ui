@@ -67,7 +67,7 @@
           </div>
         </td>
         <td>
-          
+          <!-- a entrar -->
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
               <dt>{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</dt>
@@ -88,7 +88,7 @@
           <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
         </td>
         <td>
-          
+          <!-- a sair -->
           <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
@@ -106,7 +106,7 @@
             </div>
           </dl>
 
-          <div ng-if="summaryProduct.allocatedForExit <= 0">-</div>
+          <div ng-if="summaryProduct.allocatedForExit >= 0">-</div>
         </td>
         <!-- <td>
           <dl>
@@ -218,8 +218,8 @@
           <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
         </td>
         <td>
-          
-          <dl ng-if="summaryProduct.allocatedForExit > 0">
+          <!-- a sair -->
+          <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
               <dd>
@@ -236,7 +236,7 @@
             </div>
           </dl>
 
-          <div ng-if="summaryProduct.allocatedForExit <= 0">-</div>
+          <div ng-if="summaryProduct.allocatedForExit >= 0">-</div>
         </td>
         <!-- <td>
           <dl>
@@ -349,8 +349,8 @@
           <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
         </td>
         <td>
-          
-          <dl ng-if="summaryProduct.allocatedForExit > 0">
+          <!-- a sair -->
+          <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
               <dd>
@@ -367,7 +367,7 @@
             </div>
           </dl>
 
-          <div ng-if="summaryProduct.allocatedForExit <= 0">-</div>
+          <div ng-if="summaryProduct.allocatedForExit >= 0">-</div>
         </td>
         <!-- <td>
           <dl>

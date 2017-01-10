@@ -165,7 +165,7 @@
           <!-- quantity for exit (max at inStock + allocatedForEntry - allocatedForExit) -->
           <label ng-if="shipmentType === 'exit'">
             Quantidade <span ng-if="allocation.product">(max: 
-              {{ allocation.product.inStock + allocation.product.allocatedForEntry - allocation.product.allocatedForExit }})</span>
+              {{ allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit }})</span>
           </label>
           <input
             type="number"
