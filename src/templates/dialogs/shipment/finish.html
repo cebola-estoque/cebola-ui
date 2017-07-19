@@ -2,7 +2,7 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      Efetivar {{ allocation.type }} {{ allocation.product.model.description }}
+      Finalizar {{ shipment.type }}
     </div>
     <div class="dialog-header-right">
       <md-button
@@ -19,26 +19,23 @@
   
     <section class="dialog-body">
       
-      <div layout-gt-sm="row">
-        <label>Validade:&nbsp;</label>
-        {{ allocation.product.expiry | date }}
+      <div ng-show="allocatedAndEffectivatedDifferences.length > 0" layout-gt-sm="row">
+        Há diferenças entre as quantidades alocadas e efetivadas. Favor inserir uma observação sobre tais diferenças.
       </div>
       
-      <div layout-gt-sm="row">
-        <label>Quantidade prevista:&nbsp;</label>
-        {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+      <div ng-show="allocatedAndEffectivatedDifferences.length === 0" layout-gt-sm="row">
+        Após finalizar a entrada, nenhuma alteração poderá ser feita. Você deseja continuar?
       </div>
+
       
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
-          <label>Quantidade a efetivar</label>
-          <input
-            type="number"
-            required
-            ng-model="quantityToEffectivate"
-            ng-min="1">
-          <!-- <input
-            ng-max="{{ allocation.allocatedQuantity - allocation.effectivatedQuantity }}"> -->
+          <label>Observações</label>
+          <textarea
+            ng-model="annotations"
+            ng-required="allocatedAndEffectivatedDifferences.length > 0"
+            rows="5"
+            md-select-on-focus></textarea>
         </md-input-container>
       </div>
     </section>

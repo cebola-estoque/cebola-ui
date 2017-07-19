@@ -10,7 +10,7 @@
     <md-button
       ng-if="shipment.status.value !== 'finished'"
       ng-click="finishShipment()">
-      Concluir entrada
+      Concluir saída
     </md-button>
   </div>
 </header>
@@ -18,7 +18,7 @@
 <section class="tab-body">
   
   <div class="status-badge">
-    Status: {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt }}
+    Status: {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt | date }}
   </div>
   
   <!-- active allocations -->
@@ -44,10 +44,10 @@
           {{ allocation.product.expiry | date }}
         </td>
         <td>
-          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+          {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
-          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
           <dl>
             <div ng-repeat="op in allocation.operations.active">
               {{ op.createdAt | date }} | {{ op.quantity }} {{ op.product.measureUnit }}
@@ -63,7 +63,7 @@
           </md-icon>
           <md-icon
             class="status-info"
-            ng-if="allocation.allocatedQuantity < allocation.effectivatedQuantity"
+            ng-if="-1 * allocation.allocatedQuantity < -1 * allocation.effectivatedQuantity"
             md-font-set="material-icons">
             warning
             <md-tooltip md-direction="top">

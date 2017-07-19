@@ -2,7 +2,7 @@
   
   <div class="left">
     <h1 class="tab-title">
-      Chegada {{ shipment.scheduledFor | date }} | {{ shipment.supplier.name }}
+      Chegada {{ shipment.scheduledFor | date:'MMM, HH:mm' }} | {{ shipment.supplier.name }}
     </h1>
   </div>
   
@@ -16,9 +16,18 @@
 </header>
 
 <section class="tab-body">
+
+  <div class="supplier-badge">
+    <b>Responsável:</b> {{ shipment.supplier.contactPoint.name }} | {{ shipment.supplier.contactPoint.telephone }}
+  </div>
   
   <div class="status-badge">
-    Status: {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt }}
+    <b>Status:</b> {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt | date }}
+  </div>
+
+  <div class="shipment-annotations">
+    <b>Anotações:</b><br>
+    {{ shipment.annotations }}
   </div>
   
   <!-- active allocations -->
@@ -41,16 +50,16 @@
           {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ allocation.product.expiry | date }}
+          {{ allocation.product.expiry | date:'MMM, HH:mm' }}
         </td>
         <td>
           {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
-          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
-          <dl>
+          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }} (total)
+          <dl style="opacity: 0.5;">
             <div ng-repeat="op in allocation.operations.active">
-              {{ op.createdAt | date }} | {{ op.quantity }} {{ op.product.measureUnit }}
+              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ op.quantity }} {{ op.product.measureUnit }}
             </div>
           </dl>
 
@@ -154,7 +163,7 @@
   <br>
   <table
     id="cancelled-allocations"
-    ng-if="shipment.allocations.active.cancelled > 0"
+    ng-if="shipment.allocations.cancelled.length > 0"
     class="cebola-table product-table">
     <thead>
       <tr>
@@ -171,7 +180,7 @@
           {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ allocation.product.expiry | date }}
+          {{ allocation.product.expiry | date:'MMM, HH:mm' }}
         </td>
         <td>
           {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}

@@ -6,7 +6,7 @@ angular.module('cebola.services')
         
     // dialog methods
     $scope.cancel = function() {
-      $mdDialog.hide();
+      $mdDialog.cancel();
     };
     
     $scope.submit = function () {

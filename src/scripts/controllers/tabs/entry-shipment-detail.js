@@ -1,5 +1,13 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentDetailCtrl', function ($scope, $stateParams, cebolaAPI, uiAllocationDialog, $mdDialog) {
+.controller('EntryShipmentDetailCtrl', function (
+  $scope,
+  $state,
+  $stateParams,
+  cebolaAPI,
+  uiAllocationDialog,
+  uiDialogShipment,
+  $mdDialog
+) {
   
   $scope.shipment = {};
   $scope.allocations = [];
@@ -7,27 +15,29 @@ angular.module('cebola.controllers')
   $scope.loadShipment = function () {
     return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
+
+      console.log(shipment);
     });
   };
   
   $scope.finishShipment = function () {
-    return cebolaAPI.shipment.finish($scope.shipment._id, {
-      observations: [
-        {
-          title: 'Test observation title',
-          body: 'Test observation body',
-          author: 'test-author',
-          createdAt: Date.now(),
+    return uiDialogShipment.finish($scope.shipment)
+      .then((annotations) => {
+        return cebolaAPI.shipment.finish($scope.shipment._id, {
+          annotations: annotations
+        });
+      })
+      .then(function (shipment) {
+        return $scope.loadShipment();
+      })
+      .catch(function (err) {
+        if (!err) {
+          console.log('CANCELLED');
+          return;
         }
-      ]
-    })
-    .then(function (shipment) {
-      $scope.shipment = shipment;
-    })
-    .catch(function (err) {
-      alert('error finishing shipment');
-      console.warn(err);
-    });
+
+        throw err;
+      });
   };
   
   $scope.effectivateEntryAllocation = function (allocation) {
@@ -51,7 +61,9 @@ angular.module('cebola.controllers')
         )
         .catch(function () {
           // user cancelled
-          throw new Error('CANCELLED');
+          var err = new Error('UserCancelled');
+          err.cancelled = true;
+          throw err;
         })
         .then(function () {
           return quantity;
@@ -69,14 +81,16 @@ angular.module('cebola.controllers')
       );
     })
     .then(function (operation) {
-      console.log('effectivated', operation);
-      
       // reload the shipment
       return $scope.loadShipment();
     })
     .catch(function (err) {
-      alert('error!');
-      console.warn(err);
+      if (err.cancelled) {
+        console.warn('user cancelled');
+      } else {
+        // alert('error');
+        console.warn(err);
+      }
     });
   };
   

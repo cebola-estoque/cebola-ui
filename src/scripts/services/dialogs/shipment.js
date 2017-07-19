@@ -38,6 +38,9 @@ angular.module('cebola.services')
     };
   }
   
+  /**
+   * Shipment creation / edition Controller
+   */
   function ShipmentDialog($scope, $filter, shipmentType, shipment, $mdDialog, cebolaAPI) {
     /**
      * Auxiliary scope values
@@ -207,6 +210,31 @@ angular.module('cebola.services')
       }
     };
   }
+
+  /**
+   * Shipment finishing controller
+   */
+  function FinishShipmentDialogCtrl($scope, shipment) {
+
+    console.log(shipment);
+    $scope.shipment = shipment;
+
+    // get the differences between allocation and effectivation
+    $scope.allocatedAndEffectivatedDifferences = shipment.allocations.active.filter((allocation) => {
+      return allocation.effectivatedQuantity !== allocation.allocatedQuantity; 
+    });
+
+    // dialog methods
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+    
+    $scope.submit = function () {
+      $mdDialog.hide($scope.annotations);
+    };
+  }
+
+
   
   return {
     create: function (shipmentType, shipmentTemplate) {
@@ -241,6 +269,16 @@ angular.module('cebola.services')
         },
       });
       
+    },
+
+    finish: function (shipment) {
+      return $mdDialog.show({
+        templateUrl: 'templates/dialogs/shipment/finish.html',
+        controller: FinishShipmentDialogCtrl,
+        locals: {
+          shipment: shipment
+        },
+      });
     },
   };
   

@@ -72,17 +72,17 @@
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
               <dt>{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</dt>
               <dd>
-                {{ entryAllocation.allocatedQuantity }} 
+                {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>
-            <div>
-              <dt></dt>
-              <dd>
-                {{ summaryProduct.allocatedForEntry }} 
-                {{ summaryProduct.product.measureUnit }}
-              </dd>
-            </div>
+<!--             <div>
+  <dt></dt>
+  <dd>
+    {{ summaryProduct.allocatedForEntry }} 
+    {{ summaryProduct.product.measureUnit }}
+  </dd>
+</div> -->
           </dl>
           
           <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
@@ -93,14 +93,14 @@
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
               <dd>
-                {{ exitAllocation.allocatedQuantity }} 
+                {{ -1 * exitAllocation.allocatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ summaryProduct.allocatedForExit }} 
+                {{ -1 * summaryProduct.allocatedForExit }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>
@@ -416,204 +416,4 @@
 
     </tbody>
   </table>
-  
-  
-  
-  
-  
-  
-  <!-- reference -->
-  <!-- <table class="cebola-table">
-    <thead>
-      <tr>
-        <th>Produtos em estoque</th>
-        <th>Validade</th>
-        <th>Em estoque</th>
-        <th>À chegar</th>
-        <th>À distribuir</th>
-        <th>À sair</th>
-        <th>action placeholder</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <h1>Arroz integral</h1>
-          <dl>
-            <div>
-              <dt>peso líq.</dt>
-              <dd>0,4kg</dd>
-            </div>
-            <div>
-              <dt>peso br.</dt>
-              <dd>0,5kg</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          <div>20 Out 2016</div>
-          <div>16 dias</div>
-        </td>
-        <td>
-          <div>500 sacos</div>
-        </td>
-        <td>
-          <dl>
-            <div>
-              <dt>11 Out:</dt>
-              <dd>100</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>50</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          actions
-          <md-menu>
-            <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-              <md-icon md-menu-origin md-font-set="material-icons">more_vert</md-icon>
-            </md-button>
-            <md-menu-content width="4">
-              <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
-                  Redial
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button disabled="disabled" ng-click="checkVoicemail()">
-                  <md-icon md-svg-icon="call:voicemail"></md-icon>
-                  Check voicemail
-                </md-button>
-              </md-menu-item>
-              <md-menu-divider></md-menu-divider>
-              <md-menu-item>
-                <md-button ng-click="ctrl.toggleNotifications()">
-                  <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
-                  {{ctrl.notificationsEnabled ? 'Disable' : 'Enable' }} notifications
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-        </td>
-      </tr>
-  
-  
-      <tr>
-        <td>
-          <h1>Arroz integral</h1>
-          <dl>
-            <div>
-              <dt>peso líq.</dt>
-              <dd>0,4kg</dd>
-            </div>
-            <div>
-              <dt>peso br.</dt>
-              <dd>0,5kg</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          <div>20 Out 2016</div>
-          <div>16 dias</div>
-        </td>
-        <td>
-          <div>500 sacos</div>
-        </td>
-        <td>
-          <dl>
-            <div>
-              <dt>11 Out:</dt>
-              <dd>100</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>50</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td>
-        <td>
-          actions
-          <md-menu>
-            <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-              <md-icon md-menu-origin md-font-set="material-icons">more_vert</md-icon>
-            </md-button>
-            <md-menu-content width="4">
-              <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
-                  Redial
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button disabled="disabled" ng-click="checkVoicemail()">
-                  <md-icon md-svg-icon="call:voicemail"></md-icon>
-                  Check voicemail
-                </md-button>
-              </md-menu-item>
-              <md-menu-divider></md-menu-divider>
-              <md-menu-item>
-                <md-button ng-click="ctrl.toggleNotifications()">
-                  <md-icon md-font-set="social">notifications_on</md-icon>
-                  {{ctrl.notificationsEnabled ? 'Disable' : 'Enable' }} notifications
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-        </td>
-      </tr>
-  
-    </tbody>
-  </table> -->
-  
 </section>

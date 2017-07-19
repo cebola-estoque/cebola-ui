@@ -19,3 +19,10 @@
 #finished-entry-shipments {
   margin-top: 30px;
 }
+
+/**
+ * Entry shipment details
+ */
+#cancelled-allocations {
+  opacity: 0.4;
+}
