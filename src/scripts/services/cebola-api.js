@@ -215,6 +215,16 @@ angular.module('cebola.services')
       return shipmentData;
     });
   };
+  api.shipment.cancel = function (shipmentId) {
+    return $http.delete(API_URI + '/shipment/' + shipmentId, {
+      headers: {
+        // Authorization
+      }
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
   api.shipment.update = function (shipmentId, shipmentData) {
     return $http.put(API_URI + '/shipment/' + shipmentId, shipmentData, {
       headers: {
@@ -283,6 +293,20 @@ angular.module('cebola.services')
       return res.data;
     });
   };
+  api.shipment.createOperations = function (shipmentId, operations) {
+    return $http.post(
+      API_URI + '/shipment/' + shipmentId + '/operations',
+      operations,
+      {
+        headers: {
+          // Authorization
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
   api.shipment.finish = function (shipmentId, finishData) {
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/finish',
@@ -290,6 +314,39 @@ angular.module('cebola.services')
       {
         headers: {
           // Authorization
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
+
+  /**
+   * Operation API
+   */
+  api.operation = {};
+  api.operation.createLoss = function (operationData) {
+    return $http.post(
+      API_URI + '/operations/loss',
+      operationData,
+      {
+        headers: {
+
+        }
+      }
+    )
+    .then(function (res) {
+      return res.data;
+    });
+  };
+  api.operation.createCorrection = function (operationData) {
+    return $http.post(
+      API_URI + '/operations/correction',
+      operationData,
+      {
+        headers: {
+
         }
       }
     )

@@ -2,13 +2,13 @@
   
   <div class="left">
     <h1 class="tab-title">
-      Chegada {{ shipment.scheduledFor | date:'MMM, HH:mm' }} | {{ shipment.supplier.name }}
+      Entrada {{ shipment.status.value }} {{ shipment.scheduledFor | date:'MMM, HH:mm' }} | {{ shipment.supplier.name }}
     </h1>
   </div>
   
   <div class="right">
     <md-button
-      ng-if="shipment.status.value !== 'finished'"
+      ng-if="shipment.status.value === 'in-progress'"
       ng-click="finishShipment()">
       Concluir entrada
     </md-button>
@@ -156,7 +156,6 @@
     </tbody>
   </table>
 
-
   <!-- cancelled allocations -->
   <br>
   <br>
@@ -196,4 +195,57 @@
     </tbody>
   </table>
   
+  <!-- standalone operations -->
+  <br>
+  <br>
+  <br>
+  <table
+    id="standalone-operations"
+    ng-if="shipment.standaloneOperations.active.length > 0"
+    class="cebola-table product-table">
+    <thead>
+      <tr>
+        <th>Produtos não previstos</th>
+        <th>Validade</th>
+        <th><!-- Qtde prevista --></th>
+        <th>Qtde efetivada</th>
+        <th><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="operation in shipment.standaloneOperations.active">
+        <td>
+          {{ operation.product.model.description }}
+        </td>
+        <td>
+          {{ operation.product.expiry | date:'MMM, HH:mm' }}
+        </td>
+        <td>
+          <!-- {{ operation.allocatedQuantity }} {{ operation.product.measureUnit }} -->
+        </td>
+        <td>
+          {{ operation.quantity }} {{ operation.product.measureUnit }}
+        </td>
+        <td>
+          <!-- actions -->
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  
+  <div>
+    <md-button
+      class="md-raised"
+      ng-if="shipment.status.value !== 'finished' && shipment.status.value !== 'cancelled'"
+      ng-click="createStandaloneOperation()">
+      Inserir produto não previsto
+    </md-button>
+    <md-button
+      ng-if="shipment.status.value === 'scheduled'"
+      ng-click="cancelShipment()">
+      Cancelar entrada
+    </md-button>
+  </div>
+
 </section>

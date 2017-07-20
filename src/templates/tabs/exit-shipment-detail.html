@@ -2,8 +2,7 @@
   
   <div class="left">
     <h1 class="tab-title">
-      Saída {{ shipment.scheduledFor | date }} | {{ shipment.recipient.name }}
-    </h1>
+      Saída {{ shipment.status.value }} {{ shipment.scheduledFor | date:'MMM, HH:mm' }} | {{ shipment.recipient.name }}
   </div>
   
   <div class="right">
@@ -16,9 +15,18 @@
 </header>
 
 <section class="tab-body">
+
+  <div class="recipient-badge">
+    <b>Responsável:</b> {{ shipment.recipient.contactPoint.name }} | {{ shipment.recipient.contactPoint.telephone }}
+  </div>
   
   <div class="status-badge">
-    Status: {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt | date }}
+    <b>Status:</b> {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt | date }}
+  </div>
+
+  <div class="shipment-annotations">
+    <b>Anotações:</b><br>
+    {{ shipment.annotations }}
   </div>
   
   <!-- active allocations -->
@@ -75,7 +83,7 @@
           <!-- actions -->
           <md-button
             class="md-icon-button"
-            ng-click="effectivateEntryAllocation(allocation)">
+            ng-click="effectivateExitAllocation(allocation)">
             <md-icon md-font-set="material-icons">check_circle</md-icon>
           </md-button>
           
@@ -154,7 +162,7 @@
   <br>
   <table
     id="cancelled-allocations"
-    ng-if="shipment.allocations.active.cancelled > 0"
+    ng-if="shipment.allocations.cancelled.length > 0"
     class="cebola-table product-table">
     <thead>
       <tr>
@@ -186,5 +194,13 @@
 
     </tbody>
   </table>
+
+  <div>
+    <md-button
+      ng-if="shipment.status.value === 'scheduled'"
+      ng-click="cancelShipment()">
+      Cancelar saída
+    </md-button>
+  </div>
   
 </section>

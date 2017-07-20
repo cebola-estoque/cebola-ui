@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('InventoryCtrl', function ($scope, cebolaAPI) {
+.controller('InventoryCtrl', function ($scope, cebolaAPI, uiOperationDialog) {
   
   $scope.loadSummary = function () {
     return cebolaAPI.inventory.summary().then(function (summary) {
@@ -28,6 +28,44 @@ angular.module('cebola.controllers')
   
   $scope.isExitAllocationRecord = function (record) {
     return record.kind === 'ProductAllocation' && record.type === 'exit';
+  };
+
+  $scope.createLossRecord = function () {
+    uiOperationDialog.createLoss()
+      .then(function (lossOperation) {
+        return cebolaAPI.operation.createLoss(lossOperation);
+      })
+      .then(function () {
+        return $scope.loadSummary();
+      })
+      .catch(function (err) {
+        if (!err) {
+          console.log('CANCELLED');
+          return;
+        }
+
+        throw err;
+      });
+  };
+
+  $scope.createCorrectionRecord = function () {
+    uiOperationDialog.createCorrection()
+      .then(function (correctionOperation) {
+        if (correctionOperation.quantity !== 0) {
+          return cebolaAPI.operation.createCorrection(correctionOperation);
+        }
+      })
+      .then(function () {
+        return $scope.loadSummary();
+      })
+      .catch(function (err) {
+        if (!err) {
+          console.log('CANCELLED');
+          return;
+        }
+
+        throw err;
+      });
   };
   
   // initialize

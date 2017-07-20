@@ -46,10 +46,14 @@ angular.module('cebola.controllers')
   };
   
   $scope.editExitShipment = function (sourceEntryShipment) {
-    
+
+
     return cebolaAPI.shipment.getById(sourceEntryShipment._id)
       .then(function (fullSourceEntryShipment) {
-        return uiDialogShipment.edit(fullSourceEntryShipment);
+        console.log(fullSourceEntryShipment.allocations)
+
+
+        return uiDialogShipment.edit('exit', fullSourceEntryShipment);
       })
       .then(function (data) {
         console.log('data', data);

@@ -5,6 +5,7 @@ angular.module('cebola.controllers')
   $stateParams,
   cebolaAPI,
   uiAllocationDialog,
+  uiOperationDialog,
   uiDialogShipment,
   $mdDialog
 ) {
@@ -41,7 +42,7 @@ angular.module('cebola.controllers')
   };
   
   $scope.effectivateEntryAllocation = function (allocation) {
-    return uiAllocationDialog.effectivate(allocation)
+    return uiAllocationDialog.effectivateEntry(allocation)
     .catch(function () {
       // user cancelled
       throw new Error('CANCELLED');
@@ -92,6 +93,49 @@ angular.module('cebola.controllers')
         console.warn(err);
       }
     });
+  };
+
+  $scope.createStandaloneOperation = function () {
+    return uiOperationDialog.createStandalone({})
+      .then(function (operation) {
+        return cebolaAPI.shipment.createOperations($scope.shipment._id, [operation]);
+        // console.log(operation);
+      })
+      .then(function (createdOperation) {
+        console.log('created operation');
+        return $scope.loadShipment();
+      })
+      .catch(function (err) {
+        if (!err) {
+          return;
+        }
+
+        throw err;
+      })
+  };
+
+  $scope.cancelShipment = function () {
+    return $mdDialog.show(
+      $mdDialog.confirm()
+        .title('Uma entrada cancelada não poderá mais ser editada. Confirma cancelamento?')
+        .ok('Cancelar entrada')
+        .cancel('cancelar')
+    )
+    .then(function () {
+      return cebolaAPI.shipment.cancel($scope.shipment._id);
+    })
+    .then(function () {
+      return $scope.loadShipment();
+      // alert('CANCELLED!')
+    })
+    .catch(function (err) {
+      if (!err) {
+        return;
+      }
+
+      throw err;
+    })
+    
   };
   
   // initialize

@@ -52,6 +52,7 @@
           <!-- actions -->
           <md-button
             class="md-icon-button"
+            ng-disabled="entryShipment.status.value === 'in-progress'"
             ng-click="editEntryShipment(entryShipment)">
             <md-icon md-font-set="material-icons">edit</md-icon>
           </md-button>
@@ -69,7 +70,7 @@
             <md-menu-content width="4">
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'scheduled'"
+                  ng-disabled="entryShipment.status.value === 'in-progress'"
                   ng-click="editEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target
@@ -82,7 +83,7 @@
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'scheduled'"
+                  ng-disabled="entryShipment.status.value === 'in-progress'"
                   ng-click="cancelEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target
@@ -126,16 +127,16 @@
           {{ entryShipment.supplier.name }}
         </td>
         <td>
-          <!-- responsavel placeholder -->
+          {{ entryShipment.supplier.contactPoint.name }}
         </td>
         <td>
-          <!-- contato placeholder -->
+          {{ entryShipment.supplier.contactPoint.telephone }}
         </td>
         <td>
           {{ entryShipment.status.value }}
         </td>
         <td class="table-col-150">
-          <!-- actions -->
+          <!-- actions 
           <md-menu>
             <md-button
               class="md-icon-button"
@@ -161,6 +162,7 @@
               </md-menu-item>
             </md-menu-content>
           </md-menu>
+          -->
         </td>
       </tr>
 

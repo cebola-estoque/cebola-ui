@@ -125,6 +125,34 @@ angular.module('cebola.services')
       
       // $scope.$watch('shipment.scheduledFor')
       
+      // TODO: improve
+      if ($scope.shipment._id) {
+        return cebolaAPI.inventory.availabilitySummary(
+          $scope.shipment.scheduledFor
+        )
+        .then(function (availableProductsSummary) {
+          if (!$scope.shipment.allocations) {
+            return;
+          }
+
+          $scope.shipment.allocations.active.forEach(function (allocation) {
+            var correspondingSummary = availableProductsSummary.find(function (productSummary) {
+              return allocation.product.model._id === productSummary.product.model._id &&
+                     allocation.product.expiry.getTime() === new Date(productSummary.product.expiry).getTime() &&
+                     allocation.product.measureUnit === productSummary.product.measureUnit;
+            });
+
+            allocation.product.inStock = correspondingSummary.inStock;
+            allocation.product.allocatedForEntry = correspondingSummary.allocatedForEntry;
+            allocation.product.allocatedForExit = correspondingSummary.allocatedForExit;
+
+            console.log(correspondingSummary);
+          });
+        });
+
+      }
+
+      
     }
     
     
@@ -261,7 +289,8 @@ angular.module('cebola.services')
       }
       
       return $mdDialog.show({
-        templateUrl: 'templates/dialogs/shipment.html',
+        templateUrl: shipmentType === 'entry' ?
+          'templates/dialogs/shipment.html' : 'templates/dialogs/shipment/exit.html',
         controller: ShipmentDialog,
         locals: {
           shipmentType: shipmentType,

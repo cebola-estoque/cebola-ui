@@ -7,8 +7,8 @@
   </div>
   
   <div class="right">
-    <md-button>Perda de produto</md-button>
-    <md-button>Correção</md-button>
+    <md-button ng-click="createLossRecord()">Perda de produto</md-button>
+    <md-button ng-click="createCorrectionRecord()">Correção</md-button>
   </div>
 </header>
 
@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="summaryProduct in summary | filter:isInStock">
+      <tr ng-repeat="summaryProduct in summary | filter:isInStock | orderBy:['product.model.description','product.expiry']">
         <td class="table-col-300">
           <h1>{{ summaryProduct.product.model.description }}</h1>
           <dl>
@@ -70,7 +70,9 @@
           <!-- a entrar -->
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
-              <dt>{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</dt>
+              <dt>
+                <a href="#/entrada/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
+              </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
@@ -91,7 +93,9 @@
           <!-- a sair -->
           <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
-              <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
+              <dt>
+                <a href="#/saida/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</a>
+              </dt>
               <dd>
                 {{ -1 * exitAllocation.allocatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
@@ -200,7 +204,9 @@
           
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
-              <dt>{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</dt>
+              <dt>
+                <a href="#/entrada/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
+              </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}

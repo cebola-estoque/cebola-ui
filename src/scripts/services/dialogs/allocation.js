@@ -15,9 +15,19 @@ angular.module('cebola.services')
   }
   
   return {
-    effectivate: function (allocation) {
+    effectivateEntry: function (allocation) {
       return $mdDialog.show({
-        templateUrl: 'templates/dialogs/allocation/effectivate.html',
+        templateUrl: 'templates/dialogs/allocation/effectivate-entry.html',
+        controller: EffectivateAllocationCtrl,
+        locals: {
+          allocation: allocation
+        },
+      });
+    },
+
+    effectivateExit: function (allocation) {
+      return $mdDialog.show({
+        templateUrl: 'templates/dialogs/allocation/effectivate-exit.html',
         controller: EffectivateAllocationCtrl,
         locals: {
           allocation: allocation
