@@ -3,11 +3,8 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      <span ng-if="shipmentType === 'entry'">
+      <span>
         Nova previsão de chegada
-      </span>
-      <span ng-if="shipmentType === 'exit'">
-        Nova previsão de saída
       </span>
     </div>
     <div class="dialog-header-right">
@@ -27,10 +24,7 @@
       <div layout-gt-sm="row">
         <!-- scheduledFor -->
         <md-input-container class="md-block" flex-20>
-          <label ng-if="shipmentType === 'entry'">Data de chegada</label>
-          <span >
-            <label ng-if="shipmentType === 'exit'">Data de saída</label>
-          </span>
+          <label>Data de chegada</label>
           <input
             required
             ng-model="shipment.scheduledFor"
@@ -51,28 +45,10 @@
           md-require-match
           md-item-text="supplier.name"
           md-search-text="_supplierSearchText"
+          md-min-length="0"
           md-items="supplier in completeSuppliers(_supplierSearchText)">
           <md-item-template>
             {{ supplier.name }}
-          </md-item-template>
-        </md-autocomplete>
-        
-        <!-- recipient (for exits only)-->
-        <md-autocomplete
-          ng-if="shipmentType === 'exit'"
-          flex
-          class="md-block"
-          md-selected-item="shipment.recipient"
-          md-floating-label="Receptor"
-          required
-          
-          md-no-cache
-          md-require-match
-          md-item-text="recipient.name"
-          md-search-text="_recipientSearchText"
-          md-items="recipient in completeRecipients(_recipientSearchText)">
-          <md-item-template>
-            {{ recipient.name }}
           </md-item-template>
         </md-autocomplete>
       </div>
@@ -99,39 +75,10 @@
           md-require-match
           md-item-text="productModel.description"
           md-search-text="_productModelSearchText"
+          md-min-length="0"
           md-items="productModel in completeProductModels(_productModelSearchText)">
           <md-item-template>
             {{ productModel.description }}
-          </md-item-template>
-        </md-autocomplete>
-        
-        <!-- product for exit shipments (only products in stock) -->
-        <md-autocomplete
-          ng-if="shipmentType === 'exit'"
-          class="md-block product-autocomplete"
-          md-selected-item="allocation.product"
-          md-floating-label="Modelo de produto"
-          required
-          
-          ng-disabled="allocation.status.value === 'allocation-cancelled'"
-          
-          md-no-cache
-          md-require-match
-          md-item-text="product.model.description"
-          md-search-text="_productSearchText"
-          md-min-length="0"
-          md-items="product in completeAvailableProducts(_productSearchText)"
-          md-menu-class="autocomplete-custom-template">
-          <md-item-template>
-            <div>
-              {{ product.model.description }} 
-            </div>
-            <div>
-              {{ product.expiry | date:'dd/MM' }} 
-            </div>
-            inStock: {{ product.inStock }} 
-            scheduledForEntry: {{ product.scheduledForEntry }}
-            scheduledForExit: {{ product.scheduledForExit }}
           </md-item-template>
         </md-autocomplete>
         
@@ -146,36 +93,20 @@
             required
             ng-model="allocation.product.expiry"
             ng-min="_minScheduledFor"
-            type="date"
-            ng-disabled="shipmentType === 'exit' || allocation.status.value === 'allocation-cancelled'">
+            type="date">
         </md-input-container>
         
         <md-input-container class="md-block" flex-gt-sm>
           <!-- quantity for entry (any amount higher than 0) -->
-          <label ng-if="shipmentType === 'entry'">
+          <label>
             Quantidade
           </label>
           <input
             type="number"
-            ng-if="shipmentType === 'entry'"
             required
             ng-min="1"
             ng-model="allocation.allocatedQuantity"
             ng-disabled="allocation.status.value === 'allocation-cancelled'">
-          <!-- quantity for exit (max at inStock + allocatedForEntry - allocatedForExit) -->
-          <label ng-if="shipmentType === 'exit'">
-            Quantidade <span ng-if="allocation.product">(max: 
-              {{ allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit }})</span>
-          </label>
-          <input
-            type="number"
-            ng-if="shipmentType === 'exit'"
-            required
-            ng-min="1"
-            ng-max="allocation.product.inStock + allocation.product.allocatedForEntry - allocation.product.allocatedForExit"
-            ng-model="allocation.allocatedQuantity"
-            ng-disabled="!allocation.product || allocation.status.value === 'allocation-cancelled'">
-
         </md-input-container>
         
         <!--
@@ -186,8 +117,7 @@
           <label>Unidade</label>
           <input
             required
-            ng-model="allocation.product.measureUnit"
-            ng-disabled="shipmentType === 'exit' || allocation.status.value === 'allocation-cancelled'">
+            ng-model="allocation.product.measureUnit">
         </md-input-container>
         
         <!-- actions -->

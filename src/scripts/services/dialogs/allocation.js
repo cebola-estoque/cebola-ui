@@ -1,7 +1,7 @@
 angular.module('cebola.services')
 .factory('uiAllocationDialog', function ($mdDialog, $q) {
   
-  function EffectivateAllocationCtrl($scope, allocation) {
+  function EffectivateEntryAllocationDialogCtrl($scope, allocation) {
     $scope.allocation = allocation;
         
     // dialog methods
@@ -13,12 +13,25 @@ angular.module('cebola.services')
       $mdDialog.hide($scope.quantityToEffectivate);
     };
   }
+
+  function EffectivateExitAllocationDialogCtrl($scope, allocation) {
+    $scope.allocation = allocation;
+        
+    // dialog methods
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+    
+    $scope.submit = function () {
+      $mdDialog.hide(-1 * $scope.quantityToEffectivate);
+    };
+  }
   
   return {
     effectivateEntry: function (allocation) {
       return $mdDialog.show({
         templateUrl: 'templates/dialogs/allocation/effectivate-entry.html',
-        controller: EffectivateAllocationCtrl,
+        controller: EffectivateEntryAllocationDialogCtrl,
         locals: {
           allocation: allocation
         },
@@ -28,19 +41,11 @@ angular.module('cebola.services')
     effectivateExit: function (allocation) {
       return $mdDialog.show({
         templateUrl: 'templates/dialogs/allocation/effectivate-exit.html',
-        controller: EffectivateAllocationCtrl,
+        controller: EffectivateExitAllocationDialogCtrl,
         locals: {
           allocation: allocation
         },
       });
-    },
-    
-    create: function (allocationTemplate) {
-      
-    },
-    
-    edit: function (allocationTemplate) {
-      
     },
   };
   

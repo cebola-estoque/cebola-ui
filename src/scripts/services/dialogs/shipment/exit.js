@@ -1,5 +1,5 @@
 angular.module('cebola.services')
-.factory('uiDialogShipment', function ($mdDialog, $q) {
+.factory('uiDialogExitShipment', function ($mdDialog, $q, cebolaAPI) {
 
   function arrayContains(container, item, identityFn) {
     return container.some((cItem) => {
@@ -38,10 +38,11 @@ angular.module('cebola.services')
     };
   }
   
+
   /**
    * Shipment creation / edition Controller
    */
-  function ShipmentDialog($scope, $filter, shipmentType, shipment, $mdDialog, cebolaAPI) {
+  function ExitShipmentDialog($scope, $filter, shipment, $mdDialog, cebolaAPI) {
     /**
      * Auxiliary scope values
      */
@@ -50,24 +51,31 @@ angular.module('cebola.services')
     $scope._minScheduledFor = moment().toDate();
     
     // initialize data
-    $scope.shipmentType = shipmentType;
-    $scope.shipment = shipment || {};
+    shipment = angular.copy(shipment) || {};
     
-    $scope.shipment.scheduledFor =
-      $scope.shipment.scheduledFor ||
+    shipment.scheduledFor =
+      shipment.scheduledFor ||
       moment($scope._minScheduledFor).add(1, 'hour').startOf('hour').toDate();
     
-    $scope.shipment.allocations = 
-      $scope.shipment.allocations || {};
-    $scope.shipment.allocations.active =
-      $scope.shipment.allocations.active || [];
+    shipment.allocations = 
+      shipment.allocations || {};
+    shipment.allocations.active =
+      shipment.allocations.active || [];
+
+    shipment.allocations.active.forEach(function (allocation) {
+      // make the allocation allocatedQuantity positive
+      allocation.allocatedQuantity = allocation.allocatedQuantity * -1;
+    });
+
+    $scope.shipment = shipment;
+
+    console.log($scope.shipment.allocations.active);
     
     /**
      * Save a reference to the original allocations
      * so that we may compare to retrive updated ones
      */
-    var originalActiveAllocations = angular.copy(
-      $scope.shipment.allocations.active);
+    var originalActiveAllocations = angular.copy($scope.shipment.allocations.active);
   
     // start with at least one allocation
     if ($scope.shipment.allocations.active.length === 0) {
@@ -80,8 +88,7 @@ angular.module('cebola.services')
         // make copy in order not to modify original object
         allocation = Object.assign({}, allocation);
         
-        allocation.allocatedQuantity = shipmentType === 'entry' ?
-          allocation.allocatedQuantity : -1 * allocation.allocatedQuantity;
+        allocation.allocatedQuantity = -1 * allocation.allocatedQuantity;
           
         return allocation;
       });
@@ -116,63 +123,25 @@ angular.module('cebola.services')
       $mdDialog.cancel();
     };
     
-    /**
-     * Shipment type specific behaviors
-     */
-    if (shipmentType === 'entry') {
+    // TODO: when the scheduledFor changes, we should update
+    // products...
+    // $scope.$watch('shipment.scheduledFor')
       
-    } else if (shipmentType === 'exit') {
-      
-      // $scope.$watch('shipment.scheduledFor')
-      
-      // TODO: improve
-      if ($scope.shipment._id) {
-        return cebolaAPI.inventory.availabilitySummary(
-          $scope.shipment.scheduledFor
-        )
-        .then(function (availableProductsSummary) {
-          if (!$scope.shipment.allocations) {
-            return;
-          }
 
-          $scope.shipment.allocations.active.forEach(function (allocation) {
-            var correspondingSummary = availableProductsSummary.find(function (productSummary) {
-              return allocation.product.model._id === productSummary.product.model._id &&
-                     allocation.product.expiry.getTime() === new Date(productSummary.product.expiry).getTime() &&
-                     allocation.product.measureUnit === productSummary.product.measureUnit;
-            });
-
-            allocation.product.inStock = correspondingSummary.inStock;
-            allocation.product.allocatedForEntry = correspondingSummary.allocatedForEntry;
-            allocation.product.allocatedForExit = correspondingSummary.allocatedForExit;
-
-            console.log(correspondingSummary);
-          });
-        });
-
-      }
-
-      
-    }
     
     
     /**
      * Autocompletion methods
      */
-    $scope.completeSuppliers = function (searchText) {
-      return cebolaAPI.organization.search(searchText, {
-        roles: ['supplier']
-      });
-    };
-    
     $scope.completeRecipients = function (searchText) {
-      return cebolaAPI.organization.search(searchText, {
-        roles: ['recipient'],
+      return cebolaAPI.organization.list({
+        roles: ['recipient']
+      })
+      .then(function (recipients) {
+        return $filter('filter')(recipients, {
+          name: searchText,
+        });
       });
-    };
-    
-    $scope.completeProductModels = function (searchText) {  
-      return cebolaAPI.productModel.search(searchText);
     };
     
     $scope.completeAvailableProducts = function (searchText) {
@@ -180,17 +149,6 @@ angular.module('cebola.services')
         $scope.shipment.scheduledFor
       )
       .then(function (availableProductsSummary) {
-        // var availableProductModels = availableProductsSummary.map(function (productSummary) {
-        //   return productSummary.product.model;
-        // })
-        // .filter(function firstOccurringOnly(productModel, index, self) {
-        //   // Elegant solution for ensuring uniqueness taken from:
-        //   // http://stackoverflow.com/questions/1960473/unique-values-in-an-array
-        //   return self.findIndex(function (_pm) {
-        //     return _pm._id === productModel._id;
-        //   }) === index;
-        // });
-        
         var availableProducts = availableProductsSummary.map(function (productSummary) {
           return {
             model: productSummary.product.model,
@@ -236,13 +194,17 @@ angular.module('cebola.services')
       if (idx !== -1) {
         $scope.shipment.allocations.active.splice(idx, 1);
       }
+
+      if ($scope.shipment.allocations.active.length === 0) {
+        $scope.createAllocation();
+      }
     };
   }
-
+  
   /**
    * Shipment finishing controller
    */
-  function FinishShipmentDialogCtrl($scope, shipment) {
+  function FinishExitShipmentDialogCtrl($scope, shipment) {
 
     console.log(shipment);
     $scope.shipment = shipment;
@@ -262,48 +224,73 @@ angular.module('cebola.services')
     };
   }
 
-
-  
   return {
-    create: function (shipmentType, shipmentTemplate) {
-      
-      if (!shipmentType) {
-        throw new Error('shipmentType is required');
-      }
-      
+    create: function (shipmentTemplate) {
+      shipmentTemplate = shipmentTemplate || {};
+
       return $mdDialog.show({
-        templateUrl: 'templates/dialogs/shipment.html',
-        controller: ShipmentDialog,
+        templateUrl: 'templates/dialogs/shipment/exit.html',
+        controller: ExitShipmentDialog,
         locals: {
-          shipmentType: shipmentType,
           shipment: shipmentTemplate
         },
       });
-      
     },
     
-    edit: function (shipmentType, sourceShipment) {
-      
-      if (!shipmentType) {
-        throw new Error('shipmentType is required');
+    edit: function (sourceShipment) {
+      if (!sourceShipment) {
+        throw new Error('sourceShipment is required');
       }
-      
-      return $mdDialog.show({
-        templateUrl: shipmentType === 'entry' ?
-          'templates/dialogs/shipment.html' : 'templates/dialogs/shipment/exit.html',
-        controller: ShipmentDialog,
-        locals: {
-          shipmentType: shipmentType,
-          shipment: sourceShipment
-        },
+
+      var shipmentLoadPromise;
+
+      // TODO: improve
+      if (sourceShipment._id) {
+        shipmentLoadPromise = cebolaAPI.inventory.availabilitySummary(
+          sourceShipment.scheduledFor
+        )
+        .then(function (availableProductsSummary) {
+          if (!sourceShipment.allocations) {
+            return sourceShipment;
+          }
+
+          sourceShipment.allocations.active.forEach(function (allocation) {
+            var correspondingSummary = availableProductsSummary.find(function (productSummary) {
+              return allocation.product.model._id === productSummary.product.model._id &&
+                     allocation.product.expiry.getTime() === new Date(productSummary.product.expiry).getTime() &&
+                     allocation.product.measureUnit === productSummary.product.measureUnit;
+            });
+
+            allocation.product.inStock = correspondingSummary.inStock;
+            allocation.product.allocatedForEntry = correspondingSummary.allocatedForEntry;
+            allocation.product.allocatedForExit = correspondingSummary.allocatedForExit;
+
+            console.log(correspondingSummary);
+          });
+
+          return sourceShipment;
+        });
+      } else {
+        shipmentLoadPromise = $q.resolve(sourceShipment);
+      }
+
+
+      return shipmentLoadPromise.then(function (shipment) {
+        return $mdDialog.show({
+          templateUrl: 'templates/dialogs/shipment/exit.html',
+          controller: ExitShipmentDialog,
+          locals: {
+            shipment: shipment
+          },
+        });
       });
-      
+        
     },
 
     finish: function (shipment) {
       return $mdDialog.show({
         templateUrl: 'templates/dialogs/shipment/finish.html',
-        controller: FinishShipmentDialogCtrl,
+        controller: FinishExitShipmentDialogCtrl,
         locals: {
           shipment: shipment
         },

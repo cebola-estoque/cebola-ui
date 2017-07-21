@@ -58,7 +58,7 @@
           {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
           <dl>
             <div ng-repeat="op in allocation.operations.active">
-              {{ op.createdAt | date }} | {{ op.quantity }} {{ op.product.measureUnit }}
+              {{ op.createdAt | date }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }}
             </div>
           </dl>
 

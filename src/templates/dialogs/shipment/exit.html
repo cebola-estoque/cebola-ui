@@ -24,7 +24,7 @@
       <div layout-gt-sm="row">
         <!-- scheduledFor -->
         <md-input-container class="md-block" flex-20>
-          <label ng-if="shipmentType === 'exit'">Data de saída</label>
+          <label>Data de saída</label>
           <input
             required
             ng-model="shipment.scheduledFor"
@@ -44,6 +44,7 @@
           md-require-match
           md-item-text="recipient.name"
           md-search-text="_recipientSearchText"
+          md-min-length="0"
           md-items="recipient in completeRecipients(_recipientSearchText)">
           <md-item-template>
             {{ recipient.name }}
@@ -98,19 +99,19 @@
             ng-model="allocation.product.expiry"
             ng-min="_minScheduledFor"
             type="date"
-            ng-disabled="allocation.status.value === 'allocation-cancelled'">
+            disabled>
         </md-input-container>
         
         <md-input-container class="md-block" flex-gt-sm>
           <!-- quantity for exit (max at inStock + allocatedForEntry - allocatedForExit) -->
           <label>
-            Quantidade <span ng-if="allocation.product">(max: 
-              - {{ allocation.product.inStock }})</span>
+            Quantidade <span ng-if="allocation.product">(max: {{ allocation.product.inStock }})</span>
           </label>
           <input
             type="number"
             required
-            ng-min="-1 * allocation.product.inStock"
+            ng-min="1"
+            ng-max="allocation.product.inStock"
             ng-model="allocation.allocatedQuantity"
             ng-disabled="!allocation.product || allocation.status.value === 'allocation-cancelled'">
 
@@ -125,7 +126,7 @@
           <input
             required
             ng-model="allocation.product.measureUnit"
-            ng-disabled="allocation.status.value === 'allocation-cancelled'">
+            disabled>
         </md-input-container>
         
         <!-- actions -->

@@ -6,7 +6,7 @@ angular.module('cebola.controllers')
   cebolaAPI,
   uiAllocationDialog,
   uiOperationDialog,
-  uiDialogShipment,
+  uiDialogExitShipment,
   $mdDialog
 ) {
   
@@ -22,7 +22,7 @@ angular.module('cebola.controllers')
   };
   
   $scope.finishShipment = function () {
-    return uiDialogShipment.finish($scope.shipment)
+    return uiDialogExitShipment.finish($scope.shipment)
       .then((annotations) => {
         return cebolaAPI.shipment.finish($scope.shipment._id, {
           annotations: annotations

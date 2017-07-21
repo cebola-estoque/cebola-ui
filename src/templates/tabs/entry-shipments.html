@@ -32,7 +32,7 @@
       <tr ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/entrada/{{ entryShipment._id }}">
+          <a href="#/entradas/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
           </a>
         </td>
@@ -119,7 +119,7 @@
         ng-repeat="entryShipment in entryShipments | filter:isFinishedEntryShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/entrada/{{ entryShipment._id }}">
+          <a href="#/entradas/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
           </a>
         </td>

@@ -1,11 +1,11 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentsCtrl', function ($scope, $q, uiDialogShipment, cebolaAPI) {
+.controller('EntryShipmentsCtrl', function ($scope, $q, uiDialogEntryShipment, cebolaAPI) {
   
   // initialize data
   $scope.entryShipments = [];
   
   $scope.createEntryShipment = function () {
-    return uiDialogShipment.create('entry')
+    return uiDialogEntryShipment.create('entry')
       .then(function (data) {
         console.log('create entryShipment', data);
         
@@ -49,7 +49,7 @@ angular.module('cebola.controllers')
     
     return cebolaAPI.shipment.getById(sourceEntryShipment._id)
       .then(function (fullSourceEntryShipment) {
-        return uiDialogShipment.edit('entry', fullSourceEntryShipment);
+        return uiDialogEntryShipment.edit('entry', fullSourceEntryShipment);
       })
       .then(function (data) {
         console.log('data', data);

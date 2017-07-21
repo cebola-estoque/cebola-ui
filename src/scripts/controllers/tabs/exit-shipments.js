@@ -1,11 +1,11 @@
 angular.module('cebola.controllers')
-.controller('ExitShipmentsCtrl', function ($scope, $q, uiDialogShipment, cebolaAPI) {
+.controller('ExitShipmentsCtrl', function ($scope, $q, uiDialogExitShipment, cebolaAPI) {
   
   // initialize data
   $scope.exitShipments = [];
   
   $scope.createExitShipment = function () {
-    return uiDialogShipment.create('exit')
+    return uiDialogExitShipment.create()
       .then(function (data) {
         console.log('create exit shipment', data);
         
@@ -50,10 +50,7 @@ angular.module('cebola.controllers')
 
     return cebolaAPI.shipment.getById(sourceEntryShipment._id)
       .then(function (fullSourceEntryShipment) {
-        console.log(fullSourceEntryShipment.allocations)
-
-
-        return uiDialogShipment.edit('exit', fullSourceEntryShipment);
+        return uiDialogExitShipment.edit(fullSourceEntryShipment);
       })
       .then(function (data) {
         console.log('data', data);

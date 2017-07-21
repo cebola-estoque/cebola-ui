@@ -25,41 +25,69 @@
     $stateProvider
       .state('inventory', {
         url: '/inventario',
-        controller: 'InventoryCtrl',
-        templateUrl: 'templates/tabs/inventory.html',
+        views: {
+          'body@': {
+            controller: 'InventoryCtrl',
+            templateUrl: 'templates/tabs/inventory.html',
+          }
+        }
       })
       .state('entry-shipments', {
         url: '/entradas',
-        controller: 'EntryShipmentsCtrl',
-        templateUrl: 'templates/tabs/entry-shipments.html',
+        views: {
+          'body@': {
+            controller: 'EntryShipmentsCtrl',
+            templateUrl: 'templates/tabs/entry-shipments.html',
+          }
+        }
       })
-      .state('entry-shipment-detail', {
-        url: '/entrada/:entryShipmentId',
-        controller: 'EntryShipmentDetailCtrl',
-        templateUrl: 'templates/tabs/entry-shipment-detail.html',
+      .state('entry-shipments.detail', {
+        url: '/:entryShipmentId',
+        views: {
+          'body@': {
+            controller: 'EntryShipmentDetailCtrl',
+            templateUrl: 'templates/tabs/entry-shipment-detail.html',
+          }
+        },
         params: {
           entryShipment: null,
         }
       })
       .state('exit-shipments', {
         url: '/saidas',
-        controller: 'ExitShipmentsCtrl',
-        templateUrl: 'templates/tabs/exit-shipments.html',
+        views: {
+          'body@': {
+            controller: 'ExitShipmentsCtrl',
+            templateUrl: 'templates/tabs/exit-shipments.html',
+          }
+        }
       })
-      .state('exit-shipment-detail', {
-        url: '/saida/:exitShipmentId',
-        controller: 'ExitShipmentDetailCtrl',
-        templateUrl: 'templates/tabs/exit-shipment-detail.html',
+      .state('exit-shipments.detail', {
+        url: '/:exitShipmentId',
+        views: {
+          'body@': {
+            controller: 'ExitShipmentDetailCtrl',
+            templateUrl: 'templates/tabs/exit-shipment-detail.html',
+          }
+        }
       })
       .state('products', {
         url: '/produtos',
-        controller: 'ProductModelsCtrl',
-        templateUrl: 'templates/tabs/product-models.html',
+        views: {
+          'body@': {
+            controller: 'ProductModelsCtrl',
+            templateUrl: 'templates/tabs/product-models.html',
+          }
+        }
       })
       .state('organizations', {
         url: '/organization/:role',
-        controller: 'OrganizationsCtrl',
-        templateUrl: 'templates/tabs/organizations.html',
+        views: {
+          'body@': {
+            controller: 'OrganizationsCtrl',
+            templateUrl: 'templates/tabs/organizations.html',
+          }
+        }
       })
       .state('account', {
         url: '/minha-conta',
