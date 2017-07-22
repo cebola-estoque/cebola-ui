@@ -48,6 +48,9 @@ angular.module('cebola.services')
           
         return allocation;
       });
+
+      // merge allocations that refer to the same product model
+      // currentActiveAllocations = currentActiveAllocations.reduce(function )
       
       // compare all allocations
       // to the original ones to compute differences
@@ -95,20 +98,24 @@ angular.module('cebola.services')
     
     $scope.completeProductModels = function (searchText) {
       return cebolaAPI.productModel.list().then(function (productModels) {
-        /**
-         * Prevent products models already allocated in current
-         * shipment to be reallocated.
-         */
-        productModels = productModels.filter(function (productModel) {
-          return !$scope.shipment.allocations.active.some(function (allocation) {
-            return allocation.product &&
-                   allocation.product.model &&
-                   util.product.isSameModel(
-                    allocation.product.model,
-                    productModel
-                   );
-          });
-        });
+        // 
+        // DOES NOT MAKE SENSE, as a productModel may come in two measure units
+        // or in two different expiry dates
+        // 
+        // /**
+        //  * Prevent products models already allocated in current
+        //  * shipment to be reallocated.
+        //  */
+        // productModels = productModels.filter(function (productModel) {
+        //   return !$scope.shipment.allocations.active.some(function (allocation) {
+        //     return allocation.product &&
+        //            allocation.product.model &&
+        //            util.product.isSameModel(
+        //             allocation.product.model,
+        //             productModel
+        //            );
+        //   });
+        // });
 
         // filter using searchText
         productModels = $filter('filter')(productModels, {

@@ -1,8 +1,18 @@
 <header class="tab-header">
   
   <div class="left">
+    <md-button
+      class="md-icon-button"
+      aria-label="go back"
+      ng-click="goBack()">
+      <md-icon md-font-set="material-icons" style="color: white;">
+        keyboard_backspace
+      </md-icon>
+    </md-button>
+
     <h1 class="tab-title">
-      Saída {{ shipment.status.value }} {{ shipment.scheduledFor | date:'MMM, HH:mm' }} | {{ shipment.recipient.name }}
+      Saída ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.recipient.name }}
+    </h1>
   </div>
   
   <div class="right">
@@ -21,7 +31,7 @@
   </div>
   
   <div class="status-badge">
-    <b>Status:</b> {{ shipment.status.value }} | atualizado em {{ shipment.status.updatedAt | date }}
+    <b>Status:</b> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
   </div>
 
   <div class="shipment-annotations">

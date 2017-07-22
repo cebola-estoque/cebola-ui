@@ -46,7 +46,7 @@
           {{ entryShipment.supplier.contactPoint.telephone }}
         </td>
         <td>
-          {{ entryShipment.status.value }}
+          {{ entryShipment.status.value | translate }}
         </td>
         <td class="table-col-150">
           <!-- actions -->
@@ -133,7 +133,7 @@
           {{ entryShipment.supplier.contactPoint.telephone }}
         </td>
         <td>
-          {{ entryShipment.status.value }}
+          {{ entryShipment.status.value | translate }}
         </td>
         <td class="table-col-150">
           <!-- actions 

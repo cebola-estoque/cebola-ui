@@ -7,7 +7,10 @@
     'ngMaterial',
     'cebola.services',
     'cebola.controllers',
-    'cebola.directives'
+    'cebola.directives',
+
+    // third-party
+    'pascalprecht.translate'
   ])
 
   /**
@@ -18,10 +21,12 @@
       window.CONFIG.cebolaApiURI.replace(TRAILING_SLASH_RE, ''),
   })
   
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
     
-    // urls are in pt-BR
-    
+    /**
+     * Configure routing.
+     * URLs are in pt-BR
+     */
     $stateProvider
       .state('inventory', {
         url: '/inventario',
@@ -106,6 +111,74 @@
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/inventario');
+
+    /**
+     * Configure translations
+     */
+    $translateProvider.translations('pt-BR', {
+      scheduled: 'agendada',
+      'in-progress': 'em progresso',
+      finished: 'finalizada',
+      cancelled: 'cancelada',
+    });
+    $translateProvider.preferredLanguage('pt-BR');
+  })
+  
+  /**
+   * Outmost controller of the application
+   */
+  .controller('AppCtrl', function ($scope, $rootScope, $state, $mdDialog) {
+
+    /**
+     * GO BACK functionality
+     */
+    var STATE_CHANGE_COUNT = 0;
+
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+      STATE_CHANGE_COUNT += 1;
+      // console.log('stateChangeSuccess', STATE_CHANGE_COUNT)
+    });
+
+    $rootScope.goBack = function () {
+
+      if (STATE_CHANGE_COUNT > 1) {
+        history.back();
+      } else {
+        $state.go('^');
+      }
+    };
+
+    // fake user
+    var userData;
+    try {
+      userData = JSON.parse(window.localStorage.getItem('user'));
+    } catch (e) {
+      userData = {};
+    }
+    $rootScope.user = userData || {};
+
+    $scope.setUserName = function (ev) {
+      // Appending dialog to document.body to cover sidenav in docs app
+      var confirm = $mdDialog.prompt()
+        .title('Qual é o seu nome?')
+        // .textContent('Bowser is a common name.')
+        .placeholder('Nome')
+        .ariaLabel('Nome')
+        .initialValue('')
+        .targetEvent(ev)
+        .ok('ok')
+        .cancel('cancelar');
+
+      $mdDialog.show(confirm).then(function(result) {
+        if (result) {
+          $rootScope.user.name = result;
+          window.localStorage.setItem('user', JSON.stringify($rootScope.user));
+        }
+      }, function() {
+        // $scope.status = 'You didn\'t name your dog.';
+      });
+    }
+
   });
   
 })();

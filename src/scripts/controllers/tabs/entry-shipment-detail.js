@@ -7,11 +7,11 @@ angular.module('cebola.controllers')
   uiAllocationDialog,
   uiOperationDialog,
   uiDialogExitShipment,
-  $mdDialog
+  $mdDialog,
+  $location
 ) {
   
   $scope.shipment = {};
-  $scope.allocations = [];
   
   $scope.loadShipment = function () {
     return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {

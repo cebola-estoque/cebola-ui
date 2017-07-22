@@ -12,6 +12,10 @@
 
 .tab-header > .left {
   padding-left: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .tab-header > .left > h1.tab-title {

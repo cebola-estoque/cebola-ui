@@ -47,7 +47,7 @@
           {{ exitShipment.recipient.contactPoint.telephone }}
         </td>
         <td>
-          {{ exitShipment.status.value }}
+          {{ exitShipment.status.value | translate }}
         </td>
         <td class="table-col-150">
           <!-- actions -->
@@ -134,10 +134,10 @@
           {{ exitShipment.recipient.contactPoint.telephone }}
         </td>
         <td>
-          {{ exitShipment.status.value }}
+          {{ exitShipment.status.value | translate }}
         </td>
         <td class="table-col-150">
-          <!-- actions -->
+          <!-- actions 
           <md-menu>
             <md-button
               class="md-icon-button"
@@ -163,6 +163,7 @@
               </md-menu-item>
             </md-menu-content>
           </md-menu>
+          -->
         </td>
       </tr>
 

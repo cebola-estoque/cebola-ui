@@ -26,7 +26,7 @@
       
       <div layout-gt-sm="row">
         <label>Quantidade prevista:&nbsp;</label>
-        {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+        {{ allocation.allocatedQuantity - allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
       </div>
       
       <div layout-gt-sm="row">

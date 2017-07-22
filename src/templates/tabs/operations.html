@@ -24,15 +24,30 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{ operation.type }}</td>
-        <td>{{ operation.product.model.description }}</td>
-        <td>{{ operation.product.expiry | date }}</td>
-        <td>{{ operation.product.measureUnit }}</td>
-        <td>{{ operation.quantity }}</td>
-        <td>{{ operation.createdAt | date:'d/MMM/yy HH:mm' }}</td>
+        <td>
+          <md-input-container>
+            <label>Tipo</label>
+            <input ng-model="search.type" type="text">
+          </md-input-container>
+        </td>
+        <td>
+          <md-input-container>
+            <label>Produto</label>
+            <input ng-model="search.product.model.description" type="text">
+          </md-input-container>
+        </td>
+        <td></td>
+        <td>
+          <md-input-container>
+            <label>Medida</label>
+            <input ng-model="search.product.measureUnit" type="text">
+          </md-input-container>
+        </td>
+        <td></td>
+        <td></td>
       </tr>
       <tr
-        ng-repeat="operation in operations | orderBy:'-createdAt'"
+        ng-repeat="operation in operations | filter:search | orderBy:'-createdAt'"
         ng-class="{
           'operation-entry': operation.type === 'entry',
           'operation-exit': operation.type === 'exit',

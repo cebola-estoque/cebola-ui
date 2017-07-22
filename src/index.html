@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="cebola" ng-cloak>
+<html ng-app="cebola" ng-cloak ng-controller="AppCtrl">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Cebola</title>
@@ -87,8 +87,8 @@
       </div>
       
       <div id="app-header-right">
-        <a href="#/conta">
-          nome do usuário
+        <a ng-click="setUserName()">
+          {{ user.name || 'usuário' }}
         </a>
       </div>
     </header>
@@ -113,6 +113,10 @@
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/object-path/index.js"></script>
     
+    <script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
+
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>

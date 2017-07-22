@@ -97,6 +97,7 @@ angular.module('cebola.controllers')
     return cebolaAPI.shipment.cancel(exitShipment._id)
       .then(function (cancelledEntryShipment) {
         console.log('entry shipment cancelled', cancelledEntryShipment);
+        return $scope.listExitShipments();
       });
   };
   
