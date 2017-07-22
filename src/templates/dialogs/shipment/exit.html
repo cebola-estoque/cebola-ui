@@ -105,13 +105,13 @@
         <md-input-container class="md-block" flex-gt-sm>
           <!-- quantity for exit (max at inStock + allocatedForEntry - allocatedForExit) -->
           <label>
-            Quantidade <span ng-if="allocation.product">(max: {{ allocation.product.inStock }})</span>
+            Quantidade <span ng-if="allocation.product">(max: {{ allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit }})</span>
           </label>
           <input
             type="number"
             required
             ng-min="1"
-            ng-max="allocation.product.inStock"
+            ng-max="allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit"
             ng-model="allocation.allocatedQuantity"
             ng-disabled="!allocation.product || allocation.status.value === 'allocation-cancelled'">
 

@@ -1,43 +1,6 @@
 angular.module('cebola.services')
-.factory('uiDialogEntryShipment', function ($mdDialog, $q) {
+.factory('uiDialogEntryShipment', function ($mdDialog, $q, util) {
 
-  function arrayContains(container, item, identityFn) {
-    return container.some((cItem) => {
-      return identityFn(cItem, item);
-    });
-  }
-  
-  function arrayDiff(source, target, identityFn, trackProperties) {
-    
-    identityFn = identityFn || function (a, b) {
-      return a === b;
-    }
-    
-    var remove = source.filter(function (sItem) {
-      return !arrayContains(target, sItem, identityFn);
-    });
-    
-    var create = target.filter(function (tItem) {
-      return !arrayContains(source, tItem, identityFn);
-    });
-    
-    var update = target.filter(function (tItem) {
-      return source.some(function (sItem) {
-        
-        return identityFn(sItem, tItem) && trackProperties.some(function (prop) {
-          return objectPath.get(tItem, prop) !== objectPath.get(sItem, prop);
-        });
-        
-      });
-    });
-    
-    return {
-      remove: remove,
-      create: create,
-      update: update,
-    };
-  }
-  
   /**
    * Shipment creation / edition Controller
    */
@@ -88,7 +51,7 @@ angular.module('cebola.services')
       
       // compare all allocations
       // to the original ones to compute differences
-      var allocationsDiff = arrayDiff(
+      var allocationsDiff = util.array.diff(
         originalActiveAllocations,
         currentActiveAllocations,
         function isSameAllocation(a, b) {
@@ -117,46 +80,6 @@ angular.module('cebola.services')
     };
     
     /**
-     * Shipment type specific behaviors
-     */
-    if (shipmentType === 'entry') {
-      
-    } else if (shipmentType === 'exit') {
-      
-      // $scope.$watch('shipment.scheduledFor')
-      
-      // TODO: improve
-      if ($scope.shipment._id) {
-        return cebolaAPI.inventory.availabilitySummary(
-          $scope.shipment.scheduledFor
-        )
-        .then(function (availableProductsSummary) {
-          if (!$scope.shipment.allocations) {
-            return;
-          }
-
-          $scope.shipment.allocations.active.forEach(function (allocation) {
-            var correspondingSummary = availableProductsSummary.find(function (productSummary) {
-              return allocation.product.model._id === productSummary.product.model._id &&
-                     allocation.product.expiry.getTime() === new Date(productSummary.product.expiry).getTime() &&
-                     allocation.product.measureUnit === productSummary.product.measureUnit;
-            });
-
-            allocation.product.inStock = correspondingSummary.inStock;
-            allocation.product.allocatedForEntry = correspondingSummary.allocatedForEntry;
-            allocation.product.allocatedForExit = correspondingSummary.allocatedForExit;
-
-            console.log(correspondingSummary);
-          });
-        });
-
-      }
-
-      
-    }
-    
-    
-    /**
      * Autocompletion methods
      */
     $scope.completeSuppliers = function (searchText) {
@@ -172,9 +95,30 @@ angular.module('cebola.services')
     
     $scope.completeProductModels = function (searchText) {
       return cebolaAPI.productModel.list().then(function (productModels) {
-        return $filter('filter')(productModels, {
+        /**
+         * Prevent products models already allocated in current
+         * shipment to be reallocated.
+         */
+        productModels = productModels.filter(function (productModel) {
+          return !$scope.shipment.allocations.active.some(function (allocation) {
+            return allocation.product &&
+                   allocation.product.model &&
+                   util.product.isSameModel(
+                    allocation.product.model,
+                    productModel
+                   );
+          });
+        });
+
+        // filter using searchText
+        productModels = $filter('filter')(productModels, {
           description: searchText,
         });
+
+        // sort
+        productModels = $filter('orderBy')(productModels, 'description');
+
+        return productModels;
       });
     };
     

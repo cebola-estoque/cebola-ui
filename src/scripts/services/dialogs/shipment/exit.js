@@ -1,43 +1,5 @@
 angular.module('cebola.services')
-.factory('uiDialogExitShipment', function ($mdDialog, $q, cebolaAPI) {
-
-  function arrayContains(container, item, identityFn) {
-    return container.some((cItem) => {
-      return identityFn(cItem, item);
-    });
-  }
-  
-  function arrayDiff(source, target, identityFn, trackProperties) {
-    
-    identityFn = identityFn || function (a, b) {
-      return a === b;
-    }
-    
-    var remove = source.filter(function (sItem) {
-      return !arrayContains(target, sItem, identityFn);
-    });
-    
-    var create = target.filter(function (tItem) {
-      return !arrayContains(source, tItem, identityFn);
-    });
-    
-    var update = target.filter(function (tItem) {
-      return source.some(function (sItem) {
-        
-        return identityFn(sItem, tItem) && trackProperties.some(function (prop) {
-          return objectPath.get(tItem, prop) !== objectPath.get(sItem, prop);
-        });
-        
-      });
-    });
-    
-    return {
-      remove: remove,
-      create: create,
-      update: update,
-    };
-  }
-  
+.factory('uiDialogExitShipment', function ($mdDialog, $q, cebolaAPI, util) {
 
   /**
    * Shipment creation / edition Controller
@@ -65,11 +27,20 @@ angular.module('cebola.services')
     shipment.allocations.active.forEach(function (allocation) {
       // make the allocation allocatedQuantity positive
       allocation.allocatedQuantity = allocation.allocatedQuantity * -1;
+
+      // set the _maxAllocatedQuantity property on each allocation
+      allocation._maxAllocatedQuantity =
+        allocation.product.inStock +
+        allocation.product.allocatedForEntry +
+        allocation.product.allocatedForExit +
+        allocation.allocatedQuantity;
     });
 
     $scope.shipment = shipment;
 
     console.log($scope.shipment.allocations.active);
+
+    window.test = $scope.shipment.allocations.active
     
     /**
      * Save a reference to the original allocations
@@ -95,7 +66,7 @@ angular.module('cebola.services')
       
       // compare all allocations
       // to the original ones to compute differences
-      var allocationsDiff = arrayDiff(
+      var allocationsDiff = util.array.diff(
         originalActiveAllocations,
         currentActiveAllocations,
         function isSameAllocation(a, b) {
@@ -144,11 +115,15 @@ angular.module('cebola.services')
       });
     };
     
+    // TODO: cache availabilitySummary
     $scope.completeAvailableProducts = function (searchText) {
       return cebolaAPI.inventory.availabilitySummary(
         $scope.shipment.scheduledFor
       )
       .then(function (availableProductsSummary) {
+
+        // map product summary data into objects that 
+        // are suitable for the autocomplete
         var availableProducts = availableProductsSummary.map(function (productSummary) {
           return {
             model: productSummary.product.model,
@@ -160,22 +135,30 @@ angular.module('cebola.services')
             allocatedForExit: productSummary.allocatedForExit,
           };
         });
+
+        /**
+         * Prevent products already allocated in current
+         * shipment to be reallocated.
+         */
+        availableProducts = availableProducts.filter(function (availableProduct) {
+          return !$scope.shipment.allocations.active.some(function (allocation) {
+            return allocation.product && util.product.isSame(allocation.product, availableProduct);
+          });
+        });
         
-        // console.log(availableProducts[0].model.description);
-        
-        console.log(searchText);
-        
-        console.log($filter('filter')(availableProducts, {
-          model: {
-            description: searchText
-          }
-        }))
-        
-        return $filter('filter')(availableProducts, {
+        // filter using searchText
+        availableProducts = $filter('filter')(availableProducts, {
           model: {
             description: searchText
           }
         });
+
+        // sort
+        availableProducts = $filter('orderBy')(availableProducts, ['model.description','expiry']);
+
+        console.log(availableProducts);
+
+        return availableProducts;
       });
     };
     

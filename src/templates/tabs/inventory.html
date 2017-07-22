@@ -71,7 +71,7 @@
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
               <dt>
-                <a href="#/entrada/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
+                <a href="#/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
               </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
@@ -94,7 +94,7 @@
           <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>
-                <a href="#/saida/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</a>
+                <a href="#/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</a>
               </dt>
               <dd>
                 {{ -1 * exitAllocation.allocatedQuantity }} 
@@ -205,7 +205,7 @@
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
               <dt>
-                <a href="#/entrada/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
+                <a href="#/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
               </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity }} 

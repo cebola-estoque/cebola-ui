@@ -1,0 +1,93 @@
+<header class="tab-header">
+  
+  <div class="left">
+    <h1 class="tab-title">
+      Operações
+    </h1>
+  </div>
+  
+  <div class="right">
+    <md-button class="md-fab" ng-click="createOrganization()">
+      <md-icon md-font-set="material-icons">add</md-icon>
+    </md-button>
+  </div>
+</header>
+
+<section class="tab-body">
+  
+  <table class="cebola-table">
+    <!-- <caption>This table is...</caption> -->
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th colspan="2">Documento</th>
+        <th>Responsável</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Endereços</th>
+        <th>
+          <!-- action placeholder -->
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="organization in organizations">
+        <td>{{ organization.name }}</td>
+        <td>{{ organization.document.type }}</td>
+        <td>{{ organization.document.value }}</td>
+        <td>{{ organization.contactPoint.name }}</td>
+        <td>{{ organization.contactPoint.telephone }}</td>
+        <td>{{ organization.contactPoint.email }}</td>
+        <td>
+          <dl>
+            <div ng-repeat="address in organization.addresses">
+              <dt>{{ address.label }}</dt>
+              <dd>{{ address.value }}</dd>
+            </div>
+          </dl>
+        </td>
+        <td>
+          actions
+          <md-menu>
+            <md-button
+              class="md-icon-button"
+              ng-click="$mdOpenMenu($event)">
+              <md-icon
+                md-menu-origin
+                md-font-set="material-icons">
+                more_vert
+              </md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button
+                  ng-click="editOrganization(organization)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    edit
+                  </md-icon>
+                  Edit
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button
+                  ng-click="deleteOrganization(organization)">
+                  <md-icon
+                    md-menu-align-target
+                    md-font-set="material-icons">
+                    delete
+                  </md-icon>
+                  Delete
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+</section>
