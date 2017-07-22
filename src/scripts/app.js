@@ -71,6 +71,15 @@
           }
         }
       })
+      .state('operations', {
+        url: '/operacoes',
+        views: {
+          'body@': {
+            controller: 'OperationsCtrl',
+            templateUrl: 'templates/tabs/operations.html',
+          }
+        }
+      })
       .state('products', {
         url: '/produtos',
         views: {

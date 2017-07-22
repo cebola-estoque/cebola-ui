@@ -326,6 +326,14 @@ angular.module('cebola.services')
    * Operation API
    */
   api.operation = {};
+  api.operation.list = function (query) {
+    return $http.get(API_URI + '/operations', {
+      params: query,
+    })
+    .then(function (res) {
+      return res.data;
+    });
+  };
   api.operation.createLoss = function (operationData) {
     return $http.post(
       API_URI + '/operations/loss',
