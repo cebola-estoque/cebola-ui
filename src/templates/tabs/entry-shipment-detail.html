@@ -55,7 +55,10 @@
     <tbody>
       <tr ng-repeat="allocation in shipment.allocations.active">
         <td>
-          {{ allocation.product.model.description }}
+          <div class="product-description">
+            <img ng-src="{{ allocation.product.model.image.url }}">
+            {{ allocation.product.model.description }}
+          </div>
         </td>
         <td>
           {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
@@ -145,7 +148,10 @@
     <tbody>
       <tr ng-repeat="allocation in shipment.allocations.finished">
         <td>
-          {{ allocation.product.model.description }}
+          <div class="product-description">
+            <img ng-src="{{ allocation.product.model.image.url }}">
+            {{ allocation.product.model.description }}
+          </div>
         </td>
         <td>
           {{ allocation.product.expiry | date }}
@@ -184,7 +190,10 @@
     <tbody>
       <tr ng-repeat="allocation in shipment.allocations.cancelled">
         <td>
-          {{ allocation.product.model.description }}
+          <div class="product-description">
+            <img ng-src="{{ allocation.product.model.image.url }}">
+            {{ allocation.product.model.description }}
+          </div>
         </td>
         <td>
           {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
@@ -223,7 +232,10 @@
     <tbody>
       <tr ng-repeat="operation in shipment.standaloneOperations.active">
         <td>
-          {{ operation.product.model.description }}
+          <div class="product-description">
+            <img ng-src="{{ operation.product.model.image.url }}">
+            {{ operation.product.model.description }}
+          </div>
         </td>
         <td>
           {{ operation.product.expiry | date:'dd/MMM/yyyy' }}

@@ -1,0 +1,11 @@
+.product-description {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.product-description > img {
+  height: 50px;
+  margin-right: 10px;
+}

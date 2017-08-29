@@ -103,6 +103,7 @@
   
   <table
     id="finished-entry-shipments"
+    ng-if="(entryShipments|filter:isFinishedEntryShipment).length > 0"
     class="cebola-table entry-shipments-table">
     <thead>
       <tr>

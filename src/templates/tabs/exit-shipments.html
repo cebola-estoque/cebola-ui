@@ -104,6 +104,7 @@
   
   <table
     id="finished-exit-shipments"
+    ng-if="(exitShipments|filter:isFinishedExitShipment).length > 0"
     class="cebola-table">
     <thead>
       <tr>

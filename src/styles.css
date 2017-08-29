@@ -14,6 +14,7 @@
 @import 'styles/elements/shipment-dialog.css';
 @import 'styles/elements/menu.css';
 @import 'styles/elements/button.css';
+@import 'styles/elements/product-description.css';
 
 /* sections */
 @import 'styles/app-header.css';

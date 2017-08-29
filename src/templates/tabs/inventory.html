@@ -32,11 +32,12 @@
     <tbody>
       <tr ng-repeat="summaryProduct in summary | filter:isInStock | orderBy:['product.model.description','product.expiry']">
         <td class="table-col-300">
-          <h1>
+          <div class="product-description">
+            <img ng-src="{{ summaryProduct.product.model.image.url }}">
             <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
-              {{ summaryProduct.product.model.description }}
+            <h1>{{ summaryProduct.product.model.description }}</h1>
             <!-- </a> -->
-          </h1>
+          </div>
           <dl>
             <div ng-if="summaryProduct.product.model.netWeight">
               <dt>peso líq.</dt>
@@ -182,7 +183,13 @@
     <tbody>
       <tr ng-repeat="summaryProduct in summary | filter:isOutOfStockButExpected">
         <td class="table-col-300">
-          <h1>{{ summaryProduct.product.model.description }}</h1>
+          <div class="product-description">
+            <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
+            <h1>{{ summaryProduct.product.model.description }}</h1>
+            <!-- </a> -->
+          </div>
+          
           <!-- <dl>
             <div>
               <dt>peso líq.</dt>
@@ -315,8 +322,12 @@
     <tbody>
       <tr ng-repeat="summaryProduct in summary | filter:hasError">
         <td class="table-col-300">
-          <h1>{{ summaryProduct.product.model.description }}</h1>
-          <!-- <dl>
+          <div class="product-description">
+            <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
+            <h1>{{ summaryProduct.product.model.description }}</h1>
+            <!-- </a> -->
+          </div>          <!-- <dl>
             <div>
               <dt>peso líq.</dt>
               <dd>0,4kg</dd>

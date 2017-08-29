@@ -55,7 +55,7 @@ table.cebola-table tr:last-child > td {
 }
 
 
-table.cebola-table tr > td > h1 {
+table.cebola-table tr > td h1 {
   font-size: 14px;
 }
 
