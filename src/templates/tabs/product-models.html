@@ -15,9 +15,12 @@
 
 <section class="tab-body">
   
-  <table class="cebola-table">
+  <table class="cebola-table" id="product-models-table">
     <thead>
       <tr>
+        <th class="image-column">
+          Imagem
+        </th>
         <th>Descrição</th>
         <th>SKU</th>
         <th>Dimensões (m)</th>
@@ -29,7 +32,12 @@
     </thead>
     <tbody>
       <tr ng-repeat="productModel in productModels">
-        <td>{{ productModel.description }}</td>
+        <td class="image-column">
+          <img src="{{ productModel.image.url }}">
+        </td>
+        <td>
+          {{ productModel.description }}
+        </td>
         <td>{{ productModel.sku }}</td>
         <td>
           <span ng-if="productModel.width && productModel.height && productModel.depth">

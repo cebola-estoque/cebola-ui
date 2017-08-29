@@ -1,5 +1,8 @@
 <!-- TODO: modify class names -->
-<div class="dialog large shipment-dialog">
+<md-dialog
+  id="exit-shipment-dialog"
+  class="dialog large shipment-dialog"
+  flex="80">
   <header class="dialog-header">
     
     <div class="dialog-header-left">
@@ -16,151 +19,212 @@
     </div>
   </header>
     
-  <form
-    name="shipmentForm"
-    ng-submit="shipmentForm.$valid && submit()">
+  <md-dialog-content>
+    <form
+      name="shipmentForm"
+      ng-submit="shipmentForm.$valid && submit()">
 
-    <section class="dialog-body">
-      <div layout-gt-sm="row">
-        <!-- scheduledFor -->
-        <md-input-container class="md-block" flex-20>
-          <label>Data de saída</label>
-          <input
-            required
-            ng-model="shipment.scheduledFor"
-            ng-min="_minScheduledFor"
-            type="datetime-local">
-        </md-input-container>
-        
-        <!-- recipient (for exits only)-->
-        <md-autocomplete
-          flex
-          class="md-block"
-          md-selected-item="shipment.recipient"
-          md-floating-label="Receptor"
-          required
+      <section class="dialog-body">
+        <div layout-gt-sm="row">
+          <!-- scheduledFor -->
+          <md-input-container class="md-block" flex-20>
+            <label>Data de saída</label>
+            <input
+              required
+              ng-model="shipment.scheduledFor"
+              ng-min="_minScheduledFor"
+              type="datetime-local">
+          </md-input-container>
           
-          md-no-cache
-          md-require-match
-          md-item-text="recipient.name"
-          md-search-text="_recipientSearchText"
-          md-min-length="0"
-          md-items="recipient in completeRecipients(_recipientSearchText)">
-          <md-item-template>
-            {{ recipient.name }}
-          </md-item-template>
-        </md-autocomplete>
-      </div>
-      
-      <label>Produtos</label>
-      <div
-        layout-gt-sm="row"
-        ng-class="{ 'cancelled': allocation.status.value === 'allocation-cancelled' }"
-        ng-repeat="allocation in shipment.allocations.active">
-        
-        <!-- product for exit shipments (only products in stock) -->
-        <md-autocomplete
-          class="md-block product-autocomplete"
-          md-selected-item="allocation.product"
-          md-floating-label="Modelo de produto"
-          required
-          
-          ng-disabled="allocation.status.value === 'allocation-cancelled'"
-          
-          md-no-cache
-          md-require-match
-          md-item-text="product.model.description"
-          md-search-text="_productSearchText"
-          md-min-length="0"
-          md-items="product in completeAvailableProducts(_productSearchText)"
-          md-menu-class="autocomplete-custom-template">
-          <md-item-template>
-            <div>
-              {{ product.model.description }} 
-            </div>
-            <div>
-              {{ product.expiry | date:'dd/MM' }} 
-            </div>
-            inStock: {{ product.inStock }} 
-            scheduledForEntry: {{ product.scheduledForEntry }}
-            scheduledForExit: {{ product.scheduledForExit }}
-          </md-item-template>
-        </md-autocomplete>
-        
-        <!--
-          product.expiry
-          product expiry MUST be disabled if it is an exit,
-          as exits refer to actual products that are in stock
-        -->
-        <md-input-container flex-gt-sm>
-          <label>Data de validade</label>
-          <input
+          <!-- recipient (for exits only)-->
+          <md-autocomplete
+            flex
+            class="md-block"
+            md-selected-item="shipment.recipient"
+            md-floating-label="Receptor"
             required
-            ng-model="allocation.product.expiry"
-            ng-min="_minScheduledFor"
-            type="date"
-            disabled>
-        </md-input-container>
+            
+            md-no-cache
+            md-require-match
+            md-item-text="recipient.name"
+            md-search-text="_recipientSearchText"
+            md-min-length="0"
+            md-items="recipient in completeRecipients(_recipientSearchText)">
+            <md-item-template>
+              {{ recipient.name }}
+            </md-item-template>
+          </md-autocomplete>
+        </div>
         
-        <md-input-container class="md-block" flex-gt-sm>
-          <!-- quantity for exit (max at inStock + allocatedForEntry - allocatedForExit) -->
-          <label>
-            Quantidade <span ng-if="allocation.product">(max: {{ allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit }})</span>
-          </label>
-          <input
-            type="number"
-            required
-            ng-min="1"
-            ng-max="allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit"
-            ng-model="allocation.allocatedQuantity"
-            ng-disabled="!allocation.product || allocation.status.value === 'allocation-cancelled'">
+        <label>Produtos</label>
 
-        </md-input-container>
-        
-        <!--
-          product.measureUnit
-          Measure unit is not modifiable in exits
-        -->
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Unidade</label>
-          <input
-            required
-            ng-model="allocation.product.measureUnit"
-            disabled>
-        </md-input-container>
-        
-        <!-- actions -->
-        <md-button
-          class="md-icon-button"
-          ng-click="cancelAllocation(allocation)">
-          <md-icon md-font-set="material-icons">delete</md-icon>
-        </md-button>
-      </div>
-        
-      <md-button
-        type="button"
-        ng-click="createAllocation()"
-      >
-        Adicionar produto
-      </md-button>
-    </section>
-  
-    <footer class="dialog-footer">
-      <div class="dialog-footer-left">
-        
-      </div>
-      
-      <div class="dialog-footer-right">
+        <div class="shipment-product-list">
+
+          <div
+            ng-class="{ 'cancelled': allocation.status.value === 'allocation-cancelled' }"
+            ng-repeat="allocation in shipment.allocations.active">
+
+            <div layout-gt-sm="row">
+              
+              <!-- product for exit shipments (only products in stock) -->
+              <md-autocomplete
+                class="md-block product-autocomplete"
+                md-selected-item="allocation.product"
+                md-floating-label="Modelo de produto"
+                required
+                
+                ng-disabled="allocation.status.value === 'allocation-cancelled'"
+                
+                md-no-cache
+                md-require-match
+                md-item-text="product.model.description"
+                md-search-text="_productSearchText"
+                md-min-length="0"
+                md-items="product in completeAvailableProducts(_productSearchText)"
+                md-menu-class="inventory-product-autocomplete">
+                <md-item-template>
+
+                  <div class="autocomplete-option">
+
+                    <div class="autocomplete-option-left">
+                      <div class="image-container">
+                        <img src="{{ product.model.image.url }}">
+                      </div>
+                      <div class="autocomplete-option-product-description">
+                        <div>
+                          {{ product.model.description }} 
+                        </div>
+                        <small>
+                          <label>Validade:</label>
+                          {{ product.expiry | date:'dd/MM/yyyy' }} 
+                        </small>
+                      </div>
+                    </div>
+
+                    <div class="autocomplete-option-right">
+                      <div class="product-inventory-summary">
+                        <div class="summary-line">
+                          <label>
+                            em estoque
+                          </label>
+                          <div>
+                            {{ product.inStock }} {{ product.measureUnit }}
+                          </div>
+                        </div>
+                        <div
+                          class="summary-line"
+                          ng-if="product.allocatedForEntry !== 0"
+                          style="opacity: 0.6;">
+                          <label>
+                            à chegar
+                          </label>
+                          <div>
+                            {{ product.allocatedForEntry }} {{ product.measureUnit }}
+                          </div>
+                        </div>
+                        <div
+                          class="summary-line"
+                          ng-if="product.allocatedForExit !== 0"
+                          style="color: darkred; opacity: 0.6;">
+                          <label>
+                            à sair
+                          </label>
+                          <div>
+                            {{ -1 * product.allocatedForExit }} {{ product.measureUnit }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </md-item-template>
+              </md-autocomplete>
+              
+
+            </div>
+    
+            <div layout-gt-sm="row">
+              <!--
+                product.expiry
+                product expiry MUST be disabled if it is an exit,
+                as exits refer to actual products that are in stock
+              -->
+              <md-input-container flex-gt-sm>
+                <label>Data de validade</label>
+                <input
+                  required
+                  ng-model="allocation.product.expiry"
+                  ng-min="_minScheduledFor"
+                  type="date"
+                  disabled>
+              </md-input-container>
+              
+              <md-input-container class="md-block" flex-gt-sm>
+                <!-- quantity for exit (max at inStock + allocatedForEntry - allocatedForExit) -->
+                <label>
+                  Quantidade <span ng-if="allocation.product">(max: {{ allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit }})</span>
+                </label>
+                <input
+                  type="number"
+                  required
+                  ng-min="1"
+                  ng-max="allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit"
+                  ng-model="allocation.allocatedQuantity"
+                  ng-disabled="!allocation.product || allocation.status.value === 'allocation-cancelled'">
+
+              </md-input-container>
+              
+              <!--
+                product.measureUnit
+                Measure unit is not modifiable in exits
+              -->
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Unidade</label>
+                <input
+                  required
+                  ng-model="allocation.product.measureUnit"
+                  disabled>
+              </md-input-container>
+              
+              <!-- actions -->
+              <md-button
+                class="md-icon-button"
+                ng-click="cancelAllocation(allocation)">
+                <md-icon md-font-set="material-icons">delete</md-icon>
+              </md-button>
+            </div>
+
+          </div>
+
+        </div>
+          
         <md-button
           type="button"
-          ng-click="cancel()">
-          Cancelar
+          class="md-raised"
+          ng-click="createAllocation()"
+        >
+          Adicionar produto
         </md-button>
-        <md-button
-          type="submit">
-          Registrar
-        </md-button>
-      </div>
-    </footer>
-  </form>
-</div>
+      </section>
+      
+      <!-- TODO: use <md-dialog-actions> https://material.angularjs.org/latest/api/service/$mdDialog -->
+      <footer class="dialog-footer">
+        <div class="dialog-footer-left">
+          
+        </div>
+        
+        <div class="dialog-footer-right">
+          <md-button
+            type="button"
+            ng-click="cancel()">
+            Cancelar
+          </md-button>
+          <md-button
+            type="submit">
+            Registrar
+          </md-button>
+        </div>
+      </footer>
+    </form>
+  </md-dialog-content>
+</md-dialog>

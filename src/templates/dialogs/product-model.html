@@ -33,7 +33,38 @@
         </md-input-container>
       </div>
       
-        <label>Peso</label>
+      
+      <div layout-gt-sm="row">
+        <md-input-container
+          class="md-block"
+          flex-gt-sm
+          ng-if="!productModel.image || !productModel.image.url">
+          <label
+            for="product-model-image">
+            Foto do produto
+          </label>
+          <input
+            style="opacity: 0;"
+            id="product-model-image"
+            type="file"
+            ngf-select="uploadPhoto($file)">
+          <hr>
+        </md-input-container>
+
+        <div
+          id="product-model-image-container"
+          ng-if="productModel.image && productModel.image.url">
+          <img
+            src="{{ productModel.image.url }}">
+          <div
+            id="product-model-image-overlay"
+            ng-click="removePhoto()">
+            Remover foto
+          </div>
+        </div>
+      </div>
+
+      <label>Peso</label>
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Peso bruto (g)</label>

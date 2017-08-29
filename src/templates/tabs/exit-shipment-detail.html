@@ -59,7 +59,7 @@
           {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ allocation.product.expiry | date }}
+          {{ allocation.product.expiry | date:'dd/MMM' }}
         </td>
         <td>
           {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
@@ -68,7 +68,7 @@
           {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
           <dl>
             <div ng-repeat="op in allocation.operations.active">
-              {{ op.createdAt | date }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }}
+              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }}
             </div>
           </dl>
 
@@ -97,7 +97,7 @@
             <md-icon md-font-set="material-icons">check_circle</md-icon>
           </md-button>
           
-          <md-menu>
+          <!-- <md-menu>
             <md-button
               class="md-icon-button"
               ng-click="$mdOpenMenu($event)">
@@ -122,7 +122,7 @@
                 </md-button>
               </md-menu-item>
             </md-menu-content>
-          </md-menu>
+          </md-menu> -->
         </td>
       </tr>
 
@@ -149,7 +149,7 @@
           {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ allocation.product.expiry | date }}
+          {{ allocation.product.expiry | date:'dd/MMM' }}
         </td>
         <td>
           {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
@@ -189,7 +189,7 @@
           {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ allocation.product.expiry | date }}
+          {{ allocation.product.expiry | date:'dd/MMM' }}
         </td>
         <td>
           {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}

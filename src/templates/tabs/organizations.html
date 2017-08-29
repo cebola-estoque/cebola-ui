@@ -20,12 +20,12 @@
     <thead>
       <tr>
         <th>Nome</th>
-        <th colspan="2">Documento</th>
+        <th>Documento</th>
         <th>Responsável</th>
         <th>Telefone</th>
-        <th>Email</th>
-        <th>Endereços</th>
-        <th>
+        <th style="width: 260px;">Email</th>
+        <th style="width: 300px;">Endereços</th>
+        <th style="width: 60px;">
           <!-- action placeholder -->
         </th>
       </tr>
@@ -33,8 +33,7 @@
     <tbody>
       <tr ng-repeat="organization in organizations">
         <td>{{ organization.name }}</td>
-        <td>{{ organization.document.type }}</td>
-        <td>{{ organization.document.value }}</td>
+        <td>{{ organization.document.type }}:<br>{{ organization.document.value }}</td>
         <td>{{ organization.contactPoint.name }}</td>
         <td>{{ organization.contactPoint.telephone }}</td>
         <td>{{ organization.contactPoint.email }}</td>

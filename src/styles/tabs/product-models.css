@@ -1,0 +1,12 @@
+#product-models-table {
+
+}
+
+#product-models-table .image-column {
+  width: 80px;
+}
+
+#product-models-table .image-column img {
+  width: 100%;
+  height: auto;
+}

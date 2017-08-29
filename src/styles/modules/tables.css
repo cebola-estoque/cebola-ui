@@ -10,6 +10,8 @@ table.cebola-table {
   border-collapse: collapse;
   
   box-sizing: border-box;
+
+  margin-bottom: 40px;
 }
 
 table.cebola-table a {
@@ -25,7 +27,8 @@ table.cebola-table > tbody > tr {
 }
 
 table.cebola-table > tbody > tr:hover {
-  background-color: lightgray;
+  /*background-color: lightgray;*/
+  background-color: #ECECEC;
 }
 
 table.cebola-table tr > th {
@@ -39,7 +42,7 @@ table.cebola-table tr > td {
   
   text-align: left;
   
-  border-bottom: lightgray 1px solid;
+  border-bottom: #ECECEC 1px solid;
   position: relative;
   
   padding: 10px 10px;

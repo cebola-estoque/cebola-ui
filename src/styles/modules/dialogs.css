@@ -45,3 +45,10 @@
   
   height: 60px;
 }
+
+.dialog hr {
+  border-top: none;
+  /*border-left: none;
+  border-right: none;*/
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}

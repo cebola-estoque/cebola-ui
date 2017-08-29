@@ -67,8 +67,37 @@ angular.module('cebola.services')
   function StandaloneOperationDialog($scope, operation) {
     $scope.operation = operation;
     
-    $scope.completeProductModels = function (searchText) {  
-      return cebolaAPI.productModel.search(searchText);
+    $scope.completeProductModels = function (searchText) {
+      return cebolaAPI.productModel.list().then(function (productModels) {
+        // 
+        // DOES NOT MAKE SENSE, as a productModel may come in two measure units
+        // or in two different expiry dates
+        // 
+        // /**
+        //  * Prevent products models already allocated in current
+        //  * shipment to be reallocated.
+        //  */
+        // productModels = productModels.filter(function (productModel) {
+        //   return !$scope.shipment.allocations.active.some(function (allocation) {
+        //     return allocation.product &&
+        //            allocation.product.model &&
+        //            util.product.isSameModel(
+        //             allocation.product.model,
+        //             productModel
+        //            );
+        //   });
+        // });
+
+        // filter using searchText
+        productModels = $filter('filter')(productModels, {
+          description: searchText,
+        });
+
+        // sort
+        productModels = $filter('orderBy')(productModels, 'description');
+
+        return productModels;
+      });
     };
     
     // dialog methods

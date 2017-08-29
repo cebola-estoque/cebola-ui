@@ -367,9 +367,12 @@ angular.module('cebola.services')
    * Inventory API
    */
   api.inventory = {};
-  api.inventory.summary = function () {
+  api.inventory.summary = function (query) {
+    query = query || {};
+    
     return $http.get(API_URI + '/inventory/summary', {
       // auth
+      params: query,
     })
     .then(function (res) {
       return res.data;

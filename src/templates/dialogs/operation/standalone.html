@@ -23,7 +23,7 @@
       <div layout-gt-sm="row">
         
         <md-autocomplete
-          class="md-block"
+          class="md-block product-model-autocomplete"
           md-selected-item="operation.product.model"
           md-floating-label="Modelo de produto"
           required
@@ -32,11 +32,68 @@
           md-require-match
           md-item-text="productModel.description"
           md-search-text="_productModelSearchText"
-          md-items="productModel in completeProductModels(_productModelSearchText)">
+          md-min-length="0"
+          md-items="productModel in completeProductModels(_productModelSearchText)"
+          md-menu-class="inventory-product-autocomplete">
           <md-item-template>
-            {{ productModel.description }}
+            
+            <!-- TODO: define own classes and styles -->
+
+            <div class="autocomplete-option">
+
+              <div class="autocomplete-option-left">
+                <div class="image-container">
+                  <img src="{{ productModel.image.url }}">
+                </div>
+                <div class="autocomplete-option-product-description">
+                  <div>
+                    {{ productModel.description }} 
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="autocomplete-option-right">
+                <div class="product-inventory-summary">
+                  <div class="summary-line">
+                    <label>
+                      em estoque
+                    </label>
+                    <div>
+                      {{ product.inStock }} {{ product.measureUnit }}
+                    </div>
+                  </div>
+                  <div
+                    class="summary-line"
+                    ng-if="product.allocatedForEntry !== 0"
+                    style="opacity: 0.6;">
+                    <label>
+                      à chegar
+                    </label>
+                    <div>
+                      {{ product.allocatedForEntry }} {{ product.measureUnit }}
+                    </div>
+                  </div>
+                  <div
+                    class="summary-line"
+                    ng-if="product.allocatedForExit !== 0"
+                    style="color: darkred; opacity: 0.6;">
+                    <label>
+                      à sair
+                    </label>
+                    <div>
+                      {{ -1 * product.allocatedForExit }} {{ product.measureUnit }}
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+            </div>
           </md-item-template>
         </md-autocomplete>
+
+      </div>
+
+      <div layout-gt-sm="row">
         <!--
           product.expiry
           product expiry MUST be disabled if it is an exit,

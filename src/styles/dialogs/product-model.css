@@ -1,0 +1,32 @@
+#product-model-image-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+#product-model-image-container > img {
+  width: 200px;
+  height: auto;
+}
+
+#product-model-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: none;
+  background-color: white;
+}
+
+#product-model-image-container:hover #product-model-image-overlay {
+  /*display: block;*/
+  opacity: 0.8;
+  cursor: pointer;
+
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

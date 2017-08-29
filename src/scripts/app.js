@@ -10,7 +10,8 @@
     'cebola.directives',
 
     // third-party
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'ngFileUpload',
   ])
 
   /**
@@ -34,6 +35,15 @@
           'body@': {
             controller: 'InventoryCtrl',
             templateUrl: 'templates/tabs/inventory.html',
+          }
+        }
+      })
+      .state('inventory.detail', {
+        url: '/:productModelId',
+        views: {
+          'body@': {
+            controller: 'InventoryDetailCtrl',
+            templateUrl: 'templates/tabs/inventory-detail.html',
           }
         }
       })

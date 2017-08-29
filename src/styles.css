@@ -20,3 +20,9 @@
 /* tabs */
 @import 'styles/tabs/inventory.css';
 @import 'styles/tabs/entry-shipments.css';
+@import 'styles/tabs/product-models.css';
+
+/* dialogs */
+@import 'styles/dialogs/product-model.css';
+@import 'styles/dialogs/exit-shipment.css';
+@import 'styles/dialogs/entry-shipment.css';

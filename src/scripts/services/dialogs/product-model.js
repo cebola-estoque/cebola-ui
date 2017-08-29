@@ -2,13 +2,43 @@ angular.module('cebola.services')
 .factory('uiProductModelDialog', function ($mdDialog, $q) {
   
   
-  function ProductModelDialogCtrl(productModel, $scope, $mdDialog) {
+  function ProductModelDialogCtrl(productModel, $scope, $mdDialog, Upload, CONFIG) {
     
     /**
      * Product model either has been injected or
      * should be a completely new one.
      */
     $scope.productModel = productModel || {};
+
+    $scope.uploadPhoto = function ($file) {
+
+      if (!$file) {
+
+        return;
+      }
+
+      Upload.upload({
+        url: CONFIG.cebolaApiURI + '/files',
+        data: {
+          file: $file
+        }
+      })
+      .then(function (resp) {
+        console.log('Success', resp);
+
+        $scope.productModel.image = resp.data;
+
+      }, function (resp) {
+        console.log('Error status: ' + resp.status);
+      }, function (evt) {
+        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+      });
+    };
+
+    $scope.removePhoto = function () {
+      $scope.productModel.image = null;
+    };
     
     $scope.submit = function () {
       $mdDialog.hide($scope.productModel);
@@ -17,7 +47,7 @@ angular.module('cebola.services')
     // dialog methods
     $scope.cancel = function() {
       $mdDialog.cancel();
-    }
+    };
   }
   
   return {

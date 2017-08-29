@@ -7,12 +7,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
   
-  height: 70px;
+  height: 90px;
+  padding-top: 10px;
+  
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
 }
 
 #app-header-left {
-  padding-left: 20px;
+  padding-left: 40px; /* alinhado com conteudo body */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -20,7 +25,7 @@
 }
 
 #app-header-left img.logo {
-  height: 40px;
+  height: 30px;
 }
 
 #app-header-left > nav {
@@ -32,6 +37,7 @@
   flex-direction: row;
   justify-content: space-around;
   height: 100%;
+  padding-left: 20px;
 }
 
 #app-header-left > nav > ul > li {
@@ -40,7 +46,7 @@
 
 #app-header-left > nav > ul > li > a,
 #app-header-right a {
-  color: white;
+  color: rgba(255,255,255,0.7);
   text-decoration: none;
   
   display: flex;
@@ -55,12 +61,25 @@
   padding-right: 20px;
 }
 
+#app-header-right a {
+  padding-right: 2px;
+  margin-right: 30px;
+}
+
+#app-header-left > nav > ul > li > a:hover,
+#app-header-left > nav > ul > li > a:active,
+#app-header-left > nav > ul > li > a.active,
+#app-header-right a:hover {
+  color: rgba(255,255,255,1);
+  color: white;
+}
+
 #app-header-left > nav > ul > li > a:hover:after,
 #app-header-left > nav > ul > li > a:active:after,
 #app-header-left > nav > ul > li > a.active:after {
   content: '';
   position: absolute;
-  
+
   left: 20px;
   right: 20px;
   bottom: 10px;
@@ -68,4 +87,21 @@
   height: 3px;
   
   background-color: var(--green);
+}
+
+#app-header-right a:after {
+  content: url('/resources/img/arrow.png');
+  position: absolute;
+
+  height: 16px;
+  width: 16px;
+
+  left: 100%;
+  top: 22px;
+  
+}
+
+#app-header-right {
+  padding-right: 40px; /* alinhado com conteudo body */
+  height: 60px;
 }

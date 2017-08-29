@@ -3,5 +3,7 @@
  * app body
  */
 #app-body {
-  background-color: #EFEFEF;
+  background-color: #F2F2F2;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
 }
