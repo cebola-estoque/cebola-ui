@@ -1,0 +1,7 @@
+md-menu-item {
+  font-size: 14px;
+}
+
+md-menu-item > button.md-button {
+  font-size: inherit;
+}

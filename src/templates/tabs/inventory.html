@@ -61,7 +61,7 @@
           </dl>
         </td>
         <td>
-          <div>{{ summaryProduct.product.expiry | date }}</div>
+          <div>{{ summaryProduct.product.expiry | date:'dd/MMM/yyyy' }}</div>
           <!-- <div>16 dias</div> -->
         </td>
         <td>
@@ -75,20 +75,20 @@
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
               <dt>
-                <a href="#/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
+                <a href="#/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>
-<!--             <div>
-  <dt></dt>
-  <dd>
-    {{ summaryProduct.allocatedForEntry }} 
-    {{ summaryProduct.product.measureUnit }}
-  </dd>
-</div> -->
+            <div>
+              <dt></dt>
+              <dd>
+                {{ summaryProduct.allocatedForEntry }} 
+                {{ summaryProduct.product.measureUnit }}
+              </dd>
+            </div>
           </dl>
           
           <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
@@ -98,7 +98,7 @@
           <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
               <dt>
-                <a href="#/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</a>
+                <a href="#/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ -1 * exitAllocation.allocatedQuantity }} 
@@ -195,7 +195,7 @@
           </dl> -->
         </td>
         <td>
-          <div>{{ summaryProduct.product.expiry | date }}</div>
+          <div>{{ summaryProduct.product.expiry | date:'dd/MMM/yyyy' }}</div>
           <!-- <div>16 dias</div> -->
         </td>
         <td>
@@ -209,7 +209,7 @@
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
               <dt>
-                <a href="#/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</a>
+                <a href="#/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity }} 
@@ -231,7 +231,7 @@
           <!-- a sair -->
           <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
-              <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
+              <dt>{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</dt>
               <dd>
                 {{ exitAllocation.allocatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
@@ -240,7 +240,7 @@
             <div>
               <dt></dt>
               <dd>
-                {{ summaryProduct.allocatedForExit }} 
+                {{ -1 * summaryProduct.allocatedForExit }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>
@@ -328,7 +328,7 @@
           </dl> -->
         </td>
         <td>
-          <div>{{ summaryProduct.product.expiry | date }}</div>
+          <div>{{ summaryProduct.product.expiry | date:'dd/MMM/yyyy' }}</div>
           <!-- <div>16 dias</div> -->
         </td>
         <td>
@@ -341,7 +341,7 @@
           
           <dl ng-if="summaryProduct.allocatedForEntry > 0">
             <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
-              <dt>{{ entryAllocation.scheduledFor | date:'MM/dd' }}:</dt>
+              <dt>{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
@@ -362,7 +362,7 @@
           <!-- a sair -->
           <dl ng-if="summaryProduct.allocatedForExit < 0">
             <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
-              <dt>{{ exitAllocation.scheduledFor | date:'MM/dd' }}:</dt>
+              <dt>{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</dt>
               <dd>
                 {{ exitAllocation.allocatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
@@ -371,7 +371,7 @@
             <div>
               <dt></dt>
               <dd>
-                {{ summaryProduct.allocatedForExit }} 
+                {{ -1 * summaryProduct.allocatedForExit }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>

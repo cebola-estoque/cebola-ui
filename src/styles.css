@@ -12,6 +12,8 @@
 
 /* elements */
 @import 'styles/elements/shipment-dialog.css';
+@import 'styles/elements/menu.css';
+@import 'styles/elements/button.css';
 
 /* sections */
 @import 'styles/app-header.css';
@@ -26,3 +28,8 @@
 @import 'styles/dialogs/product-model.css';
 @import 'styles/dialogs/exit-shipment.css';
 @import 'styles/dialogs/entry-shipment.css';
+
+body {
+  background-color: #F2F2F2;
+  font-family: 'Open Sans', sans-serif;
+}

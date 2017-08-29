@@ -33,7 +33,7 @@
     <b>Status:</b> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
   </div>
 
-  <div class="shipment-annotations">
+  <div ng-if="shipment.annotations" class="shipment-annotations">
     <b>Anotações:</b><br>
     {{ shipment.annotations }}
   </div>

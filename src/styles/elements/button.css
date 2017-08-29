@@ -1,0 +1,16 @@
+
+
+.md-button.md-fab {
+  background-color: var(--green);
+}
+
+.md-button.md-fab:not([disabled]):hover {
+  background-color: var(--green);
+  background-color: #479048;
+  /*background-color: rgba(158, 158, 158, 0.2);*/
+}
+
+.md-button.md-fab[disabled] {
+  color : rgba(0, 0, 0, 0.26);
+  background-color: transparent;
+}

@@ -71,7 +71,7 @@
               <md-autocomplete
                 ng-if="shipmentType === 'entry'"
                 class="md-block product-model-autocomplete"
-                md-selected-item="allocation.productModel"
+                md-selected-item="allocation.product.model"
                 md-floating-label="Modelo de produto"
                 required
                 
@@ -92,7 +92,7 @@
 
                     <div class="autocomplete-option-left">
                       <div class="image-container">
-                        <img src="{{ productModel.image.url }}">
+                        <img ng-src="{{ productModel.image.url }}">
                       </div>
                       <div class="autocomplete-option-product-description">
                         <div>

@@ -34,7 +34,7 @@
     <b>Status:</b> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
   </div>
 
-  <div class="shipment-annotations">
+  <div ng-if="shipment.annotations" class="shipment-annotations">
     <b>Anotações:</b><br>
     {{ shipment.annotations }}
   </div>
@@ -59,7 +59,7 @@
           {{ allocation.product.model.description }}
         </td>
         <td>
-          {{ allocation.product.expiry | date:'dd/MMM' }}
+          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
         </td>
         <td>
           {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}

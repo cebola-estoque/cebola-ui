@@ -15,6 +15,7 @@
     <thead>
       <tr>
         <th>Tipo</th>
+        <th>Categoria</th>
         <th>Produto</th>
         <th>Validade</th>
         <th>Unidade de medida</th>
@@ -28,6 +29,12 @@
           <md-input-container>
             <label>Tipo</label>
             <input ng-model="search.type" type="text">
+          </md-input-container>
+        </td>
+        <td>
+          <md-input-container>
+            <label>Categoria</label>
+            <input ng-model="search.category" type="text">
           </md-input-container>
         </td>
         <td>
@@ -55,8 +62,9 @@
           'operation-correction': operation.category === 'correction',
         }">
         <td>{{ operation.type }}</td>
+        <td>{{ operation.category || 'normal' }}</td>
         <td>{{ operation.product.model.description }}</td>
-        <td>{{ operation.product.expiry | date }}</td>
+        <td>{{ operation.product.expiry | date:'dd/MMM/yyyy' }}</td>
         <td>{{ operation.product.measureUnit }}</td>
         <td>{{ operation.quantity }}</td>
         <td>{{ operation.createdAt | date:'d/MMM/yy HH:mm' }}</td>

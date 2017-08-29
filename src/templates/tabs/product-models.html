@@ -33,7 +33,7 @@
     <tbody>
       <tr ng-repeat="productModel in productModels">
         <td class="image-column">
-          <img src="{{ productModel.image.url }}">
+          <img ng-src="{{ productModel.image.url }}">
         </td>
         <td>
           {{ productModel.description }}
@@ -79,7 +79,7 @@
                     md-font-set="material-icons">
                     edit
                   </md-icon>
-                  Edit
+                  Editar
                 </md-button>
               </md-menu-item>
               <md-menu-divider></md-menu-divider>
@@ -91,7 +91,7 @@
                     md-font-set="material-icons">
                     delete
                   </md-icon>
-                  Delete
+                  Deletar
                 </md-button>
               </md-menu-item>
             </md-menu-content>

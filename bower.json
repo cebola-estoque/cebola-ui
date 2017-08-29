@@ -23,6 +23,8 @@
     "object-path": "^0.11.0",
     "angular-translate": "^2.15.2",
     "angular-i18n": "^1.6.5",
-    "ng-file-upload": "^12.2.13"
+    "ng-file-upload": "^12.2.13",
+    "material-design-icons": "^3.0.1",
+    "open-sans-fontface": "^1.4.2"
   }
 }
