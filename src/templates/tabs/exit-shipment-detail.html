@@ -35,8 +35,7 @@
   </div>
 
   <div ng-if="shipment.annotations" class="shipment-annotations">
-    <b>Anotações:</b><br>
-    {{ shipment.annotations }}
+    <b>Anotações:</b> {{ shipment.annotations }} | atualizado em {{ shipment.status.updatedAt | date }}
   </div>
   
   <!-- active allocations -->

@@ -1,6 +1,12 @@
 /**
  * Shared styles among both entry shipment tables
  */
+
+#active-allocations,
+#finished-allocations {
+	margin-top: 40px;
+}
+
 .entry-shipments-table {
 }
 
@@ -17,7 +23,7 @@
 }
 
 #finished-entry-shipments {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 /**

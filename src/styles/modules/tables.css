@@ -24,6 +24,8 @@ table.cebola-table > tbody {
 
 table.cebola-table > tbody > tr {
   background-color: white;
+
+  height: 60px; /* works like min-height in tr */
 }
 
 table.cebola-table > tbody > tr:hover {
@@ -107,4 +109,17 @@ table.cebola-table .table-col-250 {
 }
 table.cebola-table .table-col-300 {
   width: 300px;
+}
+
+.md-button.md-default-theme.md-accent[disabled] md-icon, 
+.md-button.md-accent[disabled] md-icon, 
+.md-button.md-default-theme.md-fab[disabled] md-icon, 
+.md-button.md-fab[disabled] md-icon, 
+.md-button.md-default-theme.md-raised[disabled] md-icon, 
+.md-button.md-raised[disabled] md-icon, 
+.md-button.md-default-theme.md-warn[disabled] md-icon, 
+.md-button.md-warn[disabled] md-icon, 
+.md-button.md-default-theme[disabled] md-icon, 
+.md-button[disabled] md-icon {
+  color: rgba(0,0,0,0.15);
 }

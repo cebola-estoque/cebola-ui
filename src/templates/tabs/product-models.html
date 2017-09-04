@@ -41,8 +41,8 @@
         <td>{{ productModel.sku }}</td>
         <td>
           <span ng-if="productModel.width && productModel.height && productModel.depth">
-            {{ productModel.height / 100 }} X 
-            {{ productModel.width / 100 }} X 
+            {{ productModel.height / 100 }} x 
+            {{ productModel.width / 100 }} x 
             {{ productModel.width / 100 }}
           </span>
           <span ng-if="!(productModel.width && productModel.height && productModel.depth)">-</span>
@@ -51,6 +51,7 @@
           <span ng-if="productModel.weight">
             peso bruto: {{ productModel.weight / 1000 }}
           </span>
+          <br>
           <span ng-if="productModel.netWeight">
             peso líquido: {{ productModel.netWeight / 1000 }}
           </span>
