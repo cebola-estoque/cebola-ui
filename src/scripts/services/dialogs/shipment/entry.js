@@ -25,6 +25,20 @@ angular.module('cebola.services')
       $scope.shipment.allocations || {};
     $scope.shipment.allocations.active =
       $scope.shipment.allocations.active || [];
+
+    /**
+     * Ediatbility flag
+     * 0: none
+     * 1: restricted
+     * 2: all
+     */
+    $scope._editability = 2;
+    if ($scope.shipment.status.value === 'in-progress' ||
+        $scope.shipment.status.value === 'finished') {
+      $scope._editability = 1;
+    } else if ($scope.shipment.status.value === 'cancelled') {
+      $scope._editability = 0;
+    }
     
     /**
      * Save a reference to the original allocations
@@ -33,8 +47,9 @@ angular.module('cebola.services')
     var originalActiveAllocations = angular.copy(
       $scope.shipment.allocations.active);
   
-    // start with at least one allocation
-    if ($scope.shipment.allocations.active.length === 0) {
+    // start with at least one allocation in case the shipment is new
+    if ((!$scope.shipment.status || $scope.shipment.status.value === 'scheduled') &&
+        $scope.shipment.allocations.active.length === 0) {
       $scope.shipment.allocations.active.push({});
     }
     

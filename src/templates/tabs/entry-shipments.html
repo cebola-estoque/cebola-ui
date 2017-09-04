@@ -54,7 +54,6 @@
           <!-- actions -->
           <md-button
             class="md-icon-button"
-            ng-disabled="entryShipment.status.value === 'in-progress'"
             ng-click="editEntryShipment(entryShipment)">
             <md-icon md-font-set="material-icons">edit</md-icon>
           </md-button>
@@ -72,7 +71,6 @@
             <md-menu-content width="4">
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'in-progress'"
                   ng-click="editEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target
@@ -85,7 +83,6 @@
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'in-progress'"
                   ng-click="cancelEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target
@@ -139,7 +136,13 @@
           {{ entryShipment.status.value | translate }}
         </td>
         <td class="table-col-150">
-          <!-- actions 
+          <!-- actions -->
+          <md-button
+            class="md-icon-button"
+            ng-click="editEntryShipment(entryShipment)">
+            <md-icon md-font-set="material-icons">edit</md-icon>
+          </md-button>
+          
           <md-menu>
             <md-button
               class="md-icon-button"
@@ -153,19 +156,17 @@
             <md-menu-content width="4">
               <md-menu-item>
                 <md-button
-                  ng-disabled="entryShipment.status.value === 'scheduled'"
-                  ng-click="cancelEntryShipment(entryShipment)">
+                  ng-click="editEntryShipment(entryShipment)">
                   <md-icon
                     md-menu-align-target
                     md-font-set="material-icons">
-                    delete
+                    edit
                   </md-icon>
-                  Cancel
+                  Editar
                 </md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-          -->
         </td>
       </tr>
 

@@ -45,10 +45,10 @@ angular.module('cebola.controllers')
     });
   };
   
-  $scope.editExitShipment = function (sourceEntryShipment) {
+  $scope.editExitShipment = function (sourceExitShipment) {
 
 
-    return cebolaAPI.shipment.getById(sourceEntryShipment._id)
+    return cebolaAPI.shipment.getById(sourceExitShipment._id)
       .then(function (fullSourceEntryShipment) {
         return uiDialogExitShipment.edit(fullSourceEntryShipment);
       })
@@ -60,7 +60,7 @@ angular.module('cebola.controllers')
         if (data.allocationsToCancel.length > 0) {
           promises.push(
             cebolaAPI.shipment.cancelAllocations(
-              sourceEntryShipment._id,
+              sourceExitShipment._id,
               data.allocationsToCancel
             )
           );
@@ -69,7 +69,7 @@ angular.module('cebola.controllers')
         if (data.allocationsToUpdate.length > 0) {
           promises.push(
             cebolaAPI.shipment.updateAllocations(
-              sourceEntryShipment._id,
+              sourceExitShipment._id,
               data.allocationsToUpdate
             )
           );
@@ -78,17 +78,25 @@ angular.module('cebola.controllers')
         if (data.allocationsToCreate.length > 0) {
           promises.push(
             cebolaAPI.shipment.createAllocations(
-              sourceEntryShipment._id,
+              sourceExitShipment._id,
               data.allocationsToCreate
             )
           );
         }
         
-        return $q.all(promises);
-        
+        // first update allocations
+        // and then update the shipment itself
+        return $q.all(promises).then(function () {
+          return cebolaAPI.shipment.update(
+            sourceExitShipment._id,
+            data.shipment
+          );
+        });
       })
-      .then(function () {
-        console.log('updated');
+      .then(function (updatedExitShipment) {
+        var index = $scope.exitShipments.indexOf(sourceExitShipment);
+
+        $scope.exitShipments[index] = updatedExitShipment;
       });
 
   };
