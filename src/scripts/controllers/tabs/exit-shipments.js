@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('ExitShipmentsCtrl', function ($scope, $q, uiDialogExitShipment, cebolaAPI) {
+.controller('ExitShipmentsCtrl', function ($scope, $q, $state, uiDialogExitShipment, cebolaAPI) {
   
   // initialize data
   $scope.exitShipments = [];
@@ -97,16 +97,33 @@ angular.module('cebola.controllers')
         var index = $scope.exitShipments.indexOf(sourceExitShipment);
 
         $scope.exitShipments[index] = updatedExitShipment;
+      })
+      .catch(function (err) {
+        
+        if (!err) {
+          // user cancelled
+          return;
+        }
+        
+        alert('there was an error creating the exit shipment');
+        console.warn(err);
       });
 
   };
   
-  $scope.cancelEntryShipment = function (exitShipment) {
+  $scope.cancelExitShipment = function (exitShipment) {
     return cebolaAPI.shipment.cancel(exitShipment._id)
       .then(function (cancelledEntryShipment) {
-        console.log('entry shipment cancelled', cancelledEntryShipment);
+        console.log('exit shipment cancelled', cancelledEntryShipment);
         return $scope.listExitShipments();
       });
+  };
+
+  $scope.viewExitShipmentDetails = function (exitShipment) {
+    $state.go('exit-shipments.detail', {
+      exitShipmentId: exitShipment._id,
+      exitShipment: exitShipment,
+    });
   };
   
   // filters

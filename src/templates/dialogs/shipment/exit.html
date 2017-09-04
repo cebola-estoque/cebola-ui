@@ -6,7 +6,10 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      <span>
+      <span ng-if="$isNew">
+        Criar nova saída
+      </span>
+      <span ng-if="!$isNew">
         <!--  ({{ shipment.status.value | translate }})  -->
         Saída {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.recipient.name }}
       </span>
@@ -33,7 +36,7 @@
             <input
               required
               ng-model="shipment.scheduledFor"
-              ng-min="_minScheduledFor"
+              ng-disabled="_editability < 2"
               type="datetime-local">
           </md-input-container>
           
@@ -44,6 +47,7 @@
             md-selected-item="shipment.recipient"
             md-floating-label="Receptor"
             required
+            ng-disabled="_editability < 2"
             
             md-no-cache
             md-require-match
@@ -56,6 +60,37 @@
             </md-item-template>
           </md-autocomplete>
         </div>
+
+        <div layout-gt-sm="row">
+          <!--
+            shipment.documents.NF
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nota fiscal</label>
+            <input
+              ng-model="shipment.documents.NF"
+              ng-disabled="_editability < 1">
+          </md-input-container>
+          <!--
+            shipment.documents.CDE
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>CDE</label>
+            <input
+              ng-model="shipment.documents.CDE"
+              ng-disabled="_editability < 1">
+          </md-input-container>
+          <!--
+            shipment.documents.vehicleId
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Identificação do veículo</label>
+            <input
+              ng-model="shipment.documents.vehicleId"
+              ng-disabled="_editability < 1">
+          </md-input-container>
+        </div>
+
         
         <label>Produtos</label>
 
@@ -73,8 +108,7 @@
                 md-selected-item="allocation.product"
                 md-floating-label="Modelo de produto"
                 required
-                
-                ng-disabled="allocation.status.value === 'allocation-cancelled'"
+                ng-disabled="_editability < 2"
                 
                 md-no-cache
                 md-require-match
@@ -155,7 +189,7 @@
                 <input
                   required
                   ng-model="allocation.product.expiry"
-                  ng-min="_minScheduledFor"
+                  ng-min="shipment.scheduledFor"
                   type="date"
                   disabled>
               </md-input-container>
@@ -168,10 +202,11 @@
                 <input
                   type="number"
                   required
+                  ng-disabled="_editability < 2"
+                  min="1"
                   ng-min="1"
                   ng-max="allocation._maxAllocatedQuantity || allocation.product.inStock + allocation.product.allocatedForEntry + allocation.product.allocatedForExit"
-                  ng-model="allocation.allocatedQuantity"
-                  ng-disabled="!allocation.product || allocation.status.value === 'allocation-cancelled'">
+                  ng-model="allocation.allocatedQuantity">
 
               </md-input-container>
               
@@ -190,7 +225,8 @@
               <!-- actions -->
               <md-button
                 class="md-icon-button"
-                ng-click="cancelAllocation(allocation)">
+                ng-click="cancelAllocation(allocation)"
+                ng-if="_editability >= 2">
                 <md-icon md-font-set="material-icons">delete</md-icon>
               </md-button>
             </div>
@@ -203,9 +239,19 @@
           type="button"
           class="md-raised"
           ng-click="createAllocation()"
-        >
+          ng-if="_editability >= 2">
           Adicionar produto
         </md-button>
+
+
+          
+        <md-input-container class="md-block">
+          <label>Anotações</label>
+          <textarea
+            ng-model="shipment.annotations">
+          </textarea>
+        </md-input-container>
+
       </section>
       
       <!-- TODO: use <md-dialog-actions> https://material.angularjs.org/latest/api/service/$mdDialog -->

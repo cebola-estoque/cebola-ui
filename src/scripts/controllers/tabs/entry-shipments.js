@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentsCtrl', function ($scope, $q, $timeout, uiDialogEntryShipment, cebolaAPI) {
+.controller('EntryShipmentsCtrl', function ($scope, $q, $timeout, $state, uiDialogEntryShipment, cebolaAPI) {
   
   // initialize data
   $scope.entryShipments = [];
@@ -7,8 +7,6 @@ angular.module('cebola.controllers')
   $scope.createEntryShipment = function () {
     return uiDialogEntryShipment.create('entry')
       .then(function (data) {
-        console.log('create entryShipment', data);
-        
         var entryShipment = data.shipment;
         var supplier = data.shipment.supplier;
         var allocations = data.allocationsToCreate;
@@ -23,8 +21,6 @@ angular.module('cebola.controllers')
         );
       })
       .then(function (entryShipment) {
-        console.log('entryShipment created ', entryShipment);
-        
         $scope.entryShipments.push(entryShipment);
       })
       .catch(function (err) {
@@ -96,6 +92,16 @@ angular.module('cebola.controllers')
         var index = $scope.entryShipments.indexOf(sourceEntryShipment);
 
         $scope.entryShipments[index] = updatedEntryShipment;
+      })
+      .catch(function (err) {
+        
+        if (!err) {
+          // user canceled
+          return;
+        }
+        
+        alert('there was an error creating the entry shipment');
+        console.warn(err);
       });
 
   };
@@ -106,6 +112,13 @@ angular.module('cebola.controllers')
         console.log('entry shipment cancelled', cancelledEntryShipment);
         return $scope.listEntryShipments();
       });
+  };
+
+  $scope.viewEntryShipmentDetails = function (entryShipment) {
+    $state.go('entry-shipments.detail', {
+      entryShipmentId: entryShipment._id,
+      entryShipment: entryShipment,
+    });
   };
   
   // filters

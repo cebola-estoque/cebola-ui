@@ -6,9 +6,11 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      <span>
-        <!--  ({{ shipment.status.value | translate }})  -->
-        Entrada {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.supplier.name }}
+      <span ng-if="$isNew">
+        Criar nova entrada
+      </span>
+      <span ng-if="!$isNew">
+        Entrada <span ng-if="shipment.scheduledFor">{{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }}</span><span ng-if="shipment.supplier.name"> | {{ shipment.supplier.name }}</span>
       </span>
     </div>
     <div class="dialog-header-right">
@@ -35,14 +37,10 @@
               name="scheduledFor"
               ng-disabled="_editability < 2"
               ng-model="shipment.scheduledFor"
-              ng-min="_minScheduledFor"
               type="datetime-local">
             <ng-messages for="shipmentForm.scheduledFor.$error" role="alert">
               <ng-message when="required">
                 Por favor selecione uma data de chegada
-              </ng-message>
-              <ng-message when="min">
-                Data de chegada é anterior ao mínimo ({{ _minScheduledFor }}).
               </ng-message>
             </ng-messages>
           </md-input-container>
@@ -101,6 +99,11 @@
         <label>Produtos previstos</label>
 
         <div class="shipment-product-list">
+          <div
+            layout-gt-sm="row"
+            ng-if="shipment.allocations.active.length === 0">
+            Nenhum produto previsto
+          </div>
           <div
             ng-class="{ 'cancelled': allocation.status.value === 'allocation-cancelled' }"
             ng-repeat="allocation in shipment.allocations.active">
@@ -162,7 +165,7 @@
                   required
                   ng-disabled="_editability < 2"
                   ng-model="allocation.product.expiry"
-                  ng-min="shipment.scheduledFor || _minScheduledFor"
+                  ng-min="shipment.scheduledFor"
                   type="date">
                 <ng-messages for="shipmentForm['allocation-' + $index + '-product-expiry'].$error" role="alert">
                   <ng-message when="required">

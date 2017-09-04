@@ -10,14 +10,16 @@ angular.module('cebola.services')
      */
     $scope._supplierSearchText = '';
     $scope._productModelSearchText = '';
-    $scope._minScheduledFor = moment().toDate();
     
     // initialize data
+    if (!shipment || !shipment.status) {
+      $scope.$isNew = true;
+    }
     shipment = angular.copy(shipment) || {};
     
     shipment.scheduledFor =
       shipment.scheduledFor ||
-      moment($scope._minScheduledFor).add(1, 'hour').startOf('hour').toDate();
+      moment().add(1, 'hour').startOf('hour').toDate();
     
     shipment.allocations = 
       shipment.allocations || {};
@@ -38,10 +40,22 @@ angular.module('cebola.services')
 
     $scope.shipment = shipment;
 
-    console.log($scope.shipment.allocations.active);
+    /**
+     * Ediatbility flag
+     * 0: none
+     * 1: restricted
+     * 2: all
+     */
+    $scope._editability = 2;
+    if ($scope.shipment.status) {
+      if ($scope.shipment.status.value === 'in-progress' ||
+          $scope.shipment.status.value === 'finished') {
+        $scope._editability = 1;
+      } else if ($scope.shipment.status.value === 'cancelled') {
+        $scope._editability = 0;
+      }
+    }
 
-    window.test = $scope.shipment.allocations.active
-    
     /**
      * Save a reference to the original allocations
      * so that we may compare to retrive updated ones

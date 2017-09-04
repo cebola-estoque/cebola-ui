@@ -4,22 +4,20 @@ angular.module('cebola.services')
   /**
    * Shipment creation / edition Controller
    */
-  function EntryShipmentDialog($scope, $filter, shipmentType, shipment, $mdDialog, cebolaAPI) {
+  function EntryShipmentDialog($scope, $filter, shipment, $mdDialog, cebolaAPI) {
     /**
      * Auxiliary scope values
      */
     $scope._supplierSearchText = '';
     $scope._productModelSearchText = '';
-    $scope._minScheduledFor = moment().toDate();
-    $scope._maxScheduledFor;
     
     // initialize data
-    $scope.shipmentType = shipmentType;
+    $scope.$isNew   = !shipment;
     $scope.shipment = shipment || {};
     
     $scope.shipment.scheduledFor =
       $scope.shipment.scheduledFor ||
-      moment($scope._minScheduledFor).add(1, 'hour').startOf('hour').toDate();
+      moment().add(1, 'hour').startOf('hour').toDate();
     
     $scope.shipment.allocations = 
       $scope.shipment.allocations || {};
@@ -33,11 +31,13 @@ angular.module('cebola.services')
      * 2: all
      */
     $scope._editability = 2;
-    if ($scope.shipment.status.value === 'in-progress' ||
-        $scope.shipment.status.value === 'finished') {
-      $scope._editability = 1;
-    } else if ($scope.shipment.status.value === 'cancelled') {
-      $scope._editability = 0;
+    if ($scope.shipment.status) {
+      if ($scope.shipment.status.value === 'in-progress' ||
+          $scope.shipment.status.value === 'finished') {
+        $scope._editability = 1;
+      } else if ($scope.shipment.status.value === 'cancelled') {
+        $scope._editability = 0;
+      }
     }
     
     /**
