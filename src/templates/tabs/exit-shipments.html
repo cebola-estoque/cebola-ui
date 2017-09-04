@@ -33,7 +33,7 @@
       <tr ng-repeat="exitShipment in exitShipments | filter:isPendingExitShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/saidas/{{ exitShipment._id }}">
+          <a href="#!/saidas/{{ exitShipment._id }}">
             {{ exitShipment.scheduledFor | date }}
           </a>
         </td>
@@ -121,7 +121,7 @@
         ng-repeat="exitShipment in exitShipments | filter:isFinishedExitShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/saidas/{{ exitShipment._id }}">
+          <a href="#!/saidas/{{ exitShipment._id }}">
             {{ exitShipment.scheduledFor | date }}
           </a>
         </td>

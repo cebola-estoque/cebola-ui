@@ -34,7 +34,7 @@
         ng-class="{ 'highlight': highlight }">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/entradas/{{ entryShipment._id }}">
+          <a href="#!/entradas/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
           </a>
         </td>
@@ -122,7 +122,7 @@
         ng-repeat="entryShipment in entryShipments | filter:isFinishedEntryShipment">
         <td class="table-col-150">
           <!-- actions -->
-          <a href="#/entradas/{{ entryShipment._id }}">
+          <a href="#!/entradas/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
           </a>
         </td>
