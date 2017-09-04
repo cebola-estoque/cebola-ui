@@ -55,6 +55,13 @@ angular.module('cebola.controllers')
         console.log('data', data);
         
         var promises = [];
+
+        promises.push(
+          cebolaAPI.shipment.update(
+            sourceEntryShipment._id,
+            data.shipment
+          )
+        );
         
         if (data.allocationsToCancel.length > 0) {
           promises.push(

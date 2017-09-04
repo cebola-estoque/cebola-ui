@@ -5,13 +5,15 @@
   angular.module('cebola', [
     'ui.router',
     'ngMaterial',
-    'cebola.services',
-    'cebola.controllers',
-    'cebola.directives',
+    'ngMessages',
 
     // third-party
     'pascalprecht.translate',
     'ngFileUpload',
+    
+    'cebola.services',
+    'cebola.controllers',
+    'cebola.directives',
   ])
 
   /**

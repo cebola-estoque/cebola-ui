@@ -11,6 +11,7 @@ angular.module('cebola.services')
     $scope._supplierSearchText = '';
     $scope._productModelSearchText = '';
     $scope._minScheduledFor = moment().toDate();
+    $scope._maxScheduledFor;
     
     // initialize data
     $scope.shipmentType = shipmentType;

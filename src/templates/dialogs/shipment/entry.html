@@ -31,14 +31,22 @@
             <label>Data de chegada</label>
             <input
               required
+              name="scheduledFor"
               ng-model="shipment.scheduledFor"
               ng-min="_minScheduledFor"
               type="datetime-local">
+            <ng-messages for="shipmentForm.scheduledFor.$error" role="alert">
+              <ng-message when="required">
+                Por favor selecione uma data de chegada
+              </ng-message>
+              <ng-message when="min">
+                Data de chegada é anterior ao mínimo ({{ _minScheduledFor }}).
+              </ng-message>
+            </ng-messages>
           </md-input-container>
           
           <!-- supplier (for entries only)-->
           <md-autocomplete
-            ng-if="shipmentType === 'entry'"
             flex
             class="md-block"
             md-selected-item="shipment.supplier"
@@ -56,8 +64,35 @@
             </md-item-template>
           </md-autocomplete>
         </div>
-        
-        <label>Produtos</label>
+
+        <div layout-gt-sm="row">
+          <!--
+            shipment.documents.NF
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nota fiscal</label>
+            <input
+              ng-model="shipment.documents.NF">
+          </md-input-container>
+          <!--
+            shipment.documents.CDE
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>CDE</label>
+            <input
+              ng-model="shipment.documents.CDE">
+          </md-input-container>
+          <!--
+            shipment.documents.vehicleId
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Identificação do veículo</label>
+            <input
+              ng-model="shipment.documents.vehicleId">
+          </md-input-container>
+        </div>
+
+        <label>Produtos previstos</label>
 
         <div class="shipment-product-list">
           <div
@@ -69,7 +104,6 @@
                 productModel for entry shipments (any product model)
               -->
               <md-autocomplete
-                ng-if="shipmentType === 'entry'"
                 class="md-block product-model-autocomplete"
                 md-selected-item="allocation.product.model"
                 md-floating-label="Modelo de produto"
@@ -101,41 +135,6 @@
                       </div>
                     </div>
 
-                    <!-- <div class="autocomplete-option-right">
-                      <div class="product-inventory-summary">
-                        <div class="summary-line">
-                          <label>
-                            em estoque
-                          </label>
-                          <div>
-                            {{ product.inStock }} {{ product.measureUnit }}
-                          </div>
-                        </div>
-                        <div
-                          class="summary-line"
-                          ng-if="product.allocatedForEntry !== 0"
-                          style="opacity: 0.6;">
-                          <label>
-                            à chegar
-                          </label>
-                          <div>
-                            {{ product.allocatedForEntry }} {{ product.measureUnit }}
-                          </div>
-                        </div>
-                        <div
-                          class="summary-line"
-                          ng-if="product.allocatedForExit !== 0"
-                          style="color: darkred; opacity: 0.6;">
-                          <label>
-                            à sair
-                          </label>
-                          <div>
-                            {{ -1 * product.allocatedForExit }} {{ product.measureUnit }}
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
-
                   </div>
                 </md-item-template>
               </md-autocomplete>
@@ -152,10 +151,19 @@
               <md-input-container flex-gt-sm>
                 <label>Data de validade</label>
                 <input
+                  name="allocation-{{ $index }}-product-expiry"
                   required
                   ng-model="allocation.product.expiry"
-                  ng-min="_minScheduledFor"
+                  ng-min="shipment.scheduledFor || _minScheduledFor"
                   type="date">
+                <ng-messages for="shipmentForm['allocation-' + $index + '-product-expiry'].$error" role="alert">
+                  <ng-message when="required">
+                    Data de validade é obrigatória
+                  </ng-message>
+                  <ng-message when="min">
+                    Data de validade é anterior à data de chegada prevista
+                  </ng-message>
+                </ng-messages>
               </md-input-container>
               
               <md-input-container class="md-block" flex-gt-sm>
@@ -166,6 +174,7 @@
                 <input
                   type="number"
                   required
+                  min="1"
                   ng-min="1"
                   ng-model="allocation.allocatedQuantity"
                   ng-disabled="allocation.status.value === 'allocation-cancelled'">
@@ -176,7 +185,7 @@
                 Measure unit is not modifiable in exits
               -->
               <md-input-container class="md-block" flex-gt-sm>
-                <label>Unidade</label>
+                <label>Unidade de medida</label>
                 <input
                   required
                   ng-model="allocation.product.measureUnit">
@@ -199,6 +208,17 @@
         >
           Adicionar produto
         </md-button>
+
+
+          
+        <md-input-container class="md-block">
+          <label>Anotações</label>
+          <textarea
+            ng-model="shipment.annotations">
+          </textarea>
+        </md-input-container>
+
+
       </section>
     
       <footer class="dialog-footer">
