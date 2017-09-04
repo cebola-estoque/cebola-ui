@@ -41,37 +41,269 @@ h6 {
 
 .tab-header > .left {
   padding-left: 40px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 .tab-header > .left > h1.tab-title {
   font-weight: normal;
 }
 
-.product-table {
+.tab-header > .right {
+  position: relative;
+  padding-right: 40px;
+}
+
+.tab-header > .right > .md-fab {
+  transform: translateY(50%);
+}
+
+.tab-body {
+  padding-top: 60px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/**
+ * Common table styles
+ */
+
+table.cebola-table {
   width: 100%;
+  table-layout: fixed;
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
   border-collapse: collapse;
+  box-sizing: border-box;
+  margin-bottom: 40px;
 }
 
-.product-table tr td {
+table.cebola-table a {
+  color: black;
+}
+
+table.cebola-table > tbody {
+  box-shadow: 0px 15px 34px -8px rgba(204,204,204,1);
+}
+
+table.cebola-table > tbody > tr {
+  background-color: white;
+}
+
+table.cebola-table > tbody > tr:hover {
+  /*background-color: lightgray;*/
+  background-color: #ECECEC;
+}
+
+table.cebola-table tr > th {
+  text-align: left;
+  padding: 10px 10px;
+}
+
+table.cebola-table tr > td {
   /* tr borders cannot be styled directly */
-  border-bottom: lightgray 1px solid;
+  /* border: 1px magenta dashed; */
+  text-align: left;
+  border-bottom: #ECECEC 1px solid;
+  position: relative;
+  padding: 10px 10px;
+  box-sizing: border-box;
 }
 
-.product-table tr td dl {
+table.cebola-table tr:last-child > td {
+  border-bottom: none;
+}
+
+table.cebola-table tr > td h1 {
+  font-size: 14px;
+}
+
+table.cebola-table tr > td > .status-info {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+table.cebola-table tr > td > dl {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
+  margin: 0 0;
 }
 
-.protuct-table tr td dl div {
+table.cebola-table tr > td > dl > div {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
   flex-direction: row;
   -ms-flex-pack: justify;
   justify-content: space-between;
+}
+
+table.cebola-table tr > td > dl > div > dt {
+  /* background-color: green; */
+  max-width: 40%;
+}
+
+table.cebola-table tr > td > dl > div > dd {
+  margin: 0 0;
+  /* background-color: red; */
+  max-width: 60%;
+  text-align: right;
+}
+
+table.cebola-table .table-col-100 {
+  width: 100px;
+}
+
+table.cebola-table .table-col-150 {
+  width: 150px;
+}
+
+table.cebola-table .table-col-200 {
+  width: 200px;
+}
+
+table.cebola-table .table-col-250 {
+  width: 250px;
+}
+
+table.cebola-table .table-col-300 {
+  width: 300px;
+}
+
+.dialog {
+  min-width: 400px;
+}
+
+/**
+ * Dialog header
+ */
+
+.dialog header.dialog-header {
+  height: 60px;
+  background-color: #27001D;
+  color: white;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.dialog header.dialog-header md-icon {
+  color: white;
+}
+
+.dialog header.dialog-header > .dialog-header-left {
+  padding-left: 20px;
+}
+
+/**
+ * Dialog body
+ */
+
+.dialog section.dialog-body {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/**
+ * Dialog footer
+ */
+
+.dialog footer.dialog-footer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 60px;
+}
+
+.dialog hr {
+  border-top: none;
+  /*border-left: none;
+  border-right: none;*/
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* elements */
+
+.shipment-dialog .cancelled {
+  opacity: 0.5;
+}
+
+.shipment-dialog .cancelled input {
+  text-decoration: line-through;
+}
+
+.shipment-dialog .shipment-product-list {
+  background-color: #efefef;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+}
+
+md-menu-item {
+  font-size: 14px;
+}
+
+md-menu-item > button.md-button {
+  font-size: inherit;
+}
+
+.md-button.md-fab {
+  background-color: #54AB55;
+}
+
+.md-button.md-fab:not([disabled]):hover {
+  background-color: #54AB55;
+  background-color: #479048;
+  /*background-color: rgba(158, 158, 158, 0.2);*/
+}
+
+.md-button.md-fab[disabled] {
+  color: rgba(0, 0, 0, 0.26);
+  background-color: transparent;
+}
+
+.product-description {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.product-description > img {
+  height: 50px;
+  margin-right: 10px;
 }
 
 /* sections */
@@ -88,11 +320,17 @@ h6 {
   flex-direction: row;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  height: 70px;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  height: 90px;
+  padding-top: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
 }
 
 #app-header-left {
-  padding-left: 20px;
+  padding-left: 40px;
+  /* alinhado com conteudo body */
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
@@ -104,7 +342,7 @@ h6 {
 }
 
 #app-header-left img.logo {
-  height: 40px;
+  height: 30px;
 }
 
 #app-header-left > nav {
@@ -119,6 +357,7 @@ h6 {
   -ms-flex-pack: distribute;
   justify-content: space-around;
   height: 100%;
+  padding-left: 20px;
 }
 
 #app-header-left > nav > ul > li {
@@ -127,7 +366,7 @@ h6 {
 
 #app-header-left > nav > ul > li > a,
 #app-header-right a {
-  color: white;
+  color: rgba(255,255,255,0.7);
   text-decoration: none;
   display: -ms-flexbox;
   display: flex;
@@ -143,6 +382,19 @@ h6 {
   padding-right: 20px;
 }
 
+#app-header-right a {
+  padding-right: 2px;
+  margin-right: 30px;
+}
+
+#app-header-left > nav > ul > li > a:hover,
+#app-header-left > nav > ul > li > a:active,
+#app-header-left > nav > ul > li > a.active,
+#app-header-right a:hover {
+  color: rgba(255,255,255,1);
+  color: white;
+}
+
 #app-header-left > nav > ul > li > a:hover:after,
 #app-header-left > nav > ul > li > a:active:after,
 #app-header-left > nav > ul > li > a.active:after {
@@ -155,8 +407,327 @@ h6 {
   background-color: #54AB55;
 }
 
+#app-header-right a:after {
+  content: url('/resources/img/arrow.png');
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 100%;
+  top: 22px;
+}
+
+#app-header-right {
+  padding-right: 40px;
+  /* alinhado com conteudo body */
+  height: 60px;
+}
+
 /**
  * app body
  */
 
+#app-body {
+  background-color: #F2F2F2;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
 /* tabs */
+
+#in-stock-products {
+  margin-bottom: 50px;
+}
+
+/**
+ * Shared styles among both entry shipment tables
+ */
+
+.entry-shipments-table .arrival-date {
+  width: 120px;
+}
+
+.entry-shipments-table .supplier {
+  width: 200px;
+}
+
+#finished-entry-shipments {
+  margin-top: 30px;
+}
+
+/**
+ * Entry shipment details
+ */
+
+#cancelled-allocations {
+  opacity: 0.4;
+}
+
+#product-models-table .image-column {
+  width: 80px;
+}
+
+#product-models-table .image-column img {
+  width: 100%;
+  height: auto;
+}
+
+/* dialogs */
+
+#product-model-image-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+#product-model-image-container > img {
+  width: 200px;
+  height: auto;
+}
+
+#product-model-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+  background-color: white;
+}
+
+#product-model-image-container:hover #product-model-image-overlay {
+  /*display: block;*/
+  opacity: 0.8;
+  cursor: pointer;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+#exit-shipment-dialog {
+  /*width: 90%;*/
+}
+
+.product-autocomplete {
+  width: 100%;
+}
+
+/**
+ * Special styles for product-autocomplete, as specified at
+ * http://stackoverflow.com/questions/37745911/custom-auto-complete-angular-material
+ * and 
+ * https://material.angularjs.org/latest/demo/autocomplete
+ */
+
+.inventory-product-autocomplete > li {
+  height: 70px !important;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option {
+  width: 100%;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: normal;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option * {
+  line-height: normal;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > .autocomplete-option-left {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > .autocomplete-option-right {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > small {
+  margin-top: 6px;
+  opacity: 0.6;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .image-container {
+  width: 50px;
+  height: 50px;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .image-container > img {
+  height: 100%;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .product-inventory-summary {
+  margin-left: 10px;
+  min-width: 160px;
+  justify-self: flex-end;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .product-inventory-summary > .summary-line {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  /*height: 16px;*/
+  font-size: 14px;
+  border-bottom: 1px solid transparent;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .product-inventory-summary > .summary-line:hover {
+  border-bottom: 1px dotted #cccccc;
+}
+
+#entry-shipment-dialog {
+  /*width: 90%;*/
+}
+
+.product-model-autocomplete {
+  width: 100%;
+}
+
+/**
+ * Special styles for product-autocomplete, as specified at
+ * http://stackoverflow.com/questions/37745911/custom-auto-complete-angular-material
+ * and 
+ * https://material.angularjs.org/latest/demo/autocomplete
+ */
+
+.inventory-product-autocomplete > li {
+  height: 70px !important;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option {
+  width: 100%;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: normal;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option * {
+  line-height: normal;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > .autocomplete-option-left {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > .autocomplete-option-right {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > small {
+  margin-top: 6px;
+  opacity: 0.6;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .image-container {
+  width: 50px;
+  height: 50px;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .image-container > img {
+  height: 100%;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .product-inventory-summary {
+  margin-left: 10px;
+  min-width: 160px;
+  justify-self: flex-end;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .product-inventory-summary > .summary-line {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  /*height: 16px;*/
+  font-size: 14px;
+  border-bottom: 1px solid transparent;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .product-inventory-summary > .summary-line:hover {
+  border-bottom: 1px dotted #cccccc;
+}
+
+body {
+  background-color: #F2F2F2;
+  font-family: 'Open Sans', sans-serif;
+}
