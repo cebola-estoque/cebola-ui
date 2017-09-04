@@ -33,6 +33,7 @@
             <input
               required
               name="scheduledFor"
+              ng-disabled="_editability < 2"
               ng-model="shipment.scheduledFor"
               ng-min="_minScheduledFor"
               type="datetime-local">
@@ -53,6 +54,7 @@
             md-selected-item="shipment.supplier"
             md-floating-label="Fornecedor"
             required
+            ng-disabled="_editability < 2"
             
             md-no-cache
             md-require-match
@@ -73,7 +75,8 @@
           <md-input-container class="md-block" flex-gt-sm>
             <label>Nota fiscal</label>
             <input
-              ng-model="shipment.documents.NF">
+              ng-model="shipment.documents.NF"
+              ng-disabled="_editability < 1">
           </md-input-container>
           <!--
             shipment.documents.CDE
@@ -81,7 +84,8 @@
           <md-input-container class="md-block" flex-gt-sm>
             <label>CDE</label>
             <input
-              ng-model="shipment.documents.CDE">
+              ng-model="shipment.documents.CDE"
+              ng-disabled="_editability < 1">
           </md-input-container>
           <!--
             shipment.documents.vehicleId
@@ -89,7 +93,8 @@
           <md-input-container class="md-block" flex-gt-sm>
             <label>Identificação do veículo</label>
             <input
-              ng-model="shipment.documents.vehicleId">
+              ng-model="shipment.documents.vehicleId"
+              ng-disabled="_editability < 1">
           </md-input-container>
         </div>
 
@@ -109,6 +114,7 @@
                 md-selected-item="allocation.product.model"
                 md-floating-label="Modelo de produto"
                 required
+                ng-disabled="_editability < 2"
                 
                 ng-disabled="allocation.status.value === 'allocation-cancelled'"
                 
@@ -154,6 +160,7 @@
                 <input
                   name="allocation-{{ $index }}-product-expiry"
                   required
+                  ng-disabled="_editability < 2"
                   ng-model="allocation.product.expiry"
                   ng-min="shipment.scheduledFor || _minScheduledFor"
                   type="date">
@@ -175,6 +182,7 @@
                 <input
                   type="number"
                   required
+                  ng-disabled="_editability < 2"
                   min="1"
                   ng-min="1"
                   ng-model="allocation.allocatedQuantity"
@@ -189,12 +197,14 @@
                 <label>Unidade de medida</label>
                 <input
                   required
+                  ng-disabled="_editability < 2"
                   ng-model="allocation.product.measureUnit">
               </md-input-container>
               
               <!-- actions -->
               <md-button
                 class="md-icon-button"
+                ng-if="_editability >= 2"
                 ng-click="cancelAllocation(allocation)">
                 <md-icon md-font-set="material-icons">delete</md-icon>
               </md-button>
@@ -206,6 +216,7 @@
           type="button"
           class="md-raised"
           ng-click="createAllocation()"
+          ng-if="shipment.status.value === 'scheduled' || !shipment.status.value"
         >
           Adicionar produto
         </md-button>

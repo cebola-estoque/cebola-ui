@@ -56,13 +56,6 @@ angular.module('cebola.controllers')
         
         var promises = [];
 
-        promises.push(
-          cebolaAPI.shipment.update(
-            sourceEntryShipment._id,
-            data.shipment
-          )
-        );
-        
         if (data.allocationsToCancel.length > 0) {
           promises.push(
             cebolaAPI.shipment.cancelAllocations(
@@ -90,12 +83,16 @@ angular.module('cebola.controllers')
           );
         }
         
-        return $q.all(promises);
-        
+        // first update allocations
+        // and then update the shipment itself
+        return $q.all(promises).then(function () {
+          return cebolaAPI.shipment.update(
+            sourceEntryShipment._id,
+            data.shipment
+          );
+        });
       })
-      .then(function (results) {
-        // the updated shipment is always the first result
-        var updatedEntryShipment = results[0];
+      .then(function (updatedEntryShipment) {
         var index = $scope.entryShipments.indexOf(sourceEntryShipment);
 
         $scope.entryShipments[index] = updatedEntryShipment;
