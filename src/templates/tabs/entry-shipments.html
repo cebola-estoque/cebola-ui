@@ -29,7 +29,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment">
+      <tr
+        ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment | orderBy:'scheduledFor'"
+        ng-class="{ 'highlight': highlight }">
         <td class="table-col-150">
           <!-- actions -->
           <a href="#/entradas/{{ entryShipment._id }}">

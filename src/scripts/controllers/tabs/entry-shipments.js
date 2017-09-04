@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentsCtrl', function ($scope, $q, uiDialogEntryShipment, cebolaAPI) {
+.controller('EntryShipmentsCtrl', function ($scope, $q, $timeout, uiDialogEntryShipment, cebolaAPI) {
   
   // initialize data
   $scope.entryShipments = [];
@@ -93,8 +93,12 @@ angular.module('cebola.controllers')
         return $q.all(promises);
         
       })
-      .then(function () {
-        console.log('updated');
+      .then(function (results) {
+        // the updated shipment is always the first result
+        var updatedEntryShipment = results[0];
+        var index = $scope.entryShipments.indexOf(sourceEntryShipment);
+
+        $scope.entryShipments[index] = updatedEntryShipment;
       });
 
   };
