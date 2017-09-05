@@ -11,7 +11,7 @@ angular.module('cebola.controllers')
   
   // filter related methods
   $scope.isInStock = function (productSummary) {
-    return productSummary.inStock > 0;
+    return !$scope.hasError(productSummary) && productSummary.inStock > 0;
   };
   
   $scope.isOutOfStockButExpected = function (productSummary) {
