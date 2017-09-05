@@ -22,6 +22,10 @@ table.cebola-table > tbody {
   box-shadow: 0px 15px 34px -8px rgba(204,204,204,1);
 }
 
+table.cebola-table.non-interactive > tbody {
+  box-shadow: none;
+}
+
 table.cebola-table > tbody > tr {
   background-color: white;
 
@@ -31,6 +35,10 @@ table.cebola-table > tbody > tr {
 table.cebola-table > tbody > tr:hover {
   /*background-color: lightgray;*/
   background-color: #ECECEC;
+}
+
+table.cebola-table.non-interactive > tbody > tr:hover {
+  background-color: white;
 }
 
 table.cebola-table tr > th {
@@ -109,6 +117,24 @@ table.cebola-table .table-col-250 {
 }
 table.cebola-table .table-col-300 {
   width: 300px;
+}
+table.cebola-table .table-col-350 {
+  width: 350px;
+}
+table.cebola-table .table-col-400 {
+  width: 400px;
+}
+table.cebola-table .table-col-450 {
+  width: 450px;
+}
+table.cebola-table .table-col-500 {
+  width: 500px;
+}
+table.cebola-table .table-col-550 {
+  width: 550px;
+}
+table.cebola-table .table-col-600 {
+  width: 600px;
 }
 
 .md-button.md-default-theme.md-accent[disabled] md-icon, 

@@ -1,0 +1,117 @@
+<md-dialog
+  class="dialog large">
+  <header class="dialog-header">
+    
+    <div class="dialog-header-left">
+      <span>Finalizar entrada</span>
+    </div>
+    <div class="dialog-header-right">
+      <md-button
+        class="md-icon-button"
+        ng-click="cancel()">
+        <md-icon md-font-set="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </header>
+
+  <md-dialog-content>
+    
+    <form
+      name="effectivateAllocationForm"
+      ng-submit="effectivateAllocationForm.$valid && submit()">
+    
+      <section class="dialog-body">
+        <div layout-gt-sm="row">
+          <!-- scheduledFor -->
+          <md-input-container class="md-block" flex-20>
+            <label>Data de chegada</label>
+            <input
+              name="scheduledFor"
+              disabled
+              ng-model="shipment.scheduledFor"
+              type="datetime-local">
+          </md-input-container>
+
+          <!-- supplier -->
+          <md-input-container class="md-block" flex>
+            <label>Fornecedor</label>
+            <input
+              disabled
+              value="{{ shipment.supplier.name }}">
+          </md-input-container>
+        </div>
+
+        <div layout-gt-sm="row">
+          <!--
+            shipment.documents.NF
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nota fiscal</label>
+            <input
+              ng-model="shipment.documents.NF">
+          </md-input-container>
+          <!--
+            shipment.documents.CDE
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>CDE</label>
+            <input
+              ng-model="shipment.documents.CDE">
+          </md-input-container>
+          <!--
+            shipment.documents.vehicleId
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Identificação do veículo</label>
+            <input
+              ng-model="shipment.documents.vehicleId">
+          </md-input-container>
+        </div>
+
+        <div ng-include="'templates/elements/entry-shipment-summary.html'"></div>
+        
+        <div ng-show="allocatedAndEffectivatedDifferences.length > 0" layout-gt-sm="row">
+          Há diferenças entre as quantidades alocadas e efetivadas. Favor adicionar uma observação sobre estas diferenças.
+        </div>
+
+        <div ng-show="shipment.standaloneOperations.active.length > 0">
+          Produtos não previstos foram adicionados à entrada. Por favor adicione uma observação sobre estes produtos
+        </div>
+        
+        <div ng-show="allocatedAndEffectivatedDifferences.length === 0" layout-gt-sm="row">
+          Após finalizar a entrada, nenhuma alteração poderá ser feita. Você deseja continuar?
+        </div>
+        
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Observações</label>
+            <textarea
+              ng-model="shipment.annotations"
+              ng-required="allocatedAndEffectivatedDifferences.length > 0 || shipment.standaloneOperations.active.length > 0"
+              rows="5"
+              md-select-on-focus></textarea>
+          </md-input-container>
+        </div>
+      </section>
+    
+      <footer class="dialog-footer">
+        <div class="dialog-footer-left">
+          
+        </div>
+        
+        <div class="dialog-footer-right">
+          <md-button
+            type="button"
+            ng-click="cancel()">
+            Cancelar
+          </md-button>
+          <md-button
+            type="submit">
+            Confirmar
+          </md-button>
+        </div>
+      </footer>
+    </form>
+
+  </md-dialog-content>
+</md-dialog>

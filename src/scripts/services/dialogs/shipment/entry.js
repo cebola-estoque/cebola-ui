@@ -48,8 +48,7 @@ angular.module('cebola.services')
       $scope.shipment.allocations.active);
   
     // start with at least one allocation in case the shipment is new
-    if ((!$scope.shipment.status || $scope.shipment.status.value === 'scheduled') &&
-        $scope.shipment.allocations.active.length === 0) {
+    if ($scope.$isNew) {
       $scope.shipment.allocations.active.push({});
     }
     
@@ -58,9 +57,6 @@ angular.module('cebola.services')
       var currentActiveAllocations = $scope.shipment.allocations.active.map(function (allocation) {
         // make copy in order not to modify original object
         allocation = Object.assign({}, allocation);
-        
-        allocation.allocatedQuantity = shipmentType === 'entry' ?
-          allocation.allocatedQuantity : -1 * allocation.allocatedQuantity;
           
         return allocation;
       });
@@ -167,9 +163,7 @@ angular.module('cebola.services')
    * Shipment finishing controller
    */
   function FinishEntryShipmentDialogCtrl($scope, shipment) {
-
-    console.log(shipment);
-    $scope.shipment = shipment;
+    $scope.shipment = angular.copy(shipment);
 
     // get the differences between allocation and effectivation
     $scope.allocatedAndEffectivatedDifferences = shipment.allocations.active.filter((allocation) => {
@@ -182,36 +176,38 @@ angular.module('cebola.services')
     };
     
     $scope.submit = function () {
-      $mdDialog.hide($scope.annotations);
+
+      var finishedShipment = angular.copy($scope.shipment);
+
+      delete finishedShipment.allocations;
+      delete finishedShipment.standaloneOperations;
+      delete finishedShipment.scheduledFor;
+      delete finishedShipment.supplier;
+
+      $mdDialog.hide(finishedShipment);
     };
   }
 
   
   return {
-    create: function (shipmentType, shipmentTemplate) {
-      
-      if (!shipmentType) {
-        throw new Error('shipmentType is required');
-      }
+    create: function (shipmentTemplate) {
       
       return $mdDialog.show({
         templateUrl: 'templates/dialogs/shipment/entry.html',
         controller: EntryShipmentDialog,
         locals: {
-          shipmentType: shipmentType,
           shipment: shipmentTemplate
         },
       });
       
     },
     
-    edit: function (shipmentType, sourceShipment) {
+    edit: function (sourceShipment) {
       
       return $mdDialog.show({
         templateUrl: 'templates/dialogs/shipment/entry.html',
         controller: EntryShipmentDialog,
         locals: {
-          shipmentType: shipmentType,
           shipment: sourceShipment
         },
       });
@@ -220,7 +216,7 @@ angular.module('cebola.services')
 
     finish: function (shipment) {
       return $mdDialog.show({
-        templateUrl: 'templates/dialogs/shipment/finish.html',
+        templateUrl: 'templates/dialogs/shipment/finish-entry.html',
         controller: FinishEntryShipmentDialogCtrl,
         locals: {
           shipment: shipment

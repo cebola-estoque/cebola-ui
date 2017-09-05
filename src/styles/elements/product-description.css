@@ -5,7 +5,15 @@
   align-items: center;
 }
 
-.product-description > img {
-  height: 50px;
+.product-description > .product-image-wrapper {
+  width: 50px;
   margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-description > .product-image-wrapper > img {
+  height: 50px;
 }

@@ -63,7 +63,7 @@ angular.module('cebola.services')
     var originalActiveAllocations = angular.copy($scope.shipment.allocations.active);
   
     // start with at least one allocation
-    if ($scope.shipment.allocations.active.length === 0) {
+    if ($scope.$isNew) {
       $scope.shipment.allocations.active.push({});
     }
     

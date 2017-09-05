@@ -95,7 +95,11 @@
         <label>Produtos</label>
 
         <div class="shipment-product-list">
-
+          <div
+            layout-gt-sm="row"
+            ng-if="shipment.allocations.active.length === 0">
+            Nenhum produto previsto
+          </div>
           <div
             ng-class="{ 'cancelled': allocation.status.value === 'allocation-cancelled' }"
             ng-repeat="allocation in shipment.allocations.active">

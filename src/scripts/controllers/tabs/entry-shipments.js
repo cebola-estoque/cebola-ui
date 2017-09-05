@@ -5,7 +5,7 @@ angular.module('cebola.controllers')
   $scope.entryShipments = [];
   
   $scope.createEntryShipment = function () {
-    return uiDialogEntryShipment.create('entry')
+    return uiDialogEntryShipment.create()
       .then(function (data) {
         var entryShipment = data.shipment;
         var supplier = data.shipment.supplier;
@@ -45,7 +45,7 @@ angular.module('cebola.controllers')
     
     return cebolaAPI.shipment.getById(sourceEntryShipment._id)
       .then(function (fullSourceEntryShipment) {
-        return uiDialogEntryShipment.edit('entry', fullSourceEntryShipment);
+        return uiDialogEntryShipment.edit(fullSourceEntryShipment);
       })
       .then(function (data) {
         console.log('data', data);

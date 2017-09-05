@@ -1,0 +1,53 @@
+@media print {
+
+
+  .hidden-on-print {
+    display: none !important;
+  }
+
+  /**
+   * Header
+   */
+  #app-header {
+    /*display: none !important;*/
+    /*padding: 0 !important;*/
+    padding-top: 50px !important;
+    height: 40px !important;
+    justify-content: center !important;
+  }
+
+  #app-header-left {
+    padding: 0 !important;
+  }
+  #app-header-left > nav {
+    display: none;
+  }
+
+
+  /**
+   * Elements
+   */
+  .md-button {
+    display: none !important;
+  }
+
+  /**
+   * Table
+   */
+  table.cebola-table > tbody > tr {
+    background-color: white;
+
+    height: 30px; /* works like min-height in tr */
+  }
+
+
+  /**
+   * Tabs
+   */
+  .tab-header > .left,
+  .tab-header > .right,
+  .tab-body {
+    padding: 0 !important;
+  }
+}
+

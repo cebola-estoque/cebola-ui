@@ -2,7 +2,8 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      Finalizar {{ shipment.type }}
+      <span ng-if="shipment.type === 'exit'">Finalizar saída</span>
+      <span ng-if="shipment.type === 'entry'">Finalizar entrada</span>
     </div>
     <div class="dialog-header-right">
       <md-button

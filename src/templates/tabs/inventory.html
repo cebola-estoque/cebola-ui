@@ -26,14 +26,16 @@
         <th>À chegar</th>
         <th>À sair</th>
         <!-- <th>À sair</th> -->
-        <th><!-- action placeholder --></th>
+        <th class="hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="summaryProduct in summary | filter:isInStock | orderBy:['product.model.description','product.expiry']">
         <td class="table-col-300">
           <div class="product-description">
-            <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            </div>
             <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
             <h1>{{ summaryProduct.product.model.description }}</h1>
             <!-- </a> -->
@@ -129,7 +131,7 @@
             </div>
           </dl>
         </td> -->
-        <td>
+        <td class="hidden-on-print">
           <!-- actions 
           <md-menu>
             <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
@@ -177,14 +179,16 @@
         <th>À chegar</th>
         <th>À sair</th>
         <!-- <th>À sair</th> -->
-        <th><!-- action placeholder --></th>
+        <th class="hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="summaryProduct in summary | filter:isOutOfStockButExpected">
         <td class="table-col-300">
           <div class="product-description">
-            <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            </div>
             <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
             <h1>{{ summaryProduct.product.model.description }}</h1>
             <!-- </a> -->
@@ -267,7 +271,7 @@
             </div>
           </dl>
         </td> -->
-        <td>
+        <td class="hidden-on-print">
           <!-- actions
           <md-menu>
             <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
@@ -316,14 +320,16 @@
         <th>À chegar</th>
         <th>À sair</th>
         <!-- <th>À sair</th> -->
-        <th><!-- action placeholder --></th>
+        <th class="hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="summaryProduct in summary | filter:hasError">
         <td class="table-col-300">
           <div class="product-description">
-            <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ summaryProduct.product.model.image.url }}">
+            </div>
             <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
             <h1>{{ summaryProduct.product.model.description }}</h1>
             <!-- </a> -->
@@ -402,7 +408,7 @@
             </div>
           </dl>
         </td> -->
-        <td>
+        <td class="hidden-on-print">
           <!-- actions
           <md-menu>
             <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">

@@ -9,6 +9,7 @@
 @import 'styles/modules/tables.css';
 @import 'styles/modules/dialogs.css';
 @import 'styles/modules/forms.css';
+@import 'styles/modules/print.css';
 
 /* elements */
 @import 'styles/elements/shipment-dialog.css';

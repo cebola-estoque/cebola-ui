@@ -56,7 +56,9 @@
       <tr ng-repeat="allocation in shipment.allocations.active">
         <td>
           <div class="product-description">
-            <img ng-src="{{ allocation.product.model.image.url }}">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ allocation.product.model.image.url }}">
+            </div>
             {{ allocation.product.model.description }}
           </div>
         </td>
@@ -149,7 +151,9 @@
       <tr ng-repeat="allocation in shipment.allocations.finished">
         <td>
           <div class="product-description">
-            <img ng-src="{{ allocation.product.model.image.url }}">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ allocation.product.model.image.url }}">
+            </div>
             {{ allocation.product.model.description }}
           </div>
         </td>
@@ -192,7 +196,9 @@
       <tr ng-repeat="allocation in shipment.allocations.cancelled">
         <td>
           <div class="product-description">
-            <img ng-src="{{ allocation.product.model.image.url }}">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ allocation.product.model.image.url }}">
+            </div>
             {{ allocation.product.model.description }}
           </div>
         </td>
