@@ -1,5 +1,5 @@
 angular.module('cebola.services')
-.factory('entryShipmentActions', function ($q, $state, $mdDialog, uiDialogEntryShipment, uiAnnotationDialog, cebolaAPI) {
+.factory('entryShipmentActions', function ($q, $state, uiDialogEntryShipment, uiAnnotationDialog, cebolaAPI) {
   
   var entryShipmentActions = {};
 

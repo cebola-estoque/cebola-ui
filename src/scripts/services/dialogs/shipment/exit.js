@@ -30,12 +30,11 @@ angular.module('cebola.services')
       // make the allocation allocatedQuantity positive
       allocation.allocatedQuantity = allocation.allocatedQuantity * -1;
 
-      // set the _maxAllocatedQuantity property on each allocation
-      allocation._maxAllocatedQuantity =
-        allocation.product.inStock +
-        allocation.product.allocatedForEntry +
-        allocation.product.allocatedForExit +
-        allocation.allocatedQuantity;
+      /**
+       * Copy the original allocated quantity
+       * for usage later;
+       */
+      allocation.originalAllocatedQuantity = allocation.allocatedQuantity;
     });
 
     $scope.shipment = shipment;
@@ -107,13 +106,86 @@ angular.module('cebola.services')
     $scope.cancel = function() {
       $mdDialog.cancel();
     };
-    
-    // TODO: when the scheduledFor changes, we should update
-    // products...
-    // $scope.$watch('shipment.scheduledFor')
-      
 
+    $scope.enterLoadingState = function () {
+      $scope.$loading = true;
+    };
+
+    $scope.exitLoadingState = function () {
+      $scope.$loading = false;
+    };
+
+    $scope.updateAllocationAvailability = function () {
+      // TODO: lock the UI
+      $scope.enterLoadingState();
+
+      return cebolaAPI.inventory.availabilitySummary($scope.shipment.scheduledFor)
+        .then(function (availableProductsSummary) {
+          // console.log('availableProductsSummary', availableProductsSummary);
+          // console.log('active allocations', $scope.shipment.allocations.active);
+
+          $scope.shipment.allocations.active.forEach(function (alloc) {
+
+            if (!alloc || !alloc.product) {
+              return;
+            }
+
+            // get the corresponding availability summary
+            var availability = availableProductsSummary.find(function (summary) {
+              return util.product.isSame(alloc.product, summary.product);
+            });
+
+            // update allocation availability info
+            alloc.product.inStock = availability.inStock;
+            alloc.product.allocatedForEntry = availability.allocatedForEntry;
+            alloc.product.allocatedForExit = availability.allocatedForExit;
+
+            var availableQuantity =
+              availability.inStock +
+              availability.allocatedForEntry +
+              availability.allocatedForExit;
+
+            // var currentlyAllocatedQuantity = alloc.allocatedQuantity || 0;
+
+            // if (currentlyAllocatedQuantity > availableQuantity) {
+            //   // overallocated
+            //   if (availableQuantity > 0) {
+            //     alloc.allocatedQuantity = availableQuantity;
+            //   } else {
+            //     alloc.allocatedQuantity = 0;
+            //   }
+            // }
+
+            alloc._maxAllocatedQuantity =
+              availability.inStock +
+              availability.allocatedForEntry +
+              availability.allocatedForExit +
+              alloc.originalAllocatedQuantity;
+
+            console.log('=====' + $scope.shipment.scheduledFor + '=====')
+            console.log('availability.inStock', availability.inStock)
+            console.log('availability.allocatedForEntry', availability.allocatedForEntry)
+            console.log('availability.allocatedForExit', availability.allocatedForExit)
+            console.log('alloc.allocatedQuantity', alloc.allocatedQuantity)
+            console.log('alloc._maxAllocatedQuantity', alloc._maxAllocatedQuantity)
+          });
+        })
+        .then(function () {
+          $scope.exitLoadingState();
+        })
+        .catch(function (err) {
+          $scope.exitLoadingState();
+          alert('Houve um erro ao carregar informações de disponibilidade dos produtos. Por favor recarregue a página e tente novamente.')
+        });
+    };
     
+    /**
+     * Whenever the 'scheduledFor' property of the shipment is modified
+     * we should verify if the allocations are still valid.
+     */
+    $scope.$watch('shipment.scheduledFor', function (newScheduledFor) {
+      $scope.updateAllocationAvailability();
+    });
     
     /**
      * Autocompletion methods
@@ -170,7 +242,7 @@ angular.module('cebola.services')
         // sort
         availableProducts = $filter('orderBy')(availableProducts, ['model.description','expiry']);
 
-        console.log(availableProducts);
+        // console.log(availableProducts);
 
         return availableProducts;
       });
@@ -239,54 +311,18 @@ angular.module('cebola.services')
         throw new Error('sourceShipment is required');
       }
 
-      var shipmentLoadPromise;
-
-      // TODO: improve
-      if (sourceShipment._id) {
-        shipmentLoadPromise = cebolaAPI.inventory.availabilitySummary(
-          sourceShipment.scheduledFor
-        )
-        .then(function (availableProductsSummary) {
-          if (!sourceShipment.allocations) {
-            return sourceShipment;
-          }
-
-          sourceShipment.allocations.active.forEach(function (allocation) {
-            var correspondingSummary = availableProductsSummary.find(function (productSummary) {
-              return allocation.product.model._id === productSummary.product.model._id &&
-                     allocation.product.expiry.getTime() === new Date(productSummary.product.expiry).getTime() &&
-                     allocation.product.measureUnit === productSummary.product.measureUnit;
-            });
-
-            allocation.product.inStock = correspondingSummary.inStock;
-            allocation.product.allocatedForEntry = correspondingSummary.allocatedForEntry;
-            allocation.product.allocatedForExit = correspondingSummary.allocatedForExit;
-
-            console.log(correspondingSummary);
-          });
-
-          return sourceShipment;
-        });
-      } else {
-        shipmentLoadPromise = $q.resolve(sourceShipment);
-      }
-
-
-      return shipmentLoadPromise.then(function (shipment) {
-        return $mdDialog.show({
-          templateUrl: 'templates/dialogs/shipment/exit.html',
-          controller: ExitShipmentDialog,
-          locals: {
-            shipment: shipment
-          },
-        });
+      return $mdDialog.show({
+        templateUrl: 'templates/dialogs/shipment/exit.html',
+        controller: ExitShipmentDialog,
+        locals: {
+          shipment: sourceShipment
+        },
       });
-        
     },
 
     finish: function (shipment) {
       return $mdDialog.show({
-        templateUrl: 'templates/dialogs/shipment/finish.html',
+        templateUrl: 'templates/dialogs/shipment/finish-exit.html',
         controller: FinishExitShipmentDialogCtrl,
         locals: {
           shipment: shipment

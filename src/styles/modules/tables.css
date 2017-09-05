@@ -39,7 +39,7 @@ table.cebola-table > tbody > tr:hover {
 
 table.cebola-table > tbody > tr.highlight {
   /* TODO: choose highlight color */
-  background-color: #DDDDDD;
+  background-color: var(--orange);
 }
 
 table.cebola-table > tbody > tr.has-error {

@@ -2,7 +2,10 @@ angular.module('cebola.controllers')
 .controller('ExitShipmentDetailCtrl', function (
   $scope, $stateParams,
   $mdDialog,
-  cebolaAPI, uiAllocationDialog, uiDialogExitShipment) {
+  cebolaAPI,
+  exitShipmentActions,
+  uiAllocationDialog,
+  uiDialogExitShipment) {
   
   $scope.shipment = {};
   $scope.allocations = [];
@@ -83,6 +86,22 @@ angular.module('cebola.controllers')
         console.warn(err);
       }
     });
+  };
+
+  $scope.editShipment = function () {
+    return exitShipmentActions.edit($scope.shipment)
+      .then(function (updatedShipment) {
+        return $scope.loadShipment();
+      })
+      .catch(function (err) {
+        
+        if (!err) {
+          // user canceled
+          return;
+        }
+        
+        alert('there was an error editing the exit shipment');
+      });
   };
 
 

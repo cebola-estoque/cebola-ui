@@ -29,6 +29,11 @@
       ng-submit="shipmentForm.$valid && submit()">
 
       <section class="dialog-body">
+
+        <div ng-class="{ 'active': $loading }" class="loading-overlay">
+          <md-progress-circular ng-disabled="!$loading" class="md-warn md-hue-3" md-diameter="70"></md-progress-circular>
+        </div>
+
         <div layout-gt-sm="row">
           <!-- scheduledFor -->
           <md-input-container class="md-block" flex-20>
@@ -286,6 +291,7 @@
             Cancelar
           </md-button>
           <md-button
+            ng-diabled="$loading"
             type="submit">
             Registrar
           </md-button>

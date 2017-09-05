@@ -11,6 +11,7 @@
 @import 'styles/modules/forms.css';
 @import 'styles/modules/print.css';
 @import 'styles/modules/shipments.css';
+@import 'styles/modules/loading.css';
 
 /* elements */
 @import 'styles/elements/shipment-dialog.css';

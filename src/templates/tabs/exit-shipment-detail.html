@@ -17,6 +17,10 @@
   
   <div class="right">
     <md-button
+      ng-click="editShipment()">
+      Editar saída
+    </md-button>
+    <md-button
       ng-if="shipment.status.value !== 'finished'"
       ng-click="finishShipment()">
       Finalizar saída
