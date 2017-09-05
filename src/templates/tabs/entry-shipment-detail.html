@@ -16,6 +16,10 @@
   
   <div class="right">
     <md-button
+      ng-click="editShipment()">
+      Editar entrada
+    </md-button>
+    <md-button
       ng-if="shipment.status.value === 'in-progress'"
       ng-click="finishShipment()">
       Finalizar entrada
@@ -222,7 +226,7 @@
       Inserir produto não previsto
     </md-button>
     <md-button
-      ng-if="shipment.status.value === 'scheduled'"
+      ng-if="shipment.status.value !== 'finished' && shipment.status.value !== 'cancelled'"
       ng-click="cancelShipment()">
       Cancelar entrada
     </md-button>

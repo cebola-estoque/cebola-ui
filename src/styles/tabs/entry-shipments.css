@@ -1,13 +1,8 @@
 /**
  * Shared styles among both entry shipment tables
  */
-
-#active-allocations,
-#finished-allocations {
-	margin-top: 40px;
-}
-
 .entry-shipments-table {
+  
 }
 
 .entry-shipments-table .arrival-date {
@@ -16,14 +11,6 @@
 
 .entry-shipments-table .supplier {
   width: 200px;
-}
-
-#scheduled-entry-shipments {
-  
-}
-
-#finished-entry-shipments {
-  margin-top: 40px;
 }
 
 /**

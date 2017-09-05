@@ -17,7 +17,8 @@
   
   <table
     id="scheduled-entry-shipments"
-    class="cebola-table entry-shipments-table">
+    class="cebola-table entry-shipments-table"
+    ng-if="(entryShipments | filter:isPendingEntryShipment).length > 0">
     <thead>
       <tr>
         <th class="table-col-150">Entradas previstas</th>

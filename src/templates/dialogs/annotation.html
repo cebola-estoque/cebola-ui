@@ -1,0 +1,61 @@
+<md-dialog
+  class="dialog large"
+  flex="80">
+  <header class="dialog-header">
+    
+    <div class="dialog-header-left">
+      {{ dialogOptions.title }}
+    </div>
+    <div class="dialog-header-right">
+      <md-button
+        class="md-icon-button"
+        ng-click="cancel()">
+        <md-icon md-font-set="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </header>
+
+  <md-dialog-content>
+    
+    <form
+      name="annotationForm"
+      ng-submit="annotationForm.$valid && submit()">
+    
+      <section class="dialog-body">
+
+        <div ng-if="dialogOptions.message">
+          {{ dialogOptions.message }}
+        </div>
+
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Observação</label>
+            <textarea
+              ng-model="annotation.body"
+              ng-required="dialogOptions.required"
+              rows="{{ dialogOptions.rows || 5 }}"
+              md-select-on-focus></textarea>
+          </md-input-container>
+        </div>
+      </section>
+    
+      <footer class="dialog-footer">
+        <div class="dialog-footer-left">
+          
+        </div>
+        
+        <div class="dialog-footer-right">
+          <md-button
+            type="button"
+            ng-click="cancel()">
+            {{ dialogOptions.cancel || 'Cancelar' }}
+          </md-button>
+          <md-button
+            type="submit">
+            {{ dialogOptions.ok || 'Ok' }}
+          </md-button>
+        </div>
+      </footer>
+    </form>
+  </md-dialog-content>
+</md-dialog>

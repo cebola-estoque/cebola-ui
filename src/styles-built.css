@@ -65,7 +65,7 @@ h6 {
 }
 
 .tab-body {
-  padding-top: 60px;
+  padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 40px;
   padding-right: 40px;
@@ -92,13 +92,31 @@ table.cebola-table > tbody {
   box-shadow: 0px 15px 34px -8px rgba(204,204,204,1);
 }
 
+table.cebola-table.non-interactive > tbody {
+  box-shadow: none;
+}
+
 table.cebola-table > tbody > tr {
   background-color: white;
+  height: 60px;
+  /* works like min-height in tr */
 }
 
 table.cebola-table > tbody > tr:hover {
   /*background-color: lightgray;*/
   background-color: #ECECEC;
+}
+
+table.cebola-table > tbody > tr.has-error {
+  background-color: #F9F1EF;
+}
+
+table.cebola-table > tbody > tr.has-error:hover {
+  background-color: #E3CCCA;
+}
+
+table.cebola-table.non-interactive > tbody > tr:hover {
+  background-color: white;
 }
 
 table.cebola-table tr > th {
@@ -180,8 +198,47 @@ table.cebola-table .table-col-300 {
   width: 300px;
 }
 
+table.cebola-table .table-col-350 {
+  width: 350px;
+}
+
+table.cebola-table .table-col-400 {
+  width: 400px;
+}
+
+table.cebola-table .table-col-450 {
+  width: 450px;
+}
+
+table.cebola-table .table-col-500 {
+  width: 500px;
+}
+
+table.cebola-table .table-col-550 {
+  width: 550px;
+}
+
+table.cebola-table .table-col-600 {
+  width: 600px;
+}
+
+.md-button.md-default-theme.md-accent[disabled] md-icon,
+.md-button.md-accent[disabled] md-icon,
+.md-button.md-default-theme.md-fab[disabled] md-icon,
+.md-button.md-fab[disabled] md-icon,
+.md-button.md-default-theme.md-raised[disabled] md-icon,
+.md-button.md-raised[disabled] md-icon,
+.md-button.md-default-theme.md-warn[disabled] md-icon,
+.md-button.md-warn[disabled] md-icon,
+.md-button.md-default-theme[disabled] md-icon,
+.md-button[disabled] md-icon {
+  color: rgba(0,0,0,0.15);
+}
+
 .dialog {
   min-width: 400px;
+  font-size: 14px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.4);
 }
 
 /**
@@ -189,9 +246,10 @@ table.cebola-table .table-col-300 {
  */
 
 .dialog header.dialog-header {
-  height: 60px;
+  height: 70px;
   background-color: #27001D;
   color: white;
+  font-size: 18px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
@@ -242,6 +300,67 @@ table.cebola-table .table-col-300 {
   /*border-left: none;
   border-right: none;*/
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}
+
+@media print {
+  .hidden-on-print {
+    display: none !important;
+  }
+
+  /**
+   * Header
+   */
+
+  #app-header {
+    /*display: none !important;*/
+    /*padding: 0 !important;*/
+    padding-top: 50px !important;
+    height: 40px !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+  }
+
+  #app-header-left {
+    padding: 0 !important;
+  }
+
+  #app-header-left > nav {
+    display: none;
+  }
+
+  /**
+   * Elements
+   */
+
+  .md-button {
+    display: none !important;
+  }
+
+  /**
+   * Table
+   */
+
+  table.cebola-table > tbody > tr {
+    background-color: white;
+    height: 30px;
+    /* works like min-height in tr */
+  }
+
+  /**
+   * Tabs
+   */
+
+  .tab-header > .left,
+  .tab-header > .right,
+  .tab-body {
+    padding: 0 !important;
+  }
 }
 
 /* elements */
@@ -301,9 +420,21 @@ md-menu-item > button.md-button {
   align-items: center;
 }
 
-.product-description > img {
-  height: 50px;
+.product-description > .product-image-wrapper {
+  width: 50px;
   margin-right: 10px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.product-description > .product-image-wrapper > img {
+  height: 50px;
 }
 
 /* sections */
@@ -435,7 +566,7 @@ md-menu-item > button.md-button {
 /* tabs */
 
 #in-stock-products {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 /**
@@ -448,10 +579,6 @@ md-menu-item > button.md-button {
 
 .entry-shipments-table .supplier {
   width: 200px;
-}
-
-#finished-entry-shipments {
-  margin-top: 30px;
 }
 
 /**

@@ -29,14 +29,15 @@ gulp.task('develop', function() {
 
   gulp.watch([
     'src/**/*.css',
-    '!src/bower_components'
-  ], function () {
-    gulp.src('src/**/*.css').pipe(browserSync.stream());
-  });
+    '!src/styles-built.css',
+    '!src/bower_components/**/*',
+  ], ['css']);
+
   gulp.watch([
+    'src/styles-built.css',
     'src/**/*.html',
     'src/**/*.js',
-    '!src/bower_components',
+    '!src/bower_components/**/*',
   ]).on('change', browserSync.reload);
 });
 

@@ -1,14 +1,13 @@
 angular.module('cebola.controllers')
 .controller('EntryShipmentDetailCtrl', function (
   $scope,
-  $state,
   $stateParams,
+  $mdDialog,
   cebolaAPI,
   uiAllocationDialog,
   uiOperationDialog,
   uiDialogEntryShipment,
-  $mdDialog,
-  $location
+  entryShipmentActions
 ) {
   
   $scope.shipment = {};
@@ -16,8 +15,6 @@ angular.module('cebola.controllers')
   $scope.loadShipment = function () {
     return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
-
-      console.log(shipment);
     });
   };
   
@@ -119,27 +116,57 @@ angular.module('cebola.controllers')
   };
 
   $scope.cancelShipment = function () {
-    return $mdDialog.show(
-      $mdDialog.confirm()
-        .title('Uma entrada cancelada não poderá mais ser editada. Confirma cancelamento?')
-        .ok('Cancelar entrada')
-        .cancel('cancelar')
-    )
-    .then(function () {
-      return cebolaAPI.shipment.cancel($scope.shipment._id);
-    })
-    .then(function () {
-      return $scope.loadShipment();
-      // alert('CANCELLED!')
-    })
-    .catch(function (err) {
-      if (!err) {
-        return;
-      }
 
-      throw err;
-    })
+    return entryShipmentActions.cancel($scope.shipment)
+      .then(function () {
+        return $scope.loadShipment();
+      })
+      .catch(function (err) {
+        if (!err) {
+          return;
+        }
+
+        alert('houve um erro ao cancelar a carga');
+        throw err;
+      });
+
+    // return $mdDialog.show(
+    //   $mdDialog.confirm()
+    //     .title('Uma entrada cancelada não poderá mais ser editada. Confirma cancelamento?')
+    //     .ok('Cancelar entrada')
+    //     .cancel('cancelar')
+    // )
+    // .then(function () {
+    //   return cebolaAPI.shipment.cancel($scope.shipment._id);
+    // })
+    // .then(function () {
+    //   return $scope.loadShipment();
+    //   // alert('CANCELLED!')
+    // })
+    // .catch(function (err) {
+    //   if (!err) {
+    //     return;
+    //   }
+
+    //   throw err;
+    // })
     
+  };
+
+  $scope.editShipment = function () {
+    return entryShipmentActions.edit($scope.shipment)
+      .then(function (updatedEntryShipment) {
+        return $scope.loadShipment();
+      })
+      .catch(function (err) {
+        
+        if (!err) {
+          // user canceled
+          return;
+        }
+        
+        alert('there was an error editing the entry shipment');
+      });
   };
   
   // initialize
