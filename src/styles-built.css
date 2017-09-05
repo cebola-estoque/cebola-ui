@@ -107,6 +107,11 @@ table.cebola-table > tbody > tr:hover {
   background-color: #ECECEC;
 }
 
+table.cebola-table > tbody > tr.highlight {
+  /* TODO: choose highlight color */
+  background-color: #DDDDDD;
+}
+
 table.cebola-table > tbody > tr.has-error {
   background-color: #F9F1EF;
 }
@@ -361,6 +366,22 @@ table.cebola-table .table-col-600 {
   .tab-body {
     padding: 0 !important;
   }
+}
+
+.shipment-row.scheduled .status-badge {
+  /*color: black;*/
+}
+
+.shipment-row.in-progress .status-badge {
+  color: #E0A91E;
+}
+
+.shipment-row.finished .status-badge {
+  color: #3284A0;
+}
+
+.shipment-row.cancelled .status-badge {
+  color: #D34F3D;
 }
 
 /* elements */

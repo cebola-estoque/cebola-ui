@@ -1,0 +1,21 @@
+
+
+.shipment-row {
+
+}
+
+.shipment-row.scheduled .status-badge {
+  /*color: black;*/
+}
+
+.shipment-row.in-progress .status-badge {
+  color: var(--orange);
+}
+
+.shipment-row.finished .status-badge {
+  color: var(--blue);
+}
+
+.shipment-row.cancelled .status-badge {
+  color: var(--red);
+}

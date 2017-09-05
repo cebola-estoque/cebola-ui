@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentsCtrl', function ($scope, $q, $state, cebolaAPI, entryShipmentActions) {
+.controller('EntryShipmentsCtrl', function ($scope, $q, $state, $timeout, cebolaAPI, entryShipmentActions) {
   
   // initialize data
   $scope.entryShipments = [];
@@ -61,6 +61,12 @@ angular.module('cebola.controllers')
     return entryShipmentActions.edit(sourceEntryShipment)
       .then(function (updatedEntryShipment) {
         var index = $scope.entryShipments.indexOf(sourceEntryShipment);
+
+        updatedEntryShipment._highlight = true;
+
+        $timeout(function () {
+          updatedEntryShipment._highlight = false;
+        }, 2000);
 
         $scope.entryShipments[index] = updatedEntryShipment;
       })

@@ -35,9 +35,15 @@
             <label>Data de saída</label>
             <input
               required
+              name="scheduledFor"
               ng-model="shipment.scheduledFor"
               ng-disabled="_editability < 2"
               type="datetime-local">
+            <ng-messages for="shipmentForm.scheduledFor.$error" role="alert">
+              <ng-message when="required">
+                Por favor selecione uma data de saída
+              </ng-message>
+            </ng-messages>
           </md-input-container>
           
           <!-- recipient (for exits only)-->
@@ -191,11 +197,20 @@
               <md-input-container flex-gt-sm>
                 <label>Data de validade</label>
                 <input
+                  name="allocation-{{ $index }}-product-expiry"
                   required
                   ng-model="allocation.product.expiry"
                   ng-min="shipment.scheduledFor"
                   type="date"
                   disabled>
+                <ng-messages for="shipmentForm['allocation-' + $index + '-product-expiry'].$error" role="alert">
+                  <ng-message when="required">
+                    Data de validade é obrigatória
+                  </ng-message>
+                  <ng-message when="min">
+                    Data de validade é anterior à data de saída prevista
+                  </ng-message>
+                </ng-messages>
               </md-input-container>
               
               <md-input-container class="md-block" flex-gt-sm>

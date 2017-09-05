@@ -32,7 +32,12 @@
     <tbody>
       <tr
         ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment | orderBy:'scheduledFor'"
-        ng-class="{ 'highlight': highlight }">
+        class="shipment-row"
+        ng-class="{ 'highlight': entryShipment._highlight,
+                    'scheduled': entryShipment.status.value === 'scheduled',
+                    'in-progress': entryShipment.status.value === 'in-progress',
+                    'finished': entryShipment.status.value === 'finished',
+                    'cancelled': entryShipment.status.value === 'cancelled', }">
         <td class="table-col-150">
           <!-- actions -->
           <a href="#!/entradas/{{ entryShipment._id }}">
@@ -49,7 +54,9 @@
           {{ entryShipment.supplier.contactPoint.telephone }}
         </td>
         <td>
-          {{ entryShipment.status.value | translate }}
+          <span class="status-badge">
+            {{ entryShipment.status.value | translate }}
+          </span>
         </td>
         <td class="table-col-150">
           <!-- actions -->
@@ -128,7 +135,13 @@
     </thead>
     <tbody>
       <tr
-        ng-repeat="entryShipment in entryShipments | filter:isFinishedEntryShipment">
+        ng-repeat="entryShipment in entryShipments | filter:isFinishedEntryShipment"
+        class="shipment-row"
+        ng-class="{ 'highlight': entryShipment._highlight,
+                    'scheduled': entryShipment.status.value === 'scheduled',
+                    'in-progress': entryShipment.status.value === 'in-progress',
+                    'finished': entryShipment.status.value === 'finished',
+                    'cancelled': entryShipment.status.value === 'cancelled', }">
         <td class="table-col-150">
           <!-- actions -->
           <a href="#!/entradas/{{ entryShipment._id }}">
@@ -145,7 +158,9 @@
           {{ entryShipment.supplier.contactPoint.telephone }}
         </td>
         <td>
-          {{ entryShipment.status.value | translate }}
+          <span class="status-badge">
+            {{ entryShipment.status.value | translate }}
+          </span>
         </td>
         <td class="table-col-150">
           <!-- actions -->

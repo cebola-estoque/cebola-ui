@@ -37,6 +37,11 @@ table.cebola-table > tbody > tr:hover {
   background-color: #ECECEC;
 }
 
+table.cebola-table > tbody > tr.highlight {
+  /* TODO: choose highlight color */
+  background-color: #DDDDDD;
+}
+
 table.cebola-table > tbody > tr.has-error {
   background-color: #F9F1EF;
 }
