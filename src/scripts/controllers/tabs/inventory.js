@@ -19,7 +19,11 @@ angular.module('cebola.controllers')
   };
   
   $scope.hasError = function (productSummary) {
-    return productSummary.inStock < 0;
+
+    var hasNegativeStock = productSummary.inStock < 0;
+    var isOverallocated  = productSummary.inStock + productSummary.allocatedForEntry + productSummary.allocatedForExit < 0;
+
+    return hasNegativeStock || isOverallocated;
   };
   
   $scope.isEntryAllocationRecord = function (record) {

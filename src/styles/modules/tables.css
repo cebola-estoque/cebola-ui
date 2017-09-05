@@ -37,6 +37,15 @@ table.cebola-table > tbody > tr:hover {
   background-color: #ECECEC;
 }
 
+table.cebola-table > tbody > tr.has-error {
+  background-color: #F9F1EF;
+}
+
+table.cebola-table > tbody > tr.has-error:hover {
+  background-color: #E3CCCA;
+}
+
+
 table.cebola-table.non-interactive > tbody > tr:hover {
   background-color: white;
 }
