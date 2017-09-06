@@ -407,7 +407,7 @@ table.cebola-table .table-col-600 {
 }
 
 .loading-overlay.active {
-  z-index: 9999;
+  z-index: 10;
   opacity: 0.7;
 }
 
@@ -610,6 +610,11 @@ md-menu-item > button.md-button {
   background-color: #F2F2F2;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
+}
+
+#app-body > .loading-overlay {
+  position: fixed;
+  top: 160px;
 }
 
 /* tabs */

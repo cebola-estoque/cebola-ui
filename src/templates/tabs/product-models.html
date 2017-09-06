@@ -31,6 +31,17 @@
       </tr>
     </thead>
     <tbody>
+      <tr 
+        ng-if="productModels.length === 0">
+        <td colspan="6">
+          Não há produtos cadastrados
+          <md-button
+            class="md-raised"
+            ng-click="createProductModel()">
+            Cadastrar novo produto
+          </md-button>
+        </td>
+      </tr>
       <tr ng-repeat="productModel in productModels">
         <td class="image-column">
           <img ng-src="{{ productModel.image.url }}">

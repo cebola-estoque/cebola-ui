@@ -7,3 +7,8 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 }
+
+#app-body > .loading-overlay {
+  position: fixed;
+  top: 160px;
+}

@@ -31,6 +31,17 @@
       </tr>
     </thead>
     <tbody>
+      <tr 
+        ng-if="organizations.length === 0">
+        <td colspan="6">
+          Não há organizações cadastradas
+          <md-button
+            class="md-raised"
+            ng-click="createOrganization()">
+            Cadastrar nova organização
+          </md-button>
+        </td>
+      </tr>
       <tr ng-repeat="organization in organizations">
         <td>{{ organization.name }}</td>
         <td>{{ organization.document.type }}:<br>{{ organization.document.value }}</td>

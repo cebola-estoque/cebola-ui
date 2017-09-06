@@ -100,7 +100,14 @@
     </div>
   </header>
   
-  <section id="app-body" ui-view="body">
+  <section id="app-body">
+
+
+    <div ng-class="{ 'active': $httpGlobalLoading }" class="loading-overlay">
+      <md-progress-circular ng-disabled="!$httpGlobalLoading" class="md-warn md-hue-3" md-diameter="70"></md-progress-circular>
+    </div>
+    
+    <div ui-view="body"></div>
     
     
   </section>

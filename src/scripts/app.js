@@ -142,6 +142,47 @@
     });
     $translateProvider.preferredLanguage('pt-BR');
   })
+
+  // http interceptor that shows loading indicator on ajax request
+  .config(function($httpProvider) {
+
+    // alternatively, register the interceptor via an anonymous factory
+    $httpProvider.interceptors.push(function($q, $rootScope) {
+      return {
+        request: function(config) {
+
+          $rootScope.$httpGlobalLoading = true;
+
+          return config;
+        },
+
+        // optional method
+        requestError: function(rejection) {
+          // do something on error
+          
+          $rootScope.$httpGlobalLoading = false;
+
+          return $q.reject(rejection);
+        },
+
+        response: function(response) {
+
+          $rootScope.$httpGlobalLoading = false;
+
+          // same as above
+          return response;
+        },
+
+        // optional method
+        responseError: function(rejection) {
+          // do something on error
+          $rootScope.$httpGlobalLoading = false;
+
+          return $q.reject(rejection);
+        }
+      };
+    });
+  })
   
   /**
    * Outmost controller of the application
