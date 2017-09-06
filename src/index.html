@@ -1,169 +1,176 @@
 <!DOCTYPE html>
 <html ng-app="cebola" ng-cloak ng-controller="AppCtrl">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Cebola</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Cebola</title>
 
-    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 
-    <!-- material icons -->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" type="text/css" href="bower_components/material-design-icons/iconfont/material-icons.css">
+  <!-- material icons -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <link rel="stylesheet" type="text/css" href="bower_components/material-design-icons/iconfont/material-icons.css">
 
-    <!-- font Open Sans -->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
-    <link rel="stylesheet" type="text/css" href="bower_components/open-sans-fontface/open-sans.css">
+  <!-- font Open Sans -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
+  <link rel="stylesheet" type="text/css" href="bower_components/open-sans-fontface/open-sans.css">
 
-    <!-- meta tag from ionic -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <!-- meta tag from ionic -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-    <!-- build:css styles.css -->
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
-    <!-- endbuild -->
-    
+  <!-- build:css styles.css -->
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+  <!-- endbuild -->
+  
   </head>
   <body>
+  
+  <header id="app-header">
+    <div id="app-header-left">
+    <a href="#!/home">
+      <img class="logo" src="resources/img/logo.png" alt="">
+    </a>
     
-    <header id="app-header">
-      <div id="app-header-left">
-        <a href="#!/home">
-          <img class="logo" src="resources/img/logo.png" alt="">
+    <nav>
+      <ul>
+      <li>
+        <a
+        href="#!/inventario"
+        ui-sref="inventory"
+        ui-sref-active="active">
+        Inventário
         </a>
-      
-        <nav>
-          <ul>
-            <li>
-              <a
-                href="#!/inventario"
-                ui-sref="inventory"
-                ui-sref-active="active">
-                Inventário
-              </a>
-            </li>
-            <li>
-              <a
-                href="#!/entradas"
-                ui-sref="entry-shipments"
-                ui-sref-active="active">
-                Entradas
-              </a>
-            </li>
-            <li>
-              <a
-                href="#!/saidas"
-                ui-sref="exit-shipments"
-                ui-sref-active="active">
-                Saídas
-              </a>
-            </li>
-            <li>
-              <a
-                href="#!/produtos"
-                ui-sref="products"
-                ui-sref-active="active">
-                Produtos
-              </a>
-            </li>
-            <li>
-              <a
-                href="#!/organizações/supplier"
-                ui-sref="organizations({ role: 'supplier' })"
-                ui-sref-active="active">
-                Fornecedores
-              </a>
-            </li>
-            <li>
-              <a
-                href="#!/organizações/recipient"
-                ui-sref="organizations({ role: 'recipient' })"
-                ui-sref-active="active">
-                Receptores
-              </a>
-            </li>
-            <li>
-              <a
-                href="#!/operacoes"
-                ui-sref="operations"
-                ui-sref-active="active">
-                Operações
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      
-      <div id="app-header-right" class="hidden-on-print">
-        <a ng-click="setUserName()">
-          {{ user.name || 'usuário' }}
+      </li>
+      <li>
+        <a
+        href="#!/entradas"
+        ui-sref="entry-shipments"
+        ui-sref-active="active">
+        Entradas
         </a>
-      </div>
-    </header>
+      </li>
+      <li>
+        <a
+        href="#!/saidas"
+        ui-sref="exit-shipments"
+        ui-sref-active="active">
+        Saídas
+        </a>
+      </li>
+      <li>
+        <a
+        href="#!/produtos"
+        ui-sref="products"
+        ui-sref-active="active">
+        Produtos
+        </a>
+      </li>
+      <li>
+        <a
+        href="#!/organizações/supplier"
+        ui-sref="organizations({ role: 'supplier' })"
+        ui-sref-active="active">
+        Fornecedores
+        </a>
+      </li>
+      <li>
+        <a
+        href="#!/organizações/recipient"
+        ui-sref="organizations({ role: 'recipient' })"
+        ui-sref-active="active">
+        Receptores
+        </a>
+      </li>
+      <li>
+        <a
+        href="#!/operacoes"
+        ui-sref="operations"
+        ui-sref-active="active">
+        Operações
+        </a>
+      </li>
+      </ul>
+    </nav>
+    </div>
     
-    <section id="app-body" ui-view="body">
-      
-      
-    </section>
+    <div id="app-header-right" class="hidden-on-print">
+    <a ng-click="setUserName()">
+      {{ user.name || 'usuário' }}
+    </a>
+    </div>
+  </header>
+  
+  <section id="app-body" ui-view="body">
     
-    <!-- config -->
-    <script>
-      window.CONFIG = {
-        // cebolaApiURI: 'http://104.196.65.249',
-        cebolaApiURI: 'http://localhost:4000'
-      };
-    </script>
-
-    <!-- build:js scripts.js -->
-    <!-- libraries -->
-    <script src="bower_components/angular/angular.js" charset="utf-8"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
-
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/object-path/index.js"></script>
     
-    <script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
+  </section>
 
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
+  <!-- data lists -->
+  <datalist id="measure-units-list">
+    <option
+      ng-repeat="measureUnit in CONFIG.DEFAULT_MEASURE_UNITS"
+      value="{{ measureUnit }}">
+  </datalist>
+  
+  <!-- config -->
+  <script>
+    window.CONFIG = {
+    // cebolaApiURI: 'http://104.196.65.249',
+    cebolaApiURI: 'http://localhost:4000'
+    };
+  </script>
 
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
+  <!-- build:js scripts.js -->
+  <!-- libraries -->
+  <script src="bower_components/angular/angular.js" charset="utf-8"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
-    <!-- services -->
-    <script src="scripts/services/index.js"></script>
-    <script src="scripts/services/util.js"></script>
-    <script src="scripts/services/cebola-api.js"></script>
-    <script src="scripts/services/dialogs/shipment/entry.js"></script>
-    <script src="scripts/services/dialogs/shipment/exit.js"></script>
-    <script src="scripts/services/dialogs/allocation.js"></script>
-    <script src="scripts/services/dialogs/operation.js"></script>
-    <script src="scripts/services/dialogs/product-model.js"></script>
-    <script src="scripts/services/dialogs/organization.js"></script>
-    <script src="scripts/services/dialogs/annotation.js"></script>
-    <script src="scripts/services/actions/entry-shipment.js"></script>
-    <script src="scripts/services/actions/exit-shipment.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/object-path/index.js"></script>
+  
+  <script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script>
 
-    <!-- directives -->
-    <script src="scripts/directives/index.js"></script>
+  <script src="bower_components/angular-translate/angular-translate.js"></script>
 
-    <!-- controllers -->
-    <script src="scripts/controllers/index.js"></script>
-    <!-- controllers:tabs -->
-    <script src="scripts/controllers/tabs/inventory.js"></script>
-    <script src="scripts/controllers/tabs/inventory-detail.js"></script>
-    <script src="scripts/controllers/tabs/entry-shipments.js"></script>
-    <script src="scripts/controllers/tabs/entry-shipment-detail.js"></script>
-    <script src="scripts/controllers/tabs/exit-shipments.js"></script>
-    <script src="scripts/controllers/tabs/exit-shipment-detail.js"></script>
-    <script src="scripts/controllers/tabs/operations.js"></script>
-    <script src="scripts/controllers/tabs/product-models.js"></script>
-    <script src="scripts/controllers/tabs/organizations.js"></script>
-    
-    <!-- application -->
-    <script src="scripts/app.js"></script>
-    <!-- endbuild -->
-    
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
+
+  <!-- services -->
+  <script src="scripts/services/index.js"></script>
+  <script src="scripts/services/util.js"></script>
+  <script src="scripts/services/cebola-api.js"></script>
+  <script src="scripts/services/dialogs/shipment/entry.js"></script>
+  <script src="scripts/services/dialogs/shipment/exit.js"></script>
+  <script src="scripts/services/dialogs/allocation.js"></script>
+  <script src="scripts/services/dialogs/operation.js"></script>
+  <script src="scripts/services/dialogs/product-model.js"></script>
+  <script src="scripts/services/dialogs/organization.js"></script>
+  <script src="scripts/services/dialogs/annotation.js"></script>
+  <script src="scripts/services/actions/entry-shipment.js"></script>
+  <script src="scripts/services/actions/exit-shipment.js"></script>
+
+  <!-- directives -->
+  <script src="scripts/directives/index.js"></script>
+
+  <!-- controllers -->
+  <script src="scripts/controllers/index.js"></script>
+  <!-- controllers:tabs -->
+  <script src="scripts/controllers/tabs/inventory.js"></script>
+  <script src="scripts/controllers/tabs/inventory-detail.js"></script>
+  <script src="scripts/controllers/tabs/entry-shipments.js"></script>
+  <script src="scripts/controllers/tabs/entry-shipment-detail.js"></script>
+  <script src="scripts/controllers/tabs/exit-shipments.js"></script>
+  <script src="scripts/controllers/tabs/exit-shipment-detail.js"></script>
+  <script src="scripts/controllers/tabs/operations.js"></script>
+  <script src="scripts/controllers/tabs/product-models.js"></script>
+  <script src="scripts/controllers/tabs/organizations.js"></script>
+  
+  <!-- application -->
+  <script src="scripts/app.js"></script>
+  <!-- endbuild -->
+  
   </body>
 </html>

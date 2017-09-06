@@ -4,7 +4,12 @@
   <header class="dialog-header">
     
     <div class="dialog-header-left">
-      Registrar correção de estoque
+      <span ng-if="dialogOptions.correctionType === 'loss'">
+        Registrar perda de produto
+      </span>
+      <span ng-if="dialogOptions.correctionType !== 'loss'">
+        Registrar correção de estoque
+      </span>
     </div>
     <div class="dialog-header-right">
       <md-button
@@ -18,15 +23,35 @@
   <md-dialog-content>
     
     <form
-      name="effectivateAllocationForm"
-      ng-submit="effectivateAllocationForm.$valid && submit()">
+      name="correctionOperationForm"
+      ng-submit="correctionOperationForm.$valid && submit()">
     
       <section class="dialog-body">
 
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
+            <label>Tipo de correção</label>
+            <md-select
+              required
+              ng-model="dialogOptions.correctionType">
+              <md-option value="addition">
+                Adição
+              </md-option>
+              <md-option value="subtraction">
+                Subtração
+              </md-option>
+              <md-option value="loss">
+                Perda
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
             <label>Tipo de produto</label>
-            <md-select required ng-model="_productType">
+            <md-select
+              required
+              ng-model="dialogOptions.productType"
+              ng-disabled="dialogOptions.correctionType === 'loss'">
               <md-option value="in-stock">
                 Produto em estoque
               </md-option>
@@ -35,34 +60,19 @@
               </md-option>
             </md-select>
           </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Tipo de correção</label>
-            <md-select required ng-model="operation.type">
-              <md-option value="entry">
-                Adição
-              </md-option>
-              <md-option value="exit">
-                Subtração
-              </md-option>
-            </md-select>
-          </md-input-container>
         </div>
         
 
-        <div layout-gt-sm="row" ng-if="_productType && operation.type">
+        <div layout-gt-sm="row" ng-if="dialogOptions.productType">
 
           <!-- productModel for out of stock -->
           <md-autocomplete
-            ng-if="_productType === 'out-of-stock'"
+            ng-if="dialogOptions.productType === 'out-of-stock'"
             class="md-block product-model-autocomplete"
             md-selected-item="operation.product.model"
             md-floating-label="Modelo de produto"
             required
-            ng-disabled="_editability < 2"
-            
-            ng-disabled="allocation.status.value === 'allocation-cancelled'"
-            
+
             md-no-cache
             md-require-match
             md-item-text="productModel.description"
@@ -93,7 +103,7 @@
           
           <!-- product for in stock products -->
           <md-autocomplete
-            ng-if="_productType === 'in-stock'"
+            ng-if="dialogOptions.productType === 'in-stock'"
             class="md-block product-autocomplete"
             md-selected-item="operation.product"
             md-floating-label="Modelo de produto"
@@ -165,7 +175,7 @@
           </md-autocomplete>
         </div>
         
-        <div layout-gt-sm="row" ng-if="_productType && operation.type">
+        <div layout-gt-sm="row" ng-if="dialogOptions.productType">
           <!--
             product.expiry
             product expiry MUST be disabled if it is an exit,
@@ -174,24 +184,24 @@
           <md-input-container flex-gt-sm>
             <label>Data de validade</label>
             <input
-              name="operation-{{ $index }}-product-expiry"
               required
-              ng-disabled="_productType === 'in-stock'"
+              ng-disabled="dialogOptions.productType === 'in-stock'"
               ng-model="operation.product.expiry"
-              ng-min="shipment.scheduledFor"
               type="date">
-            <ng-messages for="shipmentForm['operation-' + $index + '-product-expiry'].$error" role="alert">
-              <ng-message when="required">
-                Data de validade é obrigatória
-              </ng-message>
-              <ng-message when="min">
-                Data de validade é anterior à data de saída prevista
-              </ng-message>
-            </ng-messages>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-sm>
-            <label>Quantidade a se corrigir</label>
+            <label>
+              <span ng-if="dialogOptions.correctionType === 'addition'">
+                Quantidade adicionada (+)
+              </span>
+              <span ng-if="dialogOptions.correctionType === 'subtraction'">
+                Quantidade subtraída (-)
+              </span>
+              <span ng-if="dialogOptions.correctionType === 'loss'">
+                Quantidade perdida (-)
+              </span>
+            </label>
             <input
               type="number"
               ng-disabled="!operation.product"
@@ -209,17 +219,22 @@
             <label>Unidade</label>
             <input
               required
-              ng-disabled="_productType === 'in-stock'"
+              name="measureUnit"
+              list="measure-units-list"
+              ng-disabled="dialogOptions.productType === 'in-stock'"
               ng-model="operation.product.measureUnit">
           </md-input-container>
-          
-          <!-- actions -->
-          <md-button
-            class="md-icon-button"
-            ng-click="cancelAllocation(operation)"
-            ng-if="_editability >= 2">
-            <md-icon md-font-set="material-icons">delete</md-icon>
-          </md-button>
+        </div>
+
+        <div layout-gt-sm="row" ng-if="dialogOptions.productType">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Observações</label>
+            <textarea
+              ng-model="operation.annotations"
+              required
+              rows="5">
+            </textarea>
+          </md-input-container>
         </div>
 
       </section>
@@ -237,7 +252,12 @@
           </md-button>
           <md-button
             type="submit">
-            Confirmar
+            <span ng-if="dialogOptions.correctionType === 'loss'">
+              Registrar perda
+            </span>
+            <span ng-if="dialogOptions.correctionType !== 'loss'">
+              Registrar correção
+            </span>
           </md-button>
         </div>
       </footer>

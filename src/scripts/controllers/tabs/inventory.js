@@ -4,8 +4,14 @@ angular.module('cebola.controllers')
   $scope.loadSummary = function () {
     return cebolaAPI.inventory.summary().then(function (summary) {
       $scope.summary = summary;
-      
-      console.log(summary);
+
+      // console.log(summary.map(i => {
+      //   return {
+      //     inStock: i.inStock,
+      //     forExit: i.allocatedForExit,
+      //     forEntry: i.allocatedForEntry,
+      //   }
+      // }));
     });
   };
   
@@ -34,8 +40,11 @@ angular.module('cebola.controllers')
     return record.kind === 'ProductAllocation' && record.type === 'exit';
   };
 
-  $scope.createLossRecord = function () {
-    uiOperationDialog.createLoss()
+  $scope.createLossRecord = function (operationTemplate, dialogOptions) {
+    dialogOptions = dialogOptions || {};
+    dialogOptions.correctionType = 'loss';
+
+    uiOperationDialog.createCorrection(operationTemplate, dialogOptions)
       .then(function (lossOperation) {
         return cebolaAPI.operation.createLoss(lossOperation);
       })
@@ -48,16 +57,17 @@ angular.module('cebola.controllers')
           return;
         }
 
+        alert('houve um erro ao cadastrar a perda');
         throw err;
       });
   };
 
-  $scope.createCorrectionRecord = function () {
-    uiOperationDialog.createCorrection()
+  $scope.createCorrectionRecord = function (operationTemplate, dialogOptions) {
+    dialogOptions = dialogOptions || {};
+
+    uiOperationDialog.createCorrection(operationTemplate, dialogOptions)
       .then(function (correctionOperation) {
-        if (correctionOperation.quantity !== 0) {
-          return cebolaAPI.operation.createCorrection(correctionOperation);
-        }
+        return cebolaAPI.operation.createCorrection(correctionOperation);
       })
       .then(function () {
         return $scope.loadSummary();
@@ -68,6 +78,7 @@ angular.module('cebola.controllers')
           return;
         }
 
+        alert('houve um erro ao cadastrar a correção');
         throw err;
       });
   };

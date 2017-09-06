@@ -21,6 +21,7 @@
         <th>Unidade de medida</th>
         <th>Quantidade</th>
         <th>Data</th>
+        <th>Observações</th>
       </tr>
     </thead>
     <tbody>
@@ -52,6 +53,7 @@
         </td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr
         ng-repeat="operation in operations | filter:search | orderBy:'-createdAt'"
@@ -68,6 +70,7 @@
         <td>{{ operation.product.measureUnit }}</td>
         <td>{{ operation.quantity }}</td>
         <td>{{ operation.createdAt | date:'d/MMM/yy HH:mm' }}</td>
+        <td>{{ operation.annotations }}</td>
       </tr>
     </tbody>
   </table>

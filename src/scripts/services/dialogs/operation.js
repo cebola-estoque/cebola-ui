@@ -2,15 +2,31 @@ angular.module('cebola.services')
 .factory('uiOperationDialog', function ($mdDialog, cebolaAPI, $filter) {
   
   /**
-   * [CorrectionOperationDialog description]
-   * @param {[type]} $scope    [description]
-   * @param {[type]} operation [description]
+   * CorrectionOperationDialog
    */
-  function CorrectionOperationDialog($scope, operation) {
-    $scope.operation = operation || {};
+  function CorrectionOperationDialog($scope, $rootScope, operation, dialogOptions) {
 
-    $scope._productType; // in-stock / out-of-stock
-    
+    $scope.FORM_SUPPORT = $rootScope.FORM_SUPPORT;
+
+    console.log('CorrectionOperationDialog', operation, dialogOptions);
+
+    // normalize data
+    if (operation && operation.product && operation.product.expiry) {
+      operation.product.expiry = (typeof operation.product.expiry === 'string') ?
+        new Date(operation.product.expiry) :
+        operation.product.expiry;
+    }
+
+    $scope.operation = operation || {};
+    $scope.dialogOptions = Object.assign({
+      productType: undefined, // in-stock / out-of-stock
+      correctionType: undefined, // addition / subtraction / loss 
+    }, dialogOptions);
+
+    if ($scope.dialogOptions.correctionType === 'loss') {
+      $scope.dialogOptions.productType = 'in-stock';
+    }
+
     $scope.completeProductModels = function (searchText) {
       return cebolaAPI.productModel.list().then(function (productModels) {
 
@@ -27,6 +43,9 @@ angular.module('cebola.services')
     };
 
     $scope.completeAvailableProducts = function (searchText) {
+
+      console.log('completeAvailableProducts')
+
       return cebolaAPI.inventory.availabilitySummary(new Date()).then(function (availableProductsSummary) {
 
         var availableProducts = availableProductsSummary.map(function (productSummary) {
@@ -51,10 +70,14 @@ angular.module('cebola.services')
 
     /**
      * Reset the operation product data in case
-     * the _productType is modified
+     * the dialogOptions.productType is modified
      */
-    $scope.$watch('_productType', function () {
-      $scope.operation.product = undefined;
+    $scope.$watch('dialogOptions.productType', function (newProductType, oldProductType) {
+
+      if (oldProductType && (oldProductType !== newProductType)) {
+        // change ocurred
+        $scope.operation.product = undefined;
+      }
     })
     
     // dialog methods
@@ -67,11 +90,14 @@ angular.module('cebola.services')
 
       // modify the operation quantity according to the correction's
       // operation type
-      if (operation.type === 'entry') {
+      if ($scope.dialogOptions.correctionType === 'addition') {
         operation.quantity = operation.quantity;
-      } else if (operation.type === 'exit') {
+      } else if ($scope.dialogOptions.correctionType === 'subtraction' ||
+                 $scope.dialogOptions.correctionType === 'loss') {
         operation.quantity = -1 * operation.quantity;
       }
+
+      console.log(operation);
 
       $mdDialog.hide(operation);
     };
@@ -106,27 +132,18 @@ angular.module('cebola.services')
   }
   
   return {
-    createLoss: function (operationTemplate) {
+    createCorrection: function (operationTemplate, dialogOptions) {
+      // operationTemplate = operationTemplate || {};
+      // dialogOptions = dialogOptions || {};
 
-      operationTemplate = operationTemplate || {};
-
-      return $mdDialog.show({
-        templateUrl: 'templates/dialogs/operation/loss.html',
-        controller: CorrectionOperationDialog,
-        locals: {
-          operation: operationTemplate
-        },
-      });
-    },
-
-    createCorrection: function (operationTemplate) {
-      operationTemplate = operationTemplate || {};
+      console.log('createCorrection',operationTemplate, dialogOptions)
 
       return $mdDialog.show({
         templateUrl: 'templates/dialogs/operation/correction.html',
         controller: CorrectionOperationDialog,
         locals: {
-          operation: operationTemplate
+          operation: operationTemplate,
+          dialogOptions: dialogOptions,
         },
       });
     },

@@ -22,8 +22,15 @@
   .constant('CONFIG', {
     cebolaApiURI:
       window.CONFIG.cebolaApiURI.replace(TRAILING_SLASH_RE, ''),
+    DEFAULT_MEASURE_UNITS: [
+      'KG',
+      'L',
+      'PACOTE',
+      'CAIXA',
+      'UNIDADE',
+    ],
   })
-  
+
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
     
     /**
@@ -139,7 +146,12 @@
   /**
    * Outmost controller of the application
    */
-  .controller('AppCtrl', function ($scope, $rootScope, $state, $mdDialog) {
+  .controller('AppCtrl', function ($scope, $rootScope, $state, $mdDialog, CONFIG) {
+
+    /**
+     * Expose config
+     */
+    $rootScope.CONFIG = CONFIG;
 
     /**
      * GO BACK functionality
@@ -189,7 +201,7 @@
       }, function() {
         // $scope.status = 'You didn\'t name your dog.';
       });
-    }
+    };
 
   });
   

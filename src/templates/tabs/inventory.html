@@ -7,8 +7,15 @@
   </div>
   
   <div class="right">
-    <md-button ng-click="createLossRecord()">Perda de produto</md-button>
-    <md-button ng-click="createCorrectionRecord()">Correção</md-button>
+    <md-button
+      ng-click="createLossRecord()">
+      Perda de produto
+    </md-button>
+
+    <md-button
+      ng-click="createCorrectionRecord()">
+      Correção
+    </md-button>
   </div>
 </header>
 
@@ -31,14 +38,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="has-error" ng-repeat="summaryProduct in summary | filter:hasError">
+      <tr class="has-error" ng-repeat="productSummary in summary | filter:hasError">
         <td class="table-col-300">
           <div class="product-description">
             <div class="product-image-wrapper">
-              <img ng-src="{{ summaryProduct.product.model.image.url }}">
+              <img ng-src="{{ productSummary.product.model.image.url }}">
             </div>
-            <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
-            <h1>{{ summaryProduct.product.model.description }}</h1>
+            <!-- <a href="#/inventario/{{ productSummary.product.model._id }}"> -->
+            <h1>{{ productSummary.product.model.description }}</h1>
             <!-- </a> -->
           </div>          <!-- <dl>
             <div>
@@ -52,104 +59,88 @@
           </dl> -->
         </td>
         <td>
-          <div>{{ summaryProduct.product.expiry | date:'dd/MMM/yyyy' }}</div>
+          <div>{{ productSummary.product.expiry | date:'dd/MMM/yyyy' }}</div>
           <!-- <div>16 dias</div> -->
         </td>
         <td>
           <div>
-            {{ summaryProduct.inStock }} 
-            {{ summaryProduct.product.measureUnit }}
+            {{ productSummary.inStock }} 
+            {{ productSummary.product.measureUnit }}
           </div>
         </td>
         <td>
           
-          <dl ng-if="summaryProduct.allocatedForEntry > 0">
-            <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
+          <dl ng-if="productSummary.allocatedForEntry > 0">
+            <div ng-repeat="entryAllocation in productSummary.records | filter:isEntryAllocationRecord">
               <dt>
                 <a href="#!/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <!-- <dt>{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</dt> -->
               <dd>
                 {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ summaryProduct.allocatedForEntry }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.allocatedForEntry }} 
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
           </dl>
           
-          <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
+          <div ng-if="productSummary.allocatedForEntry <= 0">-</div>
         </td>
         <td>
           <!-- a sair -->
-          <dl ng-if="summaryProduct.allocatedForExit < 0">
-            <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
+          <dl ng-if="productSummary.allocatedForExit < 0">
+            <div ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
               <dt>
                 <a href="#!/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ -1 * (exitAllocation.allocatedQuantity - exitAllocation.effectivatedQuantity) }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ -1 * summaryProduct.allocatedForExit }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ -1 * productSummary.allocatedForExit }} 
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
           </dl>
 
-          <div ng-if="summaryProduct.allocatedForExit >= 0">-</div>
+          <div ng-if="productSummary.allocatedForExit >= 0">-</div>
         </td>
-        <!-- <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td> -->
         <td class="hidden-on-print">
-          <!-- actions
+          <!-- actions --> 
           <md-menu>
             <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
               <md-icon md-menu-origin md-font-set="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content width="4">
               <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Registrar perda
+                <md-button
+                  ng-click="createLossRecord(
+                    { product: productSummary.product }
+                  )">
+                  Cadastrar perda
                 </md-button>
               </md-menu-item>
               <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Ver detalhe
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Editar produto
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="checkVoicemail()">
-                  Inserir correção
+                <md-button
+                  ng-click="createCorrectionRecord(
+                    { product: productSummary.product },
+                    { productType: 'in-stock' }
+                  )">
+                  Cadastrar correção
                 </md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-          -->
         </td>
       </tr>
 
@@ -172,137 +163,121 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="summaryProduct in summary | filter:isInStock | orderBy:['product.model.description','product.expiry']">
+      <tr ng-repeat="productSummary in summary | filter:isInStock | orderBy:['product.model.description','product.expiry']">
         <td class="table-col-300">
           <div class="product-description">
             <div class="product-image-wrapper">
-              <img ng-src="{{ summaryProduct.product.model.image.url }}">
+              <img ng-src="{{ productSummary.product.model.image.url }}">
             </div>
-            <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
-            <h1>{{ summaryProduct.product.model.description }}</h1>
+            <!-- <a href="#/inventario/{{ productSummary.product.model._id }}"> -->
+            <h1>{{ productSummary.product.model.description }}</h1>
             <!-- </a> -->
           </div>
           <dl>
-            <div ng-if="summaryProduct.product.model.netWeight">
+            <div ng-if="productSummary.product.model.netWeight">
               <dt>peso líq.</dt>
-              <dd>{{ summaryProduct.product.model.netWeight / 1000 }} kg</dd>
+              <dd>{{ productSummary.product.model.netWeight / 1000 }} kg</dd>
             </div>
-            <div ng-if="summaryProduct.product.model.weight">
+            <div ng-if="productSummary.product.model.weight">
               <dt>peso br.</dt>
-              <dd>{{ summaryProduct.product.model.weight / 1000 }} kg</dd>
+              <dd>{{ productSummary.product.model.weight / 1000 }} kg</dd>
             </div>
-            <div ng-if="summaryProduct.product.model.height">
+            <div ng-if="productSummary.product.model.height">
               <dt>Altura</dt>
-              <dd>{{ summaryProduct.product.model.height }} cm</dd>
+              <dd>{{ productSummary.product.model.height }} cm</dd>
             </div>
-            <div ng-if="summaryProduct.product.model.width">
+            <div ng-if="productSummary.product.model.width">
               <dt>Largura</dt>
-              <dd>{{ summaryProduct.product.model.width }} cm</dd>
+              <dd>{{ productSummary.product.model.width }} cm</dd>
             </div>
-            <div ng-if="summaryProduct.product.model.depth">
+            <div ng-if="productSummary.product.model.depth">
               <dt>Profundidade</dt>
-              <dd>{{ summaryProduct.product.model.depth }} cm</dd>
+              <dd>{{ productSummary.product.model.depth }} cm</dd>
             </div>
           </dl>
         </td>
         <td>
-          <div>{{ summaryProduct.product.expiry | date:'dd/MMM/yyyy' }}</div>
+          <div>{{ productSummary.product.expiry | date:'dd/MMM/yyyy' }}</div>
           <!-- <div>16 dias</div> -->
         </td>
         <td>
           <div>
-            {{ summaryProduct.inStock }} 
-            {{ summaryProduct.product.measureUnit }}
+            {{ productSummary.inStock }} 
+            {{ productSummary.product.measureUnit }}
           </div>
         </td>
         <td>
           <!-- a entrar -->
-          <dl ng-if="summaryProduct.allocatedForEntry > 0">
-            <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
+          <dl ng-if="productSummary.allocatedForEntry > 0">
+            <div ng-repeat="entryAllocation in productSummary.records | filter:isEntryAllocationRecord">
               <dt>
                 <a href="#!/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ summaryProduct.allocatedForEntry }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.allocatedForEntry }} 
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
           </dl>
           
-          <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
+          <div ng-if="productSummary.allocatedForEntry <= 0">-</div>
         </td>
         <td>
           <!-- a sair -->
-          <dl ng-if="summaryProduct.allocatedForExit < 0">
-            <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
+          <dl ng-if="productSummary.allocatedForExit < 0">
+            <div ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
               <dt>
                 <a href="#!/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ -1 * exitAllocation.allocatedQuantity }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ -1 * summaryProduct.allocatedForExit }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ -1 * productSummary.allocatedForExit }} 
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
           </dl>
 
-          <div ng-if="summaryProduct.allocatedForExit >= 0">-</div>
+          <div ng-if="productSummary.allocatedForExit >= 0">-</div>
         </td>
-        <!-- <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td> -->
         <td class="hidden-on-print">
-          <!-- actions 
+          <!-- actions --> 
           <md-menu>
             <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
               <md-icon md-menu-origin md-font-set="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content width="4">
               <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Registrar perda
+                <md-button
+                  ng-click="createLossRecord(
+                    { product: productSummary.product }
+                  )">
+                  Cadastrar perda
                 </md-button>
               </md-menu-item>
               <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Ver detalhe
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Editar produto
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="checkVoicemail()">
-                  Inserir correção
+                <md-button
+                  ng-click="createCorrectionRecord(
+                    { product: productSummary.product },
+                    { productType: 'in-stock' }
+                  )">
+                  Cadastrar correção
                 </md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-          -->
         </td>
       </tr>
 
@@ -325,14 +300,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="summaryProduct in summary | filter:isOutOfStockButExpected">
+      <tr ng-repeat="productSummary in summary | filter:isOutOfStockButExpected">
         <td class="table-col-300">
           <div class="product-description">
             <div class="product-image-wrapper">
-              <img ng-src="{{ summaryProduct.product.model.image.url }}">
+              <img ng-src="{{ productSummary.product.model.image.url }}">
             </div>
-            <!-- <a href="#/inventario/{{ summaryProduct.product.model._id }}"> -->
-            <h1>{{ summaryProduct.product.model.description }}</h1>
+            <!-- <a href="#/inventario/{{ productSummary.product.model._id }}"> -->
+            <h1>{{ productSummary.product.model.description }}</h1>
             <!-- </a> -->
           </div>
           
@@ -348,101 +323,85 @@
           </dl> -->
         </td>
         <td>
-          <div>{{ summaryProduct.product.expiry | date:'dd/MMM/yyyy' }}</div>
+          <div>{{ productSummary.product.expiry | date:'dd/MMM/yyyy' }}</div>
           <!-- <div>16 dias</div> -->
         </td>
         <td>
           <div>
-            {{ summaryProduct.inStock }} 
-            {{ summaryProduct.product.measureUnit }}
+            {{ productSummary.inStock }} 
+            {{ productSummary.product.measureUnit }}
           </div>
         </td>
         <td>
           
-          <dl ng-if="summaryProduct.allocatedForEntry > 0">
-            <div ng-repeat="entryAllocation in summaryProduct.records | filter:isEntryAllocationRecord">
+          <dl ng-if="productSummary.allocatedForEntry > 0">
+            <div ng-repeat="entryAllocation in productSummary.records | filter:isEntryAllocationRecord">
               <dt>
                 <a href="#!/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
                 {{ entryAllocation.allocatedQuantity }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ summaryProduct.allocatedForEntry }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.allocatedForEntry }} 
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
           </dl>
           
-          <div ng-if="summaryProduct.allocatedForEntry <= 0">-</div>
+          <div ng-if="productSummary.allocatedForEntry <= 0">-</div>
         </td>
         <td>
           <!-- a sair -->
-          <dl ng-if="summaryProduct.allocatedForExit < 0">
-            <div ng-repeat="exitAllocation in summaryProduct.records | filter:isExitAllocationRecord">
+          <dl ng-if="productSummary.allocatedForExit < 0">
+            <div ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
               <dt>{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</dt>
               <dd>
                 {{ exitAllocation.allocatedQuantity }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
             <div>
               <dt></dt>
               <dd>
-                {{ -1 * summaryProduct.allocatedForExit }} 
-                {{ summaryProduct.product.measureUnit }}
+                {{ -1 * productSummary.allocatedForExit }} 
+                {{ productSummary.product.measureUnit }}
               </dd>
             </div>
           </dl>
 
-          <div ng-if="summaryProduct.allocatedForExit >= 0">-</div>
+          <div ng-if="productSummary.allocatedForExit >= 0">-</div>
         </td>
-        <!-- <td>
-          <dl>
-            <div>
-              <dt>Hoje:</dt>
-              <dd>450</dd>
-            </div>
-            <div>
-              <dt>12 Out:</dt>
-              <dd>100</dd>
-            </div>
-          </dl>
-        </td> -->
         <td class="hidden-on-print">
-          <!-- actions
+          <!-- actions --> 
           <md-menu>
             <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
               <md-icon md-menu-origin md-font-set="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content width="4">
               <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Registrar perda
+                <md-button
+                  ng-click="createLossRecord(
+                    { product: productSummary.product }
+                  )">
+                  Cadastrar perda
                 </md-button>
               </md-menu-item>
               <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Ver detalhe
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="redial($event)">
-                  Editar produto
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="checkVoicemail()">
-                  Inserir correção
+                <md-button
+                  ng-click="createCorrectionRecord(
+                    { product: productSummary.product },
+                    { productType: 'in-stock' }
+                  )">
+                  Cadastrar correção
                 </md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-          -->
         </td>
       </tr>
 

@@ -645,6 +645,7 @@ md-menu-item > button.md-button {
 #product-models-table .image-column img {
   width: 100%;
   height: auto;
+  mix-blend-mode: multiply;
 }
 
 /* dialogs */
