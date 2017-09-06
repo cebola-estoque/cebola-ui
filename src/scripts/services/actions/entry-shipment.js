@@ -22,16 +22,16 @@ angular.module('cebola.services')
       // .then(function (entryShipment) {
       //   $scope.entryShipments.push(entryShipment);
       // })
-      .catch(function (err) {
+      // .catch(function (err) {
         
-        if (!err) {
-          // user canceled
-          return;
-        }
+      //   if (!err) {
+      //     // user canceled
+      //     return;
+      //   }
         
-        alert('there was an error creating the entry shipment');
-        console.warn(err);
-      });
+      //   alert('there was an error creating the entry shipment');
+      //   console.warn(err);
+      // });
   };
   
   entryShipmentActions.edit = function (sourceEntryShipment) {
@@ -104,7 +104,7 @@ angular.module('cebola.services')
       title: 'Confirmar cancelamento',
       message: 'Uma entrada cancelada não poderá mais ser editada. Confirma cancelamento?',
       ok: 'Confirmar cancelamento',
-      cancel: 'Cancelar',
+      cancel: 'Não cancelar',
       required: true,
     })
     .then(function (annotation) {

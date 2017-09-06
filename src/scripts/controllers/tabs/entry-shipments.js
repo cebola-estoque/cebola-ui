@@ -174,12 +174,14 @@ angular.module('cebola.controllers')
   
   // filters
   $scope.isPendingEntryShipment = function (entryShipment, index, array) {
-    return entryShipment.status.value === 'scheduled' ||
-           entryShipment.status.value === 'in-progress';
+    return entryShipment.status &&
+          (entryShipment.status.value === 'scheduled' ||
+           entryShipment.status.value === 'in-progress');
   };
   $scope.isFinishedEntryShipment = function (entryShipment, index, array) {
-    return entryShipment.status.value === 'finished' ||
-           entryShipment.status.value === 'cancelled';
+    return entryShipment.status &&
+          (entryShipment.status.value === 'finished' ||
+           entryShipment.status.value === 'cancelled');
   };
   
   // initialize

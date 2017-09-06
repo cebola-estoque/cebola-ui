@@ -1,0 +1,93 @@
+<div class="exit-shipment-summary">
+
+
+  <!-- active allocations -->
+  <table
+    ng-if="shipment.allocations.active.length > 0 || shipment.standaloneOperations.active.length > 0"
+    class="cebola-table non-interactive">
+    <thead>
+      <tr>
+        <th>Produtos</th>
+        <th>Validade</th>
+        <th>Qtde prevista</th>
+        <th>Qtde confirmada</th>
+        <th class="table-col-100"><!-- action placeholder --></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="allocation in shipment.allocations.active">
+        <td>
+          <div class="product-description">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ allocation.product.model.image.url }}">
+            </div>
+            {{ allocation.product.model.description }}
+          </div>
+        </td>
+        <td>
+          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
+        </td>
+        <td>
+          {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+        </td>
+        <td>
+          {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }} (total)
+          <dl style="opacity: 0.5;">
+            <div ng-repeat="op in allocation.operations.active">
+              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }}
+            </div>
+          </dl>
+        </td>
+        <td>
+          <!-- status icons -->
+          <md-icon
+            class="status-info"
+            ng-if="allocation.allocatedQuantity === allocation.effectivatedQuantity"
+            md-font-set="material-icons">
+            check
+          </md-icon>
+          <md-icon
+            class="status-info"
+            ng-if="allocation.allocatedQuantity < allocation.effectivatedQuantity"
+            md-font-set="material-icons">
+            warning
+            <md-tooltip md-direction="top">
+              Mais itens do que o previsto
+            </md-tooltip>
+          </md-icon>
+
+        </td>
+      </tr>
+
+
+      <tr ng-repeat="operation in shipment.standaloneOperations.active">
+        <td>
+          <div class="product-description">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ operation.product.model.image.url }}">
+            </div>
+            {{ operation.product.model.description }}
+          </div>
+        </td>
+        <td>
+          {{ operation.product.expiry | date:'dd/MMM/yyyy' }}
+        </td>
+        <td>
+          Produto não previsto
+        </td>
+        <td>
+          {{ operation.quantity }} {{ operation.product.measureUnit }}
+        </td>
+        <td>
+          <!-- status icons -->
+          <md-icon
+            class="status-info"
+            md-font-set="material-icons">
+            warning
+          </md-icon>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

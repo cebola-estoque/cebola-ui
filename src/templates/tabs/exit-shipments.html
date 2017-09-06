@@ -30,6 +30,13 @@
       </tr>
     </thead>
     <tbody>
+      <tr 
+        ng-if="(exitShipments|filter:isPendingExitShipment).length === 0">
+        <td colspan="6">
+          Não há saídas previstas
+          <md-button class="md-raised" ng-click="createExitShipment()">Cadastrar nova saída</md-button>
+        </td>
+      </tr>
       <tr ng-repeat="exitShipment in exitShipments | filter:isPendingExitShipment | orderBy:'scheduledFor'"
         class="shipment-row"
         ng-class="{ 'highlight': exitShipment._highlight,

@@ -7,21 +7,27 @@ angular.module('cebola.services')
    * @param {[type]} operation [description]
    */
   function CorrectionOperationDialog($scope, operation) {
-    $scope.operation = operation;
+    $scope.operation = operation || {};
 
+    $scope._productType; // in-stock / out-of-stock
     
+    $scope.completeProductModels = function (searchText) {
+      return cebolaAPI.productModel.list().then(function (productModels) {
+
+        // filter using searchText
+        productModels = $filter('filter')(productModels, {
+          description: searchText,
+        });
+
+        // sort
+        productModels = $filter('orderBy')(productModels, 'description');
+
+        return productModels;
+      });
+    };
+
     $scope.completeAvailableProducts = function (searchText) {
       return cebolaAPI.inventory.availabilitySummary(new Date()).then(function (availableProductsSummary) {
-        // var availableProductModels = availableProductsSummary.map(function (productSummary) {
-        //   return productSummary.product.model;
-        // })
-        // .filter(function firstOccurringOnly(productModel, index, self) {
-        //   // Elegant solution for ensuring uniqueness taken from:
-        //   // http://stackoverflow.com/questions/1960473/unique-values-in-an-array
-        //   return self.findIndex(function (_pm) {
-        //     return _pm._id === productModel._id;
-        //   }) === index;
-        // });
 
         var availableProducts = availableProductsSummary.map(function (productSummary) {
           return {
@@ -35,16 +41,6 @@ angular.module('cebola.services')
           };
         });
         
-        // console.log(availableProducts[0].model.description);
-        
-        console.log(searchText);
-        
-        console.log($filter('filter')(availableProducts, {
-          model: {
-            description: searchText
-          }
-        }))
-        
         return $filter('filter')(availableProducts, {
           model: {
             description: searchText
@@ -52,15 +48,32 @@ angular.module('cebola.services')
         });
       });
     };
-    
 
+    /**
+     * Reset the operation product data in case
+     * the _productType is modified
+     */
+    $scope.$watch('_productType', function () {
+      $scope.operation.product = undefined;
+    })
+    
     // dialog methods
     $scope.cancel = function() {
       $mdDialog.cancel();
     };
     
     $scope.submit = function () {
-      $mdDialog.hide($scope.operation);
+      var operation = angular.copy($scope.operation);
+
+      // modify the operation quantity according to the correction's
+      // operation type
+      if (operation.type === 'entry') {
+        operation.quantity = operation.quantity;
+      } else if (operation.type === 'exit') {
+        operation.quantity = -1 * operation.quantity;
+      }
+
+      $mdDialog.hide(operation);
     };
   }
 
@@ -69,24 +82,6 @@ angular.module('cebola.services')
     
     $scope.completeProductModels = function (searchText) {
       return cebolaAPI.productModel.list().then(function (productModels) {
-        // 
-        // DOES NOT MAKE SENSE, as a productModel may come in two measure units
-        // or in two different expiry dates
-        // 
-        // /**
-        //  * Prevent products models already allocated in current
-        //  * shipment to be reallocated.
-        //  */
-        // productModels = productModels.filter(function (productModel) {
-        //   return !$scope.shipment.allocations.active.some(function (allocation) {
-        //     return allocation.product &&
-        //            allocation.product.model &&
-        //            util.product.isSameModel(
-        //             allocation.product.model,
-        //             productModel
-        //            );
-        //   });
-        // });
 
         // filter using searchText
         productModels = $filter('filter')(productModels, {

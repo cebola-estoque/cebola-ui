@@ -70,7 +70,7 @@
               </dt>
               <!-- <dt>{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</dt> -->
               <dd>
-                {{ entryAllocation.allocatedQuantity }} 
+                {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>
@@ -93,7 +93,7 @@
                 <a href="#!/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</a>
               </dt>
               <dd>
-                {{ exitAllocation.allocatedQuantity }} 
+                {{ -1 * (exitAllocation.allocatedQuantity - exitAllocation.effectivatedQuantity) }} 
                 {{ summaryProduct.product.measureUnit }}
               </dd>
             </div>

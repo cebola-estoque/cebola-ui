@@ -21,7 +21,7 @@
       Editar saída
     </md-button>
     <md-button
-      ng-if="shipment.status.value !== 'finished'"
+      ng-if="shipment.status.value === 'in-progress'"
       ng-click="finishShipment()">
       Finalizar saída
     </md-button>
@@ -165,10 +165,10 @@
           {{ allocation.product.expiry | date:'dd/MMM' }}
         </td>
         <td>
-          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+          {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
-          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
           <!-- actions -->
@@ -210,10 +210,10 @@
           {{ allocation.product.expiry | date:'dd/MMM' }}
         </td>
         <td>
-          {{ allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
+          {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
-          {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
           <!-- actions -->
@@ -225,7 +225,7 @@
 
   <div>
     <md-button
-      ng-if="shipment.status.value === 'scheduled'"
+      ng-if="shipment.status.value === 'scheduled' || shipment.status.value === 'in-progress'"
       ng-click="cancelShipment()">
       Cancelar saída
     </md-button>

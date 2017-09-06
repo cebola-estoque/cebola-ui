@@ -1,11 +1,13 @@
 angular.module('cebola.controllers')
 .controller('ExitShipmentDetailCtrl', function (
-  $scope, $stateParams,
+  $scope,
+  $stateParams,
   $mdDialog,
   cebolaAPI,
-  exitShipmentActions,
   uiAllocationDialog,
-  uiDialogExitShipment) {
+  uiDialogExitShipment,
+  exitShipmentActions
+) {
   
   $scope.shipment = {};
   $scope.allocations = [];
@@ -18,10 +20,14 @@ angular.module('cebola.controllers')
   
   $scope.finishShipment = function () {
     return uiDialogExitShipment.finish($scope.shipment)
-      .then((annotations) => {
-        return cebolaAPI.shipment.finish($scope.shipment._id, {
-          annotations: annotations
-        });
+      .then((finishedShipment) => {
+        return cebolaAPI.shipment.update(
+          $scope.shipment._id,
+          finishedShipment
+        );
+      })
+      .then(function (shipment) {
+        return cebolaAPI.shipment.finish($scope.shipment._id);
       })
       .then(function (shipment) {
         return $scope.loadShipment();
@@ -106,25 +112,17 @@ angular.module('cebola.controllers')
 
 
   $scope.cancelShipment = function () {
-    return $mdDialog.show(
-      $mdDialog.confirm()
-        .title('Uma saída cancelada não poderá mais ser editada. Confirma cancelamento?')
-        .ok('Cancelar saída')
-        .cancel('cancelar')
-    )
-    .then(function () {
-      return cebolaAPI.shipment.cancel($scope.shipment._id);
-    })
-    .then(function () {
-      return $scope.loadShipment();
-    })
-    .catch(function (err) {
-      if (!err) {
-        return;
-      }
+    return exitShipmentActions.cancel($scope.shipment)
+      .then(function () {
+        return $scope.loadShipment();
+      })
+      .catch(function (err) {
+        if (!err) {
+          return;
+        }
 
-      throw err;
-    })
+        throw err;
+      });
     
   };
   // initialize

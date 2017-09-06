@@ -1,5 +1,5 @@
 angular.module('cebola.services')
-.factory('exitShipmentActions', function ($q, uiDialogExitShipment, cebolaAPI) {
+.factory('exitShipmentActions', function ($q, uiDialogExitShipment, uiAnnotationDialog, cebolaAPI) {
   
   var exitShipmentActions = {};
   
@@ -104,7 +104,24 @@ angular.module('cebola.services')
 
   };
   
-  exitShipmentActions.cancelExitShipment = function (exitShipment) {
+  exitShipmentActions.cancel = function (shipment) {
+    return uiAnnotationDialog.create({}, {
+      title: 'Confirmar cancelamento',
+      message: 'Uma saída cancelada não poderá mais ser editada. Confirma cancelamento?',
+      ok: 'Confirmar cancelamento',
+      cancel: 'Não cancelar',
+      required: true,
+    })
+    .then(function (annotation) {
+      return cebolaAPI.shipment.update(shipment._id, {
+        // TODO
+        annotations: annotation.body
+      });
+    })
+    .then(function () {
+      return cebolaAPI.shipment.cancel(shipment._id);
+    });
+
     // return cebolaAPI.shipment.cancel(exitShipment._id)
     //   .then(function (cancelledEntryShipment) {
     //     console.log('exit shipment cancelled', cancelledEntryShipment);

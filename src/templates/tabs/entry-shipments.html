@@ -17,8 +17,7 @@
   
   <table
     id="scheduled-entry-shipments"
-    class="cebola-table entry-shipments-table"
-    ng-if="(entryShipments | filter:isPendingEntryShipment).length > 0">
+    class="cebola-table entry-shipments-table">
     <thead>
       <tr>
         <th class="table-col-150">Entradas previstas</th>
@@ -30,6 +29,13 @@
       </tr>
     </thead>
     <tbody>
+      <tr 
+        ng-if="(entryShipments | filter:isPendingEntryShipment).length === 0">
+        <td colspan="6">
+          Não há entradas previstas
+          <md-button class="md-raised" ng-click="createEntryShipment()">Cadastrar nova entrada</md-button>
+        </td>
+      </tr>
       <tr
         ng-repeat="entryShipment in entryShipments | filter:isPendingEntryShipment | orderBy:'scheduledFor'"
         class="shipment-row"
