@@ -205,8 +205,9 @@
             <input
               type="number"
               ng-disabled="!operation.product"
-              min="1"
-              ng-min="1"
+              min="0.01"
+              ng-min="0.01"
+              step="0.01"
               required
               ng-model="operation.quantity">
           </md-input-container>

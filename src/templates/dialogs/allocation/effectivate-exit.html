@@ -36,7 +36,9 @@
             type="number"
             required
             ng-model="quantityToEffectivate"
-            ng-min="1"
+            min="0.01"
+            ng-min="0.01"
+            step="0.01"
             ng-max="-1 * (allocation.allocatedQuantity - allocation.effectivatedQuantity)">
           <!-- <input
             ng-max="{{ allocation.allocatedQuantity - allocation.effectivatedQuantity }}"> -->

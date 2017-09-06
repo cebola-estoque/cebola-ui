@@ -184,8 +184,9 @@
                   type="number"
                   required
                   ng-disabled="_editability < 2"
-                  min="1"
-                  ng-min="1"
+                  min="0.01"
+                  ng-min="0.01"
+                  step="0.01"
                   ng-model="allocation.allocatedQuantity"
                   ng-disabled="allocation.status.value === 'allocation-cancelled'">
               </md-input-container>
@@ -198,6 +199,8 @@
                 <label>Unidade de medida</label>
                 <input
                   required
+                  name="measureUnit"
+                  list="measure-units-list"
                   ng-disabled="_editability < 2"
                   ng-model="allocation.product.measureUnit">
               </md-input-container>
