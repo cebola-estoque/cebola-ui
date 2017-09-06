@@ -31,7 +31,7 @@
     </thead>
     <tbody>
       <tr 
-        ng-if="(exitShipments|filter:isPendingExitShipment).length === 0">
+        ng-if="(exitShipments|filter:isPendingExitShipment).length === 0 && !$httpGlobalLoading">
         <td colspan="6">
           Não há saídas previstas
           <md-button class="md-raised" ng-click="createExitShipment()">Cadastrar nova saída</md-button>
@@ -207,19 +207,6 @@
                     remove_red_eye
                   </md-icon>
                   Ver detalhes
-                </md-button>
-              </md-menu-item>
-              <md-menu-divider></md-menu-divider>
-              <md-menu-item>
-                <md-button
-                  ng-disabled="exitShipment.status.value === 'scheduled'"
-                  ng-click="cancelExitShipment(exitShipment)">
-                  <md-icon
-                    md-menu-align-target
-                    md-font-set="material-icons">
-                    delete
-                  </md-icon>
-                  Cancel
                 </md-button>
               </md-menu-item>
             </md-menu-content>

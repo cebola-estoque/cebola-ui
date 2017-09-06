@@ -17,9 +17,9 @@ angular.module('cebola.services')
     }
     shipment = angular.copy(shipment) || {};
     
-    shipment.scheduledFor =
-      shipment.scheduledFor ||
-      moment().add(1, 'hour').startOf('hour').toDate();
+    // shipment.scheduledFor =
+    //   shipment.scheduledFor ||
+    //   moment().add(1, 'hour').startOf('hour').toDate();
     
     shipment.allocations = 
       shipment.allocations || {};

@@ -27,6 +27,7 @@ table.cebola-table.non-interactive > tbody {
 }
 
 table.cebola-table > tbody > tr {
+  transition: background-color .2s ease;
   background-color: white;
 
   height: 60px; /* works like min-height in tr */

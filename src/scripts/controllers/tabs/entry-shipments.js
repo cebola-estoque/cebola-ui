@@ -8,6 +8,13 @@ angular.module('cebola.controllers')
 
     return entryShipmentActions.create()
       .then(function (entryShipment) {
+
+        entryShipment._highlight = true;
+
+        $timeout(function () {
+          entryShipment._highlight = false;
+        }, 2000);
+        
         $scope.entryShipments.push(entryShipment);
       })
       .catch(function (err) {

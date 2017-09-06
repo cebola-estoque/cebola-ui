@@ -1,4 +1,4 @@
-<div class="dialog large">
+<md-dialog class="dialog large">
   <header class="dialog-header">
     
     <div class="dialog-header-left">
@@ -12,123 +12,128 @@
       </md-button>
     </div>
   </header>
-  
-  <form
-    name="productModelForm"
-    ng-submit="productModelForm.$valid && submit()">
-  
-    <section class="dialog-body">
-      
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Descrição do produto</label>
-          <input required ng-model="productModel.description">
-        </md-input-container>
-      </div>
-      
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>SKU do produto</label>
-          <input ng-model="productModel.sku">
-        </md-input-container>
-      </div>
-      
-      
-      <div layout-gt-sm="row">
-        <md-input-container
-          class="md-block"
-          flex-gt-sm
-          ng-if="!productModel.image || !productModel.image.url">
-          <label
-            for="product-model-image">
-            Foto do produto
-          </label>
-          <input
-            style="opacity: 0;"
-            id="product-model-image"
-            type="file"
-            ngf-select="uploadPhoto($file)">
-          <hr>
-        </md-input-container>
+    
 
-        <div
-          id="product-model-image-container"
-          ng-if="productModel.image && productModel.image.url">
-          <img
-            ng-src="{{ productModel.image.url }}">
+  <md-dialog-content>
+
+    <form
+      name="productModelForm"
+      ng-submit="productModelForm.$valid && submit()">
+    
+      <section class="dialog-body">
+        
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Descrição do produto</label>
+            <input required ng-model="productModel.description">
+          </md-input-container>
+        </div>
+        
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>SKU do produto</label>
+            <input ng-model="productModel.sku">
+          </md-input-container>
+        </div>
+        
+        
+        <div layout-gt-sm="row">
+          <md-input-container
+            class="md-block"
+            flex-gt-sm
+            ng-if="!productModel.image || !productModel.image.url">
+            <label
+              for="product-model-image">
+              Foto do produto
+            </label>
+            <input
+              style="opacity: 0;"
+              id="product-model-image"
+              type="file"
+              ngf-select="uploadPhoto($file)">
+            <hr>
+          </md-input-container>
+
           <div
-            id="product-model-image-overlay"
-            ng-click="removePhoto()">
-            Remover foto
+            id="product-model-image-container"
+            ng-if="productModel.image && productModel.image.url">
+            <img
+              ng-src="{{ productModel.image.url }}">
+            <div
+              id="product-model-image-overlay"
+              ng-click="removePhoto()">
+              Remover foto
+            </div>
           </div>
         </div>
-      </div>
 
-      <label>Peso</label>
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Peso bruto (g)</label>
-          <input
-            type="number"
-            step="any"
-            ng-min="0"
-            ng-model="productModel.weight">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Peso líquido (g)</label>
-          <input
-            type="number"
-            step="any"
-            ng-min="0"
-            ng-model="productModel.netWeight">
-        </md-input-container>
-      </div>
-      
-        <label>Dimensões</label>
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Altura (cm)</label>
-          <input
-            type="number"
-            step="any"
-            ng-min="0"
-            ng-model="productModel.height">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Largura (cm)</label>
-          <input
-            type="number"
-            step="any"
-            ng-min="0"
-            ng-model="productModel.width">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Profundidade (cm)</label>
-          <input
-            type="number"
-            step="any"
-            ng-min="0"
-            ng-model="productModel.depth">
-        </md-input-container>
-      </div>
-    </section>
-  
-    <footer class="dialog-footer">
-      <div class="dialog-footer-left">
+        <label>Peso</label>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Peso bruto (g)</label>
+            <input
+              type="number"
+              step="any"
+              ng-min="0"
+              ng-model="productModel.weight">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Peso líquido (g)</label>
+            <input
+              type="number"
+              step="any"
+              ng-min="0"
+              ng-model="productModel.netWeight">
+          </md-input-container>
+        </div>
         
-      </div>
-      
-      <div class="dialog-footer-right">
-        <md-button
-          type="button"
-          ng-click="cancel()">
-          Cancelar
-        </md-button>
-        <md-button
-          type="submit">
-          Registrar
-        </md-button>
-      </div>
-    </footer>
-  </form>
-</div>
+          <label>Dimensões</label>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Altura (cm)</label>
+            <input
+              type="number"
+              step="any"
+              ng-min="0"
+              ng-model="productModel.height">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Largura (cm)</label>
+            <input
+              type="number"
+              step="any"
+              ng-min="0"
+              ng-model="productModel.width">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Profundidade (cm)</label>
+            <input
+              type="number"
+              step="any"
+              ng-min="0"
+              ng-model="productModel.depth">
+          </md-input-container>
+        </div>
+      </section>
+    
+      <footer class="dialog-footer">
+        <div class="dialog-footer-left">
+          
+        </div>
+        
+        <div class="dialog-footer-right">
+          <md-button
+            type="button"
+            ng-click="cancel()">
+            Cancelar
+          </md-button>
+          <md-button
+            type="submit">
+            Registrar
+          </md-button>
+        </div>
+      </footer>
+    </form>
+
+  </md-dialog-content>
+</md-dialog>

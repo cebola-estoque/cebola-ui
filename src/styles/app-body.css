@@ -3,6 +3,7 @@
  * app body
  */
 #app-body {
+  padding-top: 160px;
   background-color: #F2F2F2;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -11,4 +12,14 @@
 #app-body > .loading-overlay {
   position: fixed;
   top: 160px;
+}
+
+#app-body .tab-header {
+  position: fixed;
+
+  z-index: 10;
+
+  top: 100px;
+  left: 0;
+  right: 0;
 }

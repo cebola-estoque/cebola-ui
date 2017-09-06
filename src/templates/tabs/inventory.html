@@ -164,7 +164,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="productSummary in summary | filter:isInStock | orderBy:['product.model.description','product.expiry']">
-        <td class="table-col-300">
+        <td>
           <div class="product-description">
             <div class="product-image-wrapper">
               <img ng-src="{{ productSummary.product.model.image.url }}">

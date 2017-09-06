@@ -32,7 +32,7 @@
     </thead>
     <tbody>
       <tr 
-        ng-if="organizations.length === 0">
+        ng-if="organizations.length === 0 && !$httpGlobalLoading">
         <td colspan="6">
           Não há organizações cadastradas
           <md-button

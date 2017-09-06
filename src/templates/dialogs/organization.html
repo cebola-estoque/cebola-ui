@@ -1,4 +1,5 @@
-<div class="dialog large">
+<md-dialog
+  class="dialog large">
   <header class="dialog-header">
     
     <div class="dialog-header-left">
@@ -12,114 +13,117 @@
       </md-button>
     </div>
   </header>
+  <md-dialog-content>
   
-  <form
-    name="organizationForm"
-    ng-submit="organizationForm.$valid && submit()">
-  
-    <section class="dialog-body">
-      
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Nome da organização (nome fantasia)</label>
-          <input required ng-model="organization.name">
-        </md-input-container>
-      </div>
-      
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Razão social</label>
-          <input ng-model="organization.legalName">
-        </md-input-container>
-      </div>
-      
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Tipo de documento</label>
-          <input required ng-model="organization.document.type">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Documento</label>
-          <input required ng-model="organization.document.value">
-        </md-input-container>
-      </div>
-      
-      <div layout="column" layout-wrap flex>
-        <div flex>
-          <label>
-            <md-checkbox
-              ng-checked="hasRole('supplier')"
-              ng-click="toggleRole('supplier')">
-              Fornecedor
-            </md-checkbox>
-          </label>
-        </div>
-        <div flex>
-          <label>
-            <md-checkbox
-              ng-checked="hasRole('recipient')"
-              ng-click="toggleRole('recipient')">
-              Receptor
-            </md-checkbox>
-          </label>
-        </div>
-      </div>
-      
-      <div layout="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Responsável</label>
-          <input
-            ng-model="organization.contactPoint.name">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Telefone</label>
-          <input
-            ng-model="organization.contactPoint.telephone">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>E-mail</label>
-          <input
-            ng-model="organization.contactPoint.email">
-        </md-input-container>
-      </div>
-      
-      <div
-        layout-gt-sm="row"
-        ng-repeat="address in organization.addresses">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Identificador</label>
-          <input required ng-model="address.label">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Endereço</label>
-          <input required ng-model="address.value">
-        </md-input-container>
-      </div>
-      
-      <md-button
-        type="button"
-        ng-click="addAddress()"
-      >
-        Adicionar endereço
-      </md-button>
-    </section>
-  
-    <footer class="dialog-footer">
-      <div class="dialog-footer-left">
+    <form
+      name="organizationForm"
+      ng-submit="organizationForm.$valid && submit()">
+    
+      <section class="dialog-body">
         
-      </div>
-      
-      <div class="dialog-footer-right">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nome da organização (nome fantasia)</label>
+            <input required ng-model="organization.name">
+          </md-input-container>
+        </div>
+        
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Razão social</label>
+            <input ng-model="organization.legalName">
+          </md-input-container>
+        </div>
+        
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Tipo de documento</label>
+            <input required ng-model="organization.document.type">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Documento</label>
+            <input required ng-model="organization.document.value">
+          </md-input-container>
+        </div>
+        
+        <div layout="column" layout-wrap flex>
+          <div flex>
+            <label>
+              <md-checkbox
+                ng-checked="hasRole('supplier')"
+                ng-click="toggleRole('supplier')">
+                Fornecedor
+              </md-checkbox>
+            </label>
+          </div>
+          <div flex>
+            <label>
+              <md-checkbox
+                ng-checked="hasRole('recipient')"
+                ng-click="toggleRole('recipient')">
+                Receptor
+              </md-checkbox>
+            </label>
+          </div>
+        </div>
+        
+        <div layout="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Responsável</label>
+            <input
+              ng-model="organization.contactPoint.name">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Telefone</label>
+            <input
+              ng-model="organization.contactPoint.telephone">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>E-mail</label>
+            <input
+              ng-model="organization.contactPoint.email">
+          </md-input-container>
+        </div>
+        
+        <div
+          layout-gt-sm="row"
+          ng-repeat="address in organization.addresses">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Identificador</label>
+            <input required ng-model="address.label">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Endereço</label>
+            <input required ng-model="address.value">
+          </md-input-container>
+        </div>
+        
         <md-button
           type="button"
-          ng-click="cancel()">
-          Cancelar
+          ng-click="addAddress()"
+        >
+          Adicionar endereço
         </md-button>
-        <md-button
-          type="submit">
-          Registrar
-        </md-button>
-      </div>
-    </footer>
-  </form>
-</div>
+      </section>
+    
+      <footer class="dialog-footer">
+        <div class="dialog-footer-left">
+          
+        </div>
+        
+        <div class="dialog-footer-right">
+          <md-button
+            type="button"
+            ng-click="cancel()">
+            Cancelar
+          </md-button>
+          <md-button
+            type="submit">
+            Registrar
+          </md-button>
+        </div>
+      </footer>
+    </form>
+
+  </md-dialog-content>
+</md-dialog>

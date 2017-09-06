@@ -123,7 +123,7 @@
                 md-selected-item="allocation.product"
                 md-floating-label="Modelo de produto"
                 required
-                ng-disabled="_editability < 2"
+                ng-disabled="!shipment.scheduledFor || _editability < 2"
                 
                 md-no-cache
                 md-require-match
@@ -226,7 +226,7 @@
                 <input
                   type="number"
                   required
-                  ng-disabled="_editability < 2"
+                  ng-disabled="!allocation.product || _editability < 2"
                   min="0.01"
                   ng-min="0.01"
                   step="0.01"

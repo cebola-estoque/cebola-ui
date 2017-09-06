@@ -41,15 +41,25 @@ gulp.task('develop', function() {
   ]).on('change', browserSync.reload);
 });
 
-gulp.task('distribute', ['css'], function () {
-  return gulp.src('src/**/*')
+gulp.task('distribute', ['css', 'useref'], function () {
+  return gulp.src([
+      'src/templates/**/*',
+      'src/resources/**/*',
+      'src/bower_components/material-design-icons/**/*',
+      'src/bower_components/open-sans-fontface/**/*',
+    ], { base: 'src' })
     .pipe(gulp.dest('dist'));
 });
 
 // not-working-yet
 gulp.task('useref', ['css'], function () {
-  return gulp.src('src/*.html')
+  return gulp.src('src/index.html')
     .pipe(useref())
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('serve:dist', function () {
+  browserSync.init({
+    server: './dist'
+  });
+});

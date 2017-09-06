@@ -30,7 +30,7 @@
     </thead>
     <tbody>
       <tr 
-        ng-if="(entryShipments | filter:isPendingEntryShipment).length === 0">
+        ng-if="(entryShipments | filter:isPendingEntryShipment).length === 0 && !$httpGlobalLoading">
         <td colspan="6">
           Não há entradas previstas
           <md-button class="md-raised" ng-click="createEntryShipment()">Cadastrar nova entrada</md-button>

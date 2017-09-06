@@ -44,6 +44,8 @@
     background-color: white;
 
     height: 30px; /* works like min-height in tr */
+
+    font-size: 12px !important;
   }
 
 

@@ -9,6 +9,12 @@ angular.module('cebola.controllers')
       .then(function (exitShipment) {
         console.log('shipment created ', exitShipment);
         
+        exitShipment._highlight = true;
+
+        $timeout(function () {
+          exitShipment._highlight = false;
+        }, 2000);
+        
         $scope.exitShipments.push(exitShipment);
       })
       .catch(function (err) {
@@ -150,10 +156,20 @@ angular.module('cebola.controllers')
   };
   
   $scope.cancelExitShipment = function (exitShipment) {
-    return cebolaAPI.shipment.cancel(exitShipment._id)
+    return exitShipmentActions.cancel(exitShipment)
       .then(function (cancelledEntryShipment) {
         console.log('exit shipment cancelled', cancelledEntryShipment);
         return $scope.listExitShipments();
+      })
+      .catch(function (err) {
+        
+        if (!err) {
+          // user cancelled
+          return;
+        }
+        
+        alert('there was an error cancelling the exit shipment');
+        console.warn(err);
       });
   };
 

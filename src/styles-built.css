@@ -97,6 +97,7 @@ table.cebola-table.non-interactive > tbody {
 }
 
 table.cebola-table > tbody > tr {
+  transition: background-color .2s ease;
   background-color: white;
   height: 60px;
   /* works like min-height in tr */
@@ -357,6 +358,7 @@ table.cebola-table .table-col-600 {
     background-color: white;
     height: 30px;
     /* works like min-height in tr */
+    font-size: 12px !important;
   }
 
   /**
@@ -384,6 +386,20 @@ table.cebola-table .table-col-600 {
 
 .shipment-row.cancelled .status-badge {
   color: #D34F3D;
+}
+
+.shipment-info-box {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.shipment-info-box > div {
+  width: 1px;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .loading-overlay {
@@ -493,6 +509,11 @@ md-menu-item > button.md-button {
  */
 
 #app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background-color: #27001D;
   display: -ms-flexbox;
   display: flex;
@@ -607,6 +628,7 @@ md-menu-item > button.md-button {
  */
 
 #app-body {
+  padding-top: 160px;
   background-color: #F2F2F2;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -615,6 +637,14 @@ md-menu-item > button.md-button {
 #app-body > .loading-overlay {
   position: fixed;
   top: 160px;
+}
+
+#app-body .tab-header {
+  position: fixed;
+  z-index: 10;
+  top: 100px;
+  left: 0;
+  right: 0;
 }
 
 /* tabs */
@@ -640,7 +670,7 @@ md-menu-item > button.md-button {
  */
 
 #cancelled-allocations {
-  opacity: 0.4;
+  opacity: 0.7;
 }
 
 #product-models-table .image-column {

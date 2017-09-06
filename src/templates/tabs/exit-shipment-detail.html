@@ -30,16 +30,33 @@
 
 <section class="tab-body">
 
-  <div class="recipient-badge">
-    <b>Responsável:</b> {{ shipment.recipient.contactPoint.name }} | {{ shipment.recipient.contactPoint.telephone }}
-  </div>
-  
-  <div class="status-badge">
-    <b>Status:</b> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
-  </div>
+  <div class="shipment-info-box">
+    <div>
+      <div>
+        <strong>Responsável:</strong> {{ shipment.recipient.contactPoint.name }} | {{ shipment.recipient.contactPoint.telephone }}
+      </div>
+      
+      <div>
+        <strong>Status:</strong> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
+      </div>
 
-  <div ng-if="shipment.annotations" class="shipment-annotations">
-    <b>Anotações:</b> {{ shipment.annotations }} | atualizado em {{ shipment.status.updatedAt | date }}
+      <div ng-if="shipment.annotations">
+        <strong>Anotações:</strong> {{ shipment.annotations }}
+      </div>
+    </div>
+    <div>
+      <div>
+        <strong>CDE:</strong> {{ shipment.documents.CDE }}<span ng-if="!shipment.documents.CDE">-</span>
+      </div>
+      
+      <div>
+        <strong>Nota fiscal:</strong> {{ shipment.documents.NF }}<span ng-if="!shipment.documents.NF">-</span>
+      </div>
+      
+      <div>
+        <strong>Identificação do veículo:</strong> {{ shipment.documents.vehicleId }}<span ng-if="!shipment.documents.vehicleId">-</span>
+      </div>
+    </div>
   </div>
   
   <!-- active allocations -->
@@ -180,9 +197,6 @@
 
 
   <!-- cancelled allocations -->
-  <br>
-  <br>
-  <br>
   <table
     id="cancelled-allocations"
     ng-if="shipment.allocations.cancelled.length > 0"

@@ -15,9 +15,9 @@ angular.module('cebola.services')
     $scope.$isNew   = !shipment;
     $scope.shipment = shipment || {};
     
-    $scope.shipment.scheduledFor =
-      $scope.shipment.scheduledFor ||
-      moment().add(1, 'hour').startOf('hour').toDate();
+    // $scope.shipment.scheduledFor =
+    //   $scope.shipment.scheduledFor ||
+    //   moment().add(1, 'hour').startOf('hour').toDate();
     
     $scope.shipment.allocations = 
       $scope.shipment.allocations || {};

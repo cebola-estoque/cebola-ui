@@ -19,3 +19,15 @@
 .shipment-row.cancelled .status-badge {
   color: var(--red);
 }
+
+.shipment-info-box {
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 20px;
+}
+
+.shipment-info-box > div {
+  width: 1px;
+  flex-grow: 1;
+}
