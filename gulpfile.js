@@ -45,8 +45,8 @@ gulp.task('distribute', ['css', 'useref'], function () {
   return gulp.src([
       'src/templates/**/*',
       'src/resources/**/*',
-      'src/bower_components/material-design-icons/**/*',
-      'src/bower_components/open-sans-fontface/**/*',
+      // 'src/bower_components/material-design-icons/**/*',
+      // 'src/bower_components/open-sans-fontface/**/*',
     ], { base: 'src' })
     .pipe(gulp.dest('dist'));
 });
