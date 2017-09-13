@@ -65,7 +65,7 @@ h6 {
 }
 
 .tab-body {
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 20px;
   padding-left: 40px;
   padding-right: 40px;
@@ -110,7 +110,7 @@ table.cebola-table > tbody > tr:hover {
 
 table.cebola-table > tbody > tr.highlight {
   /* TODO: choose highlight color */
-  background-color: #E0A91E;
+  background-color: #C7E2C7;
 }
 
 /*
@@ -176,8 +176,9 @@ table.cebola-table tr > td > dl > div {
   display: flex;
   -ms-flex-direction: row;
   flex-direction: row;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 table.cebola-table tr > td > dl > div > dt {
@@ -251,6 +252,21 @@ table.cebola-table .table-col-600 {
 .md-button.md-default-theme[disabled] md-icon,
 .md-button[disabled] md-icon {
   color: rgba(0,0,0,0.15);
+}
+
+table.sub-table {
+  table-layout: fixed;
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
+  border-collapse: collapse;
+}
+
+table.sub-table tr {
+  border: none;
+}
+
+table.sub-table tr td {
+  padding: 0 6px 0 0;
+  border: none;
 }
 
 .dialog {
@@ -386,18 +402,22 @@ table.cebola-table .table-col-600 {
 
 .shipment-row.scheduled .status-badge {
   /*color: black;*/
+  font-weight: bold;
 }
 
 .shipment-row.in-progress .status-badge {
   color: #E0A91E;
+  font-weight: bold;
 }
 
 .shipment-row.finished .status-badge {
   color: #3284A0;
+  font-weight: bold;
 }
 
 .shipment-row.cancelled .status-badge {
   color: #D34F3D;
+  font-weight: bold;
 }
 
 .shipment-info-box {
@@ -405,13 +425,17 @@ table.cebola-table .table-col-600 {
   display: flex;
   -ms-flex-direction: row;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .shipment-info-box > div {
   width: 1px;
   -ms-flex-positive: 1;
   flex-grow: 1;
+}
+
+.shipment-info-box > div > .shipment-info {
+  margin-bottom: 6px;
 }
 
 .loading-overlay {
@@ -437,6 +461,10 @@ table.cebola-table .table-col-600 {
 .loading-overlay.active {
   z-index: 10;
   opacity: 0.7;
+}
+
+.md-button.md-icon-button.no-margin {
+  margin: 0;
 }
 
 /* elements */
@@ -710,6 +738,8 @@ md-menu-item > button.md-button {
 #product-model-image-container {
   position: relative;
   margin-bottom: 30px;
+  min-width: 200px;
+  min-height: 200px;
 }
 
 #product-model-image-container > img {

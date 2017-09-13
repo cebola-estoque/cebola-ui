@@ -31,32 +31,32 @@
 
   <div class="shipment-info-box">
     <div>
-      <div>
+      <div class="shipment-info">
         <strong>No.</strong> #{{ shipment.number }} 
       </div>
 
-      <div>
+      <div class="shipment-info">
         <strong>Responsável:</strong> {{ shipment.supplier.contactPoint.name }} | {{ shipment.supplier.contactPoint.telephone }}
       </div>
       
-      <div>
+      <div class="shipment-info">
         <strong>Status:</strong> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
       </div>
 
-      <div ng-if="shipment.annotations">
+      <div class="shipment-info" ng-if="shipment.annotations">
         <strong>Anotações:</strong> {{ shipment.annotations }}
       </div>
     </div>
     <div>
-      <div>
+      <div class="shipment-info">
         <strong>CDE:</strong> {{ shipment.documents.CDE }}<span ng-if="!shipment.documents.CDE">-</span>
       </div>
       
-      <div>
+      <div class="shipment-info">
         <strong>Nota fiscal:</strong> {{ shipment.documents.NF }}<span ng-if="!shipment.documents.NF">-</span>
       </div>
       
-      <div>
+      <div class="shipment-info">
         <strong>Identificação do veículo:</strong> {{ shipment.documents.vehicleId }}<span ng-if="!shipment.documents.vehicleId">-</span>
       </div>
     </div>
@@ -94,11 +94,27 @@
         </td>
         <td>
           {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }} (total)
-          <dl>
+          <table class="sub-table">
+            <tr ng-repeat="op in allocation.operations.active">
+              <td>
+                {{ op.createdAt | date:'dd/MMM, HH:mm' }} 
+              </td>
+              <td>|</td>
+              <td>
+                {{ op.quantity }} {{ op.product.measureUnit }}
+              </td>
+              <td>|</td>
+              <td>
+                Código: E{{ shipment.number }}-{{ allocation.number }}-{{ op.number }}
+              </td>
+            </tr>
+          </table>
+
+<!--           <dl>
             <div ng-repeat="op in allocation.operations.active">
               {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ op.quantity }} {{ op.product.measureUnit }} | Código: E{{ shipment.number }}/{{ op.number }}
             </div>
-          </dl>
+          </dl> -->
 
           <!-- status icons -->
           <md-icon

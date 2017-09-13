@@ -38,10 +38,13 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Tipo de documento</label>
-            <input required ng-model="organization.document.type">
+            <md-select required ng-model="organization.document.type">
+              <md-option value="CNPJ">CNPJ</md-option>
+              <md-option value="CPF">CPF</md-option>
+            </md-select>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
-            <label>Documento</label>
+            <label>Número</label>
             <input required ng-model="organization.document.value">
           </md-input-container>
         </div>
@@ -89,7 +92,7 @@
           layout-gt-sm="row"
           ng-repeat="address in organization.addresses">
           <md-input-container class="md-block" flex-gt-sm>
-            <label>Identificador</label>
+            <label>Nome do local</label>
             <input required ng-model="address.label">
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>

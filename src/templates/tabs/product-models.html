@@ -18,15 +18,12 @@
   <table class="cebola-table" id="product-models-table">
     <thead>
       <tr>
-        <th>No.</th>
-        <th class="image-column">
-          Imagem
-        </th>
-        <th>Descrição</th>
+        <th class="table-col-50">No.</th>
+        <th class="table-col-350">Produto</th>
         <th>SKU</th>
         <th>Dimensões (m)</th>
         <th>Peso (kg)</th>
-        <th>
+        <th class="table-col-50">
           <!-- action placeholder -->
         </th>
       </tr>
@@ -48,10 +45,16 @@
           #{{ productModel.number }}
         </td>
         <td class="image-column">
-          <img ng-src="{{ productModel.image.url }}">
-        </td>
-        <td>
-          {{ productModel.description }}
+          <div class="product-description">
+            <div class="product-image-wrapper">
+              <img ng-src="{{ productModel.image.url }}">
+            </div>
+            <!-- <a href="#/inventario/{{ productModel._id }}"> -->
+            <h1>{{ productModel.description }}</h1>
+            <!-- </a> -->
+          </div>
+
+          <!-- <img ng-src="{{ productModel.image.url }}"> -->
         </td>
         <td>{{ productModel.sku }}</td>
         <td>

@@ -40,7 +40,7 @@ table.cebola-table > tbody > tr:hover {
 
 table.cebola-table > tbody > tr.highlight {
   /* TODO: choose highlight color */
-  background-color: var(--orange);
+  background-color: var(--light-green);
 }
 /*
 table.cebola-table > tbody > tr.ng-enter {
@@ -110,7 +110,8 @@ table.cebola-table tr > td > dl {
 table.cebola-table tr > td > dl > div {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
+  justify-content: flex-start;
 }
 
 table.cebola-table tr > td > dl > div > dt {
@@ -175,4 +176,23 @@ table.cebola-table .table-col-600 {
 .md-button.md-default-theme[disabled] md-icon, 
 .md-button[disabled] md-icon {
   color: rgba(0,0,0,0.15);
+}
+
+
+table.sub-table {  
+  table-layout: fixed;
+  
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse */
+  border-collapse: collapse;
+
+}
+
+table.sub-table tr {
+  border: none;
+
+}
+
+table.sub-table tr td {
+  padding: 0 6px 0 0;
+  border: none;
 }

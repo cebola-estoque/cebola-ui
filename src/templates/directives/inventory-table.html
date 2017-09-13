@@ -33,12 +33,8 @@
       </td>
       <td>
         <a href="#!/entradas/{{ productSummary.product.sourceShipment._id }}">
-          <small>
-            Fornecedor: {{ productSummary.product.sourceShipment.supplier.name }}
-          </small><br>
-          <small>
-            CDE: {{ productSummary.product.sourceShipment.documents.CDE || 'Não informado' }}
-          </small>
+          {{ productSummary.product.sourceShipment.supplier.name }}<br>
+          CDE: {{ productSummary.product.sourceShipment.documents.CDE || 'Não informado' }}
         </a>
       </td>
       <td>
@@ -48,49 +44,86 @@
         </div>
       </td>
       <td>
+
+        <table
+          class="sub-table"
+          ng-if="productSummary.allocatedForEntry > 0">
+          <tr ng-repeat="entryAllocation in productSummary.records | filter:isEntryAllocationRecord">
+            <td>
+              <a href="#!/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
+            </td>
+            <td>
+              {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
+              {{ productSummary.product.measureUnit }}
+            </td>
+          </tr>
+          <tr>
+            <td>Total:</td>
+            <td>
+              {{ productSummary.allocatedForEntry }} 
+              {{ productSummary.product.measureUnit }}
+            </td>
+          </tr>
+        </table>
         
-        <dl ng-if="productSummary.allocatedForEntry > 0">
+        <!-- <dl ng-if="productSummary.allocatedForEntry > 0">
           <div ng-repeat="entryAllocation in productSummary.records | filter:isEntryAllocationRecord">
             <dt>
               <a href="#!/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
             </dt>
-            <!-- <dt>{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</dt> -->
             <dd>
               {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
               {{ productSummary.product.measureUnit }}
             </dd>
           </div>
           <div>
-            <dt></dt>
+            <dt>Total:</dt>
             <dd>
               {{ productSummary.allocatedForEntry }} 
               {{ productSummary.product.measureUnit }}
             </dd>
           </div>
-        </dl>
+        </dl> -->
         
         <div ng-if="productSummary.allocatedForEntry <= 0">-</div>
       </td>
       <td>
         <!-- a sair -->
-        <dl ng-if="productSummary.allocatedForExit < 0">
-          <div ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
-            <dt>
-              <a href="#!/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</a>
-            </dt>
-            <dd>
+        <table
+          ng-if="productSummary.allocatedForExit < 0"
+          class="sub-table">
+          <tr ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
+            <td>
+              <a href="#!/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd MMM' }}</a><span>: </span>
+            </td>
+            <td>
               {{ -1 * (exitAllocation.allocatedQuantity - exitAllocation.effectivatedQuantity) }}
               {{ productSummary.product.measureUnit }}
+            </td>
+          </tr>
+          <tr>
+            <td>Total:</td>
+            <td>
+              {{ -1 * productSummary.allocatedForExit }}
+              {{ productSummary.product.measureUnit }}
+            </td>
+          </tr>
+        </table>
+<!--         <dl ng-if="productSummary.allocatedForExit < 0">
+          <div ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
+            <dt>
+            </dt>
+            <dd>
+              {{ -1 * (exitAllocation.allocatedQuantity - exitAllocation.effectivatedQuantity) }}{{ productSummary.product.measureUnit }}
             </dd>
           </div>
           <div>
-            <dt></dt>
+            <dt>Total   : </dt>
             <dd>
-              {{ -1 * productSummary.allocatedForExit }} 
-              {{ productSummary.product.measureUnit }}
+              {{ -1 * productSummary.allocatedForExit }}{{ productSummary.product.measureUnit }}
             </dd>
           </div>
-        </dl>
+        </dl> -->
 
         <div ng-if="productSummary.allocatedForExit >= 0">-</div>
       </td>

@@ -44,7 +44,7 @@
             ng-if="!productModel.image || !productModel.image.url">
             <label
               for="product-model-image">
-              Foto do produto
+              Foto do produto <span ng-if="_uploadedPercentage">{{ _uploadedPercentage }}</span>
             </label>
             <input
               style="opacity: 0;"

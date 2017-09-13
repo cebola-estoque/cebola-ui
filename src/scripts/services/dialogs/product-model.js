@@ -28,9 +28,15 @@ angular.module('cebola.services')
 
         $scope.productModel.image = resp.data;
 
+        $scope._uploadedPercentage = false;
+
       }, function (resp) {
         console.log('Error status: ' + resp.status);
+
+        $scope._uploadedPercentage = false;
       }, function (evt) {
+        $scope._uploadedPercentage = parseInt(100 * evt.loaded / evt.total) + '%';
+
         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
       });

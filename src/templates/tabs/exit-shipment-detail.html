@@ -32,28 +32,28 @@
 
   <div class="shipment-info-box">
     <div>
-      <div>
+      <div class="shipment-info">
         <strong>No.</strong> #{{ shipment.number }} 
       </div>
       
-      <div>
+      <div class="shipment-info">
         <strong>Responsável:</strong> {{ shipment.recipient.contactPoint.name }} | {{ shipment.recipient.contactPoint.telephone }}
       </div>
       
-      <div>
+      <div class="shipment-info">
         <strong>Status:</strong> {{ shipment.status.value | translate }} | atualizado em {{ shipment.status.updatedAt | date }}
       </div>
 
-      <div ng-if="shipment.annotations">
+      <div class="shipment-info" ng-if="shipment.annotations">
         <strong>Anotações:</strong> {{ shipment.annotations }}
       </div>
     </div>
     <div>
-      <div>
+      <div class="shipment-info">
         <strong>Nota fiscal:</strong> {{ shipment.documents.NF }}<span ng-if="!shipment.documents.NF">-</span>
       </div>
       
-      <div>
+      <div class="shipment-info">
         <strong>Identificação do veículo:</strong> {{ shipment.documents.vehicleId }}<span ng-if="!shipment.documents.vehicleId">-</span>
       </div>
     </div>
@@ -68,7 +68,7 @@
       <tr>
         <th class="table-col-350">Produtos agendados</th>
         <th>Validade</th>
-        <th>Origem</th>
+        <th class="table-col-150">Origem</th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
         <th class="hidden-on-print table-col-50"><!-- action placeholder --></th>
@@ -89,12 +89,8 @@
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
-            <small>
-              Fornecedor: {{ allocation.product.sourceShipment.supplier.name }}
-            </small><br>
-            <small>
-              CDE: {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
-            </small>
+            {{ allocation.product.sourceShipment.supplier.name }}<br>
+            CDE: {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
           </a>
         </td>
         <td>
@@ -102,11 +98,27 @@
         </td>
         <td>
           {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
-          <dl>
+          <table class="sub-table">
+            <tr ng-repeat="op in allocation.operations.active">
+              <td>
+                {{ op.createdAt | date:'dd/MMM, HH:mm' }} 
+              </td>
+              <td>|</td>
+              <td>
+                {{ -1 * op.quantity }} {{ op.product.measureUnit }}
+              </td>
+              <td>|</td>
+              <td>
+                Código: S{{ shipment.number }}-{{ allocation.number }}-{{ op.number }}
+              </td>
+            </tr>
+          </table>
+
+<!--           <dl>
             <div ng-repeat="op in allocation.operations.active">
               {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }} | Código: S{{ shipment.number }}/{{ op.number }}
             </div>
-          </dl>
+          </dl> -->
 
           <!-- status icons -->
           <md-icon
