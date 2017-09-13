@@ -10,9 +10,9 @@ angular.module('cebola.controllers')
   entryShipmentActions
 ) {
   
-  $scope.shipment = {};
-  
   $scope.loadShipment = function () {
+    $scope.shipment = {};
+    
     return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
     });

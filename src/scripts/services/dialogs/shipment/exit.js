@@ -135,6 +135,15 @@ angular.module('cebola.services')
               return util.product.isSame(alloc.product, summary.product);
             });
 
+            availability = availability || {
+              entered: 0,
+              exited: 0,
+              inStock: 0,
+              allocatedForEntry: 0,
+              allocatedForExit: 0,
+              allocated: 0,
+            };
+
             // update allocation availability info
             alloc.product.inStock = availability.inStock;
             alloc.product.allocatedForEntry = availability.allocatedForEntry;
@@ -175,7 +184,8 @@ angular.module('cebola.services')
         })
         .catch(function (err) {
           $scope.exitLoadingState();
-          alert('Houve um erro ao carregar informações de disponibilidade dos produtos. Por favor recarregue a página e tente novamente.')
+          alert('Houve um erro ao carregar informações de disponibilidade dos produtos. Por favor recarregue a página e tente novamente.');
+          throw err;
         });
     };
     
@@ -215,6 +225,7 @@ angular.module('cebola.services')
             model: productSummary.product.model,
             measureUnit: productSummary.product.measureUnit,
             expiry: new Date(productSummary.product.expiry),
+            sourceShipment: productSummary.product.sourceShipment,
             
             inStock: productSummary.inStock,
             allocatedForEntry: productSummary.allocatedForEntry,
@@ -228,6 +239,9 @@ angular.module('cebola.services')
          */
         availableProducts = availableProducts.filter(function (availableProduct) {
           return !$scope.shipment.allocations.active.some(function (allocation) {
+
+            console.log(allocation.product);
+            console.log(availableProduct);
             return allocation.product && util.product.isSame(allocation.product, availableProduct);
           });
         });

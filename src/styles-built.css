@@ -113,6 +113,14 @@ table.cebola-table > tbody > tr.highlight {
   background-color: #E0A91E;
 }
 
+/*
+table.cebola-table > tbody > tr.ng-enter {
+  opacity: 0;
+}
+table.cebola-table > tbody > tr.ng-enter-active {
+  opacity: 1;
+}*/
+
 table.cebola-table > tbody > tr.has-error {
   background-color: #F9F1EF;
 }
@@ -182,6 +190,10 @@ table.cebola-table tr > td > dl > div > dd {
   /* background-color: red; */
   max-width: 60%;
   text-align: right;
+}
+
+table.cebola-table .table-col-50 {
+  width: 50px;
 }
 
 table.cebola-table .table-col-100 {
@@ -499,6 +511,7 @@ md-menu-item > button.md-button {
 
 .product-description > .product-image-wrapper > img {
   height: 50px;
+  width: 100%;
   mix-blend-mode: multiply;
 }
 
@@ -683,6 +696,15 @@ md-menu-item > button.md-button {
   mix-blend-mode: multiply;
 }
 
+#operations-table .operation-exit {
+  color: #D34F3D;
+}
+
+#operations-table .operation-status-cancelled {
+  opacity: 0.5;
+  color: #D34F3D;
+}
+
 /* dialogs */
 
 #product-model-image-container {
@@ -786,9 +808,19 @@ md-menu-item > button.md-button {
   align-items: flex-start;
 }
 
-.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > small {
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > .atocomplete-option-product-details {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
   margin-top: 6px;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > .atocomplete-option-product-details > small {
   opacity: 0.6;
+  margin-right: 10px;
 }
 
 .inventory-product-autocomplete > li .autocomplete-option > * > .image-container {

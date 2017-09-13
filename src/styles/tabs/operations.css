@@ -1,0 +1,12 @@
+#operations-table {
+
+}
+
+#operations-table .operation-exit {
+  color: var(--red);
+}
+
+#operations-table .operation-status-cancelled {
+  opacity: 0.5;
+  color: var(--red);
+}

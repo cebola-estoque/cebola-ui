@@ -85,12 +85,14 @@
           <!--
             shipment.documents.CDE
           -->
+          <!--
           <md-input-container class="md-block" flex-gt-sm>
             <label>CDE</label>
             <input
               ng-model="shipment.documents.CDE"
               ng-disabled="_editability < 1">
           </md-input-container>
+          -->
           <!--
             shipment.documents.vehicleId
           -->
@@ -144,10 +146,21 @@
                         <div>
                           {{ product.model.description }} 
                         </div>
-                        <small>
-                          <label>Validade:</label>
-                          {{ product.expiry | date:'dd/MM/yyyy' }} 
-                        </small>
+                        <div class="atocomplete-option-product-details">
+                          <small>
+                            <label>Validade:</label>
+                            {{ product.expiry | date:'dd/MM/yyyy' }} 
+                          </small>
+                          <small>
+                            <label>CDE:</label>
+                            {{ product.sourceShipment.documents.CDE || 'não informado' }}
+                          </small>
+                          <small>
+                            <label>Fornecedor:</label>
+                            {{ product.sourceShipment.supplier.name }} | 
+                            {{ product.sourceShipment.scheduledFor | date:'dd/MM/yyyy' }}
+                          </small>
+                        </div>
                       </div>
                     </div>
 
@@ -246,6 +259,16 @@
                   name="measureUnit"
                   list="measure-units-list"
                   ng-model="allocation.product.measureUnit"
+                  disabled>
+              </md-input-container>
+              
+              <!--
+                Display the CDE
+              -->
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>CDE</label>
+                <input
+                  value="{{ allocation.product.sourceShipment.documents.CDE || 'não informado' }}"
                   disabled>
               </md-input-container>
               

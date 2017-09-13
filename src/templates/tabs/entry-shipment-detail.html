@@ -10,7 +10,7 @@
       </md-icon>
     </md-button>
     <h1 class="tab-title">
-      Entrada ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.supplier.name }}
+      Entrada #{{ shipment.number }} ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.supplier.name }}
     </h1>
   </div>
   
@@ -31,6 +31,10 @@
 
   <div class="shipment-info-box">
     <div>
+      <div>
+        <strong>No.</strong> #{{ shipment.number }} 
+      </div>
+
       <div>
         <strong>Responsável:</strong> {{ shipment.supplier.contactPoint.name }} | {{ shipment.supplier.contactPoint.telephone }}
       </div>
@@ -68,8 +72,8 @@
         <th class="table-col-350">Produtos agendados</th>
         <th>Validade</th>
         <th>Qtde prevista</th>
-        <th>Qtde confirmada</th>
-        <th class="hidden-on-print"><!-- action placeholder --></th>
+        <th class="table-col-350">Qtde confirmada</th>
+        <th class="table-col-50 hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
@@ -90,9 +94,9 @@
         </td>
         <td>
           {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }} (total)
-          <dl style="opacity: 0.5;">
+          <dl>
             <div ng-repeat="op in allocation.operations.active">
-              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ op.quantity }} {{ op.product.measureUnit }}
+              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ op.quantity }} {{ op.product.measureUnit }} | Código: E{{ shipment.number }}/{{ op.number }}
             </div>
           </dl>
 

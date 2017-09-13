@@ -11,7 +11,7 @@
     </md-button>
 
     <h1 class="tab-title">
-      Saída ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.recipient.name }}
+      Saída #{{ shipment.number }} ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.recipient.name }}
     </h1>
   </div>
   
@@ -33,6 +33,10 @@
   <div class="shipment-info-box">
     <div>
       <div>
+        <strong>No.</strong> #{{ shipment.number }} 
+      </div>
+      
+      <div>
         <strong>Responsável:</strong> {{ shipment.recipient.contactPoint.name }} | {{ shipment.recipient.contactPoint.telephone }}
       </div>
       
@@ -45,10 +49,6 @@
       </div>
     </div>
     <div>
-      <div>
-        <strong>CDE:</strong> {{ shipment.documents.CDE }}<span ng-if="!shipment.documents.CDE">-</span>
-      </div>
-      
       <div>
         <strong>Nota fiscal:</strong> {{ shipment.documents.NF }}<span ng-if="!shipment.documents.NF">-</span>
       </div>
@@ -66,11 +66,12 @@
     class="cebola-table product-table">
     <thead>
       <tr>
-        <th>Produtos agendados</th>
+        <th class="table-col-350">Produtos agendados</th>
         <th>Validade</th>
+        <th>Origem</th>
         <th>Qtde prevista</th>
-        <th>Qtde confirmada</th>
-        <th><!-- action placeholder --></th>
+        <th class="table-col-350">Qtde confirmada</th>
+        <th class="hidden-on-print table-col-50"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
@@ -87,13 +88,23 @@
           {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
         </td>
         <td>
+          <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
+            <small>
+              Fornecedor: {{ allocation.product.sourceShipment.supplier.name }}
+            </small><br>
+            <small>
+              CDE: {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            </small>
+          </a>
+        </td>
+        <td>
           {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
           {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
           <dl>
             <div ng-repeat="op in allocation.operations.active">
-              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }}
+              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }} | Código: S{{ shipment.number }}/{{ op.number }}
             </div>
           </dl>
 

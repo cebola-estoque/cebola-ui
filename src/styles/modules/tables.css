@@ -42,6 +42,15 @@ table.cebola-table > tbody > tr.highlight {
   /* TODO: choose highlight color */
   background-color: var(--orange);
 }
+/*
+table.cebola-table > tbody > tr.ng-enter {
+  opacity: 0;
+}
+table.cebola-table > tbody > tr.ng-enter-active {
+  opacity: 1;
+}*/
+
+
 
 table.cebola-table > tbody > tr.has-error {
   background-color: #F9F1EF;
@@ -118,6 +127,9 @@ table.cebola-table tr > td > dl > div > dd {
   text-align: right;
 }
 
+table.cebola-table .table-col-50 {
+  width: 50px;
+}
 table.cebola-table .table-col-100 {
   width: 100px;
 }

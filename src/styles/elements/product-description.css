@@ -16,5 +16,6 @@
 
 .product-description > .product-image-wrapper > img {
   height: 50px;
+  width: 100%;
   mix-blend-mode: multiply;
 }

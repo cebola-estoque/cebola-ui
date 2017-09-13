@@ -1,9 +1,25 @@
 angular.module('cebola.controllers')
-.controller('InventoryCtrl', function ($scope, cebolaAPI, uiOperationDialog) {
+.controller('InventoryCtrl', function ($scope, $filter, cebolaAPI, uiOperationDialog) {
   
   $scope.loadSummary = function () {
     return cebolaAPI.inventory.summary().then(function (summary) {
       $scope.summary = summary;
+
+      $scope.summaries = {
+        error: summary.filter(function hasError(productSummary) {
+
+          var hasNegativeStock = productSummary.inStock < 0;
+          var isOverallocated  = productSummary.inStock + productSummary.allocatedForEntry + productSummary.allocatedForExit < 0;
+
+          return hasNegativeStock || isOverallocated;
+        }),
+        inStock: summary.filter(function isInStock(productSummary) {
+          return !$scope.hasError(productSummary) && productSummary.inStock > 0;
+        }),
+        expected: summary.filter(function isOutOfStockButExpected(productSummary) {
+          return productSummary.inStock === 0 && productSummary.allocatedForEntry > 0;
+        })
+      };
 
       // console.log(summary.map(i => {
       //   return {
@@ -81,6 +97,11 @@ angular.module('cebola.controllers')
         alert('houve um erro ao cadastrar a correção');
         throw err;
       });
+  };
+
+  $scope.inventoryTableMethods = {
+    createLossRecord: $scope.createLossRecord,
+    createCorrectionRecord: $scope.createCorrectionRecord,
   };
   
   // initialize

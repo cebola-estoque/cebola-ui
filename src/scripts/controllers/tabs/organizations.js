@@ -5,10 +5,7 @@ angular.module('cebola.controllers')
   
   // title to be shown in the ui
   $scope.tabTitle = TAB_ROLE === 'recipient' ? 'Receptores' : 'Fornecedores';
-  
-  // initialize data objects
-  $scope.organizations = [];
-  
+
   $scope.createOrganization = function () {
     
     return uiOrganizationDialog.create({

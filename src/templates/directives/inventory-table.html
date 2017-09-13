@@ -1,0 +1,131 @@
+<!-- error -->
+<table
+  ng-show="data.length > 0"
+  class="cebola-table">
+  <thead>
+    <tr>
+      <th class="table-col-300">{{ title }}</th>
+      <th class="table-col-100">Validade</th>
+      <th>Origem</th>
+      <th>Em estoque</th>
+      <th>À chegar</th>
+      <th>À sair</th>
+      <th
+        class="table-col-50 hidden-on-print">
+        <!-- action placeholder -->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="{{ rowClass }}" ng-repeat="productSummary in data">
+      <td class="table-col-300">
+        <div class="product-description">
+          <div class="product-image-wrapper">
+            <img ng-src="{{ productSummary.product.model.image.url }}">
+          </div>
+          <!-- <a href="#/inventario/{{ productSummary.product.model._id }}"> -->
+          <h1>{{ productSummary.product.model.description }}</h1>
+          <!-- </a> -->
+        </div>
+      </td>
+      <td>
+        <div>{{ productSummary.product.expiry | date:'dd/MMM/yyyy' }}</div>
+      </td>
+      <td>
+        <a href="#!/entradas/{{ productSummary.product.sourceShipment._id }}">
+          <small>
+            Fornecedor: {{ productSummary.product.sourceShipment.supplier.name }}
+          </small><br>
+          <small>
+            CDE: {{ productSummary.product.sourceShipment.documents.CDE || 'Não informado' }}
+          </small>
+        </a>
+      </td>
+      <td>
+        <div>
+          {{ productSummary.inStock }} 
+          {{ productSummary.product.measureUnit }}
+        </div>
+      </td>
+      <td>
+        
+        <dl ng-if="productSummary.allocatedForEntry > 0">
+          <div ng-repeat="entryAllocation in productSummary.records | filter:isEntryAllocationRecord">
+            <dt>
+              <a href="#!/entradas/{{ entryAllocation.shipment._id }}">{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</a>
+            </dt>
+            <!-- <dt>{{ entryAllocation.scheduledFor | date:'dd/MMM' }}:</dt> -->
+            <dd>
+              {{ entryAllocation.allocatedQuantity - entryAllocation.effectivatedQuantity }} 
+              {{ productSummary.product.measureUnit }}
+            </dd>
+          </div>
+          <div>
+            <dt></dt>
+            <dd>
+              {{ productSummary.allocatedForEntry }} 
+              {{ productSummary.product.measureUnit }}
+            </dd>
+          </div>
+        </dl>
+        
+        <div ng-if="productSummary.allocatedForEntry <= 0">-</div>
+      </td>
+      <td>
+        <!-- a sair -->
+        <dl ng-if="productSummary.allocatedForExit < 0">
+          <div ng-repeat="exitAllocation in productSummary.records | filter:isExitAllocationRecord">
+            <dt>
+              <a href="#!/saidas/{{ exitAllocation.shipment._id }}">{{ exitAllocation.scheduledFor | date:'dd/MMM' }}:</a>
+            </dt>
+            <dd>
+              {{ -1 * (exitAllocation.allocatedQuantity - exitAllocation.effectivatedQuantity) }}
+              {{ productSummary.product.measureUnit }}
+            </dd>
+          </div>
+          <div>
+            <dt></dt>
+            <dd>
+              {{ -1 * productSummary.allocatedForExit }} 
+              {{ productSummary.product.measureUnit }}
+            </dd>
+          </div>
+        </dl>
+
+        <div ng-if="productSummary.allocatedForExit >= 0">-</div>
+      </td>
+      <td class="hidden-on-print">
+
+        <!-- actions --> 
+        <md-menu
+          ng-if="enabledMenuItems.length > 0">
+          <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+            <md-icon md-menu-origin md-font-set="material-icons">more_vert</md-icon>
+          </md-button>
+          <md-menu-content width="4">
+            <md-menu-item
+              ng-if="enabledMenuItems.indexOf('loss') !== -1">
+              <md-button
+                ng-click="inventoryMethods.createLossRecord(
+                  { product: productSummary.product }
+                )">
+                Cadastrar perda
+              </md-button>
+            </md-menu-item>
+            <md-menu-item
+              ng-if="enabledMenuItems.indexOf('correction') !== -1">
+              <md-button
+                ng-click="inventoryMethods.createCorrectionRecord(
+                  { product: productSummary.product },
+                  { productType: 'in-stock' }
+                )">
+                Cadastrar correção
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

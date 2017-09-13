@@ -40,3 +40,26 @@ angular.module('cebola.directives', [])
 //     templateUrl: 'templates/directives/measure-unit-input.html',
 //   };
 // });
+
+.directive('cbInventoryTable', function () {
+  return {
+    restrict: 'E',
+    scope: {
+      title: '@',
+      data: '=',
+      inventoryMethods: '=',
+      enabledMenuItems: '@',
+      rowClass: '@',
+    },
+    controller: function ($scope) {      
+      $scope.isEntryAllocationRecord = function (record) {
+        return record.kind === 'ProductAllocation' && record.type === 'entry';
+      };
+      
+      $scope.isExitAllocationRecord = function (record) {
+        return record.kind === 'ProductAllocation' && record.type === 'exit';
+      };
+    },
+    templateUrl: 'templates/directives/inventory-table.html',
+  }
+});

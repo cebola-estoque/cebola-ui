@@ -21,6 +21,7 @@
     class="cebola-table exit-shipments-table">
     <thead>
       <tr>
+        <th class="table-col-50">No.</th>
         <th class="table-col-150">Saídas previstas</th>
         <th>Destinatário</th>
         <th>Responsável</th>
@@ -31,8 +32,8 @@
     </thead>
     <tbody>
       <tr 
-        ng-if="(exitShipments|filter:isPendingExitShipment).length === 0 && !$httpGlobalLoading">
-        <td colspan="6">
+        ng-show="exitShipments && (exitShipments|filter:isPendingExitShipment).length === 0">
+        <td colspan="7">
           Não há saídas previstas
           <md-button class="md-raised" ng-click="createExitShipment()">Cadastrar nova saída</md-button>
         </td>
@@ -44,6 +45,9 @@
                     'in-progress': exitShipment.status.value === 'in-progress',
                     'finished': exitShipment.status.value === 'finished',
                     'cancelled': exitShipment.status.value === 'cancelled', }">
+        <td>
+          #{{ exitShipment.number }}
+        </td>
         <td class="table-col-150">
           <!-- actions -->
           <a href="#!/saidas/{{ exitShipment._id }}">
@@ -127,10 +131,11 @@
   
   <table
     id="finished-exit-shipments"
-    ng-if="(exitShipments|filter:isFinishedExitShipment).length > 0"
+    ng-show="(exitShipments|filter:isFinishedExitShipment).length > 0"
     class="cebola-table">
     <thead>
       <tr>
+        <th class="table-col-50">No.</th>
         <th class="table-col-150">Saídas finalizadas</th>
         <th>Destinatário</th>
         <th>Responsável</th>
@@ -148,6 +153,9 @@
                     'in-progress': exitShipment.status.value === 'in-progress',
                     'finished': exitShipment.status.value === 'finished',
                     'cancelled': exitShipment.status.value === 'cancelled', }">
+        <td>
+          #{{ exitShipment.number }}
+        </td>
         <td class="table-col-150">
           <!-- actions -->
           <a href="#!/saidas/{{ exitShipment._id }}">

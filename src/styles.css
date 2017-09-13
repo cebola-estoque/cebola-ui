@@ -27,6 +27,7 @@
 @import 'styles/tabs/inventory.css';
 @import 'styles/tabs/entry-shipments.css';
 @import 'styles/tabs/product-models.css';
+@import 'styles/tabs/operations.css';
 
 /* dialogs */
 @import 'styles/dialogs/product-model.css';

@@ -9,10 +9,9 @@ angular.module('cebola.controllers')
   exitShipmentActions
 ) {
   
-  $scope.shipment = {};
-  $scope.allocations = [];
-  
   $scope.loadShipment = function () {
+    $scope.shipment = {};
+    
     return cebolaAPI.shipment.getById($stateParams.exitShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
     });

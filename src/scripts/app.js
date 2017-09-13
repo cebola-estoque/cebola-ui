@@ -6,6 +6,7 @@
     'ui.router',
     'ngMaterial',
     'ngMessages',
+    'ngAnimate',
 
     // third-party
     'pascalprecht.translate',

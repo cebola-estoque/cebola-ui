@@ -10,15 +10,20 @@
 
 <section class="tab-body">
   
-  <table class="cebola-table">
+  <table
+    id="operations-table"
+    class="cebola-table">
     <!-- <caption>This table is...</caption> -->
     <thead>
       <tr>
+        <th>No.</th>
+        <th>Status</th>
         <th>Tipo</th>
         <th>Categoria</th>
         <th>Produto</th>
         <th>Validade</th>
         <th>Unidade de medida</th>
+        <th>Origem</th>
         <th>Quantidade</th>
         <th>Data</th>
         <th>Observações</th>
@@ -26,6 +31,8 @@
     </thead>
     <tbody>
       <tr>
+        <td></td>
+        <td></td>
         <td>
           <md-input-container>
             <label>Tipo</label>
@@ -51,6 +58,12 @@
             <input ng-model="search.product.measureUnit" type="text">
           </md-input-container>
         </td>
+        <td>
+          <md-input-container>
+            <label>Origem</label>
+            <input ng-model="search.product.sourceShipment._id" type="text">
+          </md-input-container>
+        </td>
         <td></td>
         <td></td>
         <td></td>
@@ -62,12 +75,20 @@
           'operation-exit': operation.type === 'exit',
           'operation-loss': operation.category === 'loss',
           'operation-correction': operation.category === 'correction',
+          'operation-status-cancelled': operation.status.value === 'operation-cancelled'
         }">
+        <td>#{{ operation.number }}</td>
+        <td>{{ operation.status.value }}</td>
         <td>{{ operation.type }}</td>
         <td>{{ operation.category || 'normal' }}</td>
         <td>{{ operation.product.model.description }}</td>
         <td>{{ operation.product.expiry | date:'dd/MMM/yyyy' }}</td>
         <td>{{ operation.product.measureUnit }}</td>
+        <td>
+          <a href="#!/entradas/{{ operation.product.sourceShipment._id }}">
+            Entrada #{{ operation.product.sourceShipment.number }}
+          </a>
+        </td>
         <td>{{ operation.quantity }}</td>
         <td>{{ operation.createdAt | date:'d/MMM/yy HH:mm' }}</td>
         <td>{{ operation.annotations }}</td>

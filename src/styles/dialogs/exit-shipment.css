@@ -53,9 +53,17 @@
   align-items: flex-start;
 }
 
-.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > small {
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > .atocomplete-option-product-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
   margin-top: 6px;
+}
+
+.inventory-product-autocomplete > li .autocomplete-option > * > .autocomplete-option-product-description > .atocomplete-option-product-details > small {
   opacity: 0.6;
+  margin-right: 10px;
 }
 
 .inventory-product-autocomplete > li .autocomplete-option > * > .image-container {

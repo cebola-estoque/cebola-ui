@@ -1,12 +1,6 @@
 angular.module('cebola.controllers')
 .controller('ProductModelsCtrl', function ($scope, $mdDialog, uiProductModelDialog, cebolaAPI) {
   
-  // initialize scope properties
-  /**
-   * The product models listed in the view
-   */
-  $scope.productModels = [];
-  
   /**
    * Loads product models from server into the $scope
    */

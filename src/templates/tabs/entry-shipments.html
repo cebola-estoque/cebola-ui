@@ -20,6 +20,7 @@
     class="cebola-table entry-shipments-table">
     <thead>
       <tr>
+        <th class="table-col-50">No.</th>
         <th class="table-col-150">Entradas previstas</th>
         <th>Fornecedor</th>
         <th>Responsável</th>
@@ -30,8 +31,8 @@
     </thead>
     <tbody>
       <tr 
-        ng-if="(entryShipments | filter:isPendingEntryShipment).length === 0 && !$httpGlobalLoading">
-        <td colspan="6">
+        ng-show="entryShipments && (entryShipments | filter:isPendingEntryShipment).length === 0">
+        <td colspan="7">
           Não há entradas previstas
           <md-button class="md-raised" ng-click="createEntryShipment()">Cadastrar nova entrada</md-button>
         </td>
@@ -44,7 +45,10 @@
                     'in-progress': entryShipment.status.value === 'in-progress',
                     'finished': entryShipment.status.value === 'finished',
                     'cancelled': entryShipment.status.value === 'cancelled', }">
-        <td class="table-col-150">
+        <td>
+          #{{ entryShipment.number }}
+        </td>
+        <td>
           <!-- actions -->
           <a href="#!/entradas/{{ entryShipment._id }}">
             {{ entryShipment.scheduledFor | date }}
@@ -127,10 +131,11 @@
   
   <table
     id="finished-entry-shipments"
-    ng-if="(entryShipments|filter:isFinishedEntryShipment).length > 0"
+    ng-show="(entryShipments|filter:isFinishedEntryShipment).length > 0"
     class="cebola-table entry-shipments-table">
     <thead>
       <tr>
+        <th class="table-col-50">No.</th>
         <th class="table-col-150">Entradas finalizadas</th>
         <th>Fornecedor</th>
         <th>Responsável</th>
@@ -148,6 +153,9 @@
                     'in-progress': entryShipment.status.value === 'in-progress',
                     'finished': entryShipment.status.value === 'finished',
                     'cancelled': entryShipment.status.value === 'cancelled', }">
+        <td>
+          #{{ entryShipment.number }}
+        </td>
         <td class="table-col-150">
           <!-- actions -->
           <a href="#!/entradas/{{ entryShipment._id }}">
