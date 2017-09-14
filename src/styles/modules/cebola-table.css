@@ -53,11 +53,13 @@ table.cebola-table > tbody > tr.ng-enter-active {
 
 
 table.cebola-table > tbody > tr.has-error {
-  background-color: #F9F1EF;
+  /* same color as var(--red), but using rgba for opacity */
+  background-color: rgba(210, 79, 61, 0.4);
 }
 
 table.cebola-table > tbody > tr.has-error:hover {
-  background-color: #E3CCCA;
+  /* same color as var(--red), but using rgba for opacity */
+  background-color: rgba(210, 79, 61, 0.5);
 }
 
 
