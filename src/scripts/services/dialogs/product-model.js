@@ -2,7 +2,7 @@ angular.module('cebola.services')
 .factory('uiProductModelDialog', function ($mdDialog, $q) {
   
   
-  function ProductModelDialogCtrl(productModel, $scope, $mdDialog, Upload, CONFIG) {
+  function ProductModelDialogCtrl(productModel, $scope, $mdDialog, Upload, CONFIG, accountAPI) {
     
     /**
      * Product model either has been injected or
@@ -10,7 +10,7 @@ angular.module('cebola.services')
      */
     $scope.productModel = productModel || {};
 
-    $scope.uploadPhoto = function ($file) {
+    $scope.uploadPhoto = accountAPI.injectAuthorizationHeader(function (headers, $file) {
 
       if (!$file) {
 
@@ -21,7 +21,8 @@ angular.module('cebola.services')
         url: CONFIG.cebolaApiURI + '/files',
         data: {
           file: $file
-        }
+        },
+        headers: headers,
       })
       .then(function (resp) {
         console.log('Success', resp);
@@ -40,7 +41,7 @@ angular.module('cebola.services')
         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
       });
-    };
+    });
 
     $scope.removePhoto = function () {
       $scope.productModel.image = null;
@@ -60,6 +61,7 @@ angular.module('cebola.services')
     create: function (productModelTemplate) {
       
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/product-model.html',
         controller: ProductModelDialogCtrl,
         locals: {
@@ -75,6 +77,7 @@ angular.module('cebola.services')
       }
       
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/product-model.html',
         controller: ProductModelDialogCtrl,
         locals: {

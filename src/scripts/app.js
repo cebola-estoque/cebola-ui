@@ -23,6 +23,8 @@
   .constant('CONFIG', {
     cebolaApiURI:
       window.CONFIG.cebolaApiURI.replace(TRAILING_SLASH_RE, ''),
+    accountApiURI:
+      window.CONFIG.accountApiURI.replace(TRAILING_SLASH_RE, ''),
     DEFAULT_MEASURE_UNITS: [
       'KG',
       'L',
@@ -146,7 +148,6 @@
 
   // http interceptor that shows loading indicator on ajax request
   .config(function($httpProvider) {
-
     // alternatively, register the interceptor via an anonymous factory
     $httpProvider.interceptors.push(function($q, $rootScope) {
       return {
@@ -188,7 +189,7 @@
   /**
    * Outmost controller of the application
    */
-  .controller('AppCtrl', function ($scope, $rootScope, $state, $mdDialog, CONFIG) {
+  .controller('AppCtrl', function ($scope, $rootScope, $state, $mdDialog, CONFIG, accountAPI) {
 
     /**
      * Expose config
@@ -214,37 +215,9 @@
       }
     };
 
-    // fake user
-    var userData;
-    try {
-      userData = JSON.parse(window.localStorage.getItem('user'));
-    } catch (e) {
-      userData = {};
-    }
-    $rootScope.user = userData || {};
-
-    $scope.setUserName = function (ev) {
-      // Appending dialog to document.body to cover sidenav in docs app
-      var confirm = $mdDialog.prompt()
-        .title('Qual é o seu nome?')
-        // .textContent('Bowser is a common name.')
-        .placeholder('Nome')
-        .ariaLabel('Nome')
-        .initialValue('')
-        .targetEvent(ev)
-        .ok('ok')
-        .cancel('cancelar');
-
-      $mdDialog.show(confirm).then(function(result) {
-        if (result) {
-          $rootScope.user.name = result;
-          window.localStorage.setItem('user', JSON.stringify($rootScope.user));
-        }
-      }, function() {
-        // $scope.status = 'You didn\'t name your dog.';
-      });
+    $rootScope.logOut = function () {
+      accountAPI.logOut();
     };
-
   });
   
 })();

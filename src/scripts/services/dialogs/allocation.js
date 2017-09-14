@@ -30,6 +30,7 @@ angular.module('cebola.services')
   return {
     effectivateEntry: function (allocation) {
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/allocation/effectivate-entry.html',
         controller: EffectivateEntryAllocationDialogCtrl,
         locals: {
@@ -40,6 +41,7 @@ angular.module('cebola.services')
 
     effectivateExit: function (allocation) {
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/allocation/effectivate-exit.html',
         controller: EffectivateExitAllocationDialogCtrl,
         locals: {

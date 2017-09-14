@@ -21,6 +21,9 @@
 
 <section class="tab-body">
 
+  <div ng-if="summary.length === 0">
+    Não há produtos em estoque ou previstos
+  </div>
 
   <cb-inventory-table
     title="Produtos com erro"

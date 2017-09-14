@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const myth = require('gulp-myth');
 const useref = require('gulp-useref');
 const rename = require('gulp-rename');
+const replace = require('gulp-replace');
 const autoprefixer = require('gulp-autoprefixer');
 
 const browserSync = require('browser-sync').create();
@@ -41,8 +42,9 @@ gulp.task('develop', function() {
   ]).on('change', browserSync.reload);
 });
 
-gulp.task('distribute', ['css', 'useref'], function () {
+gulp.task('distribute', ['css', 'prepare-index'], function () {
   return gulp.src([
+      'src/favicon.png',
       'src/templates/**/*',
       'src/resources/**/*',
       // 'src/bower_components/material-design-icons/**/*',
@@ -52,8 +54,9 @@ gulp.task('distribute', ['css', 'useref'], function () {
 });
 
 // not-working-yet
-gulp.task('useref', ['css'], function () {
+gulp.task('prepare-index', ['css'], function () {
   return gulp.src('src/index.html')
+    .pipe(replace('http://localhost:4000', 'https://glacial-journey-19231.herokuapp.com'))
     .pipe(useref())
     .pipe(gulp.dest('dist'));
 });

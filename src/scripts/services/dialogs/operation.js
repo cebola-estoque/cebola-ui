@@ -139,6 +139,7 @@ angular.module('cebola.services')
       console.log('createCorrection',operationTemplate, dialogOptions)
 
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/operation/correction.html',
         controller: CorrectionOperationDialog,
         locals: {
@@ -152,6 +153,7 @@ angular.module('cebola.services')
       operationTemplate = operationTemplate || {};
 
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/operation/standalone.html',
         controller: StandaloneOperationDialog,
         locals: {

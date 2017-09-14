@@ -193,6 +193,7 @@ angular.module('cebola.services')
     create: function (shipmentTemplate) {
       
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/shipment/entry.html',
         controller: EntryShipmentDialog,
         locals: {
@@ -205,6 +206,7 @@ angular.module('cebola.services')
     edit: function (sourceShipment) {
       
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/shipment/entry.html',
         controller: EntryShipmentDialog,
         locals: {
@@ -216,6 +218,7 @@ angular.module('cebola.services')
 
     finish: function (shipment) {
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/shipment/finish-entry.html',
         controller: FinishEntryShipmentDialogCtrl,
         locals: {

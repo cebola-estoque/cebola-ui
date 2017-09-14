@@ -18,6 +18,7 @@ angular.module('cebola.services')
   return {
     create: function (annotation, options) {
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/annotation.html',
         controller: CreateAnnotationDialogCtrl,
         locals: {

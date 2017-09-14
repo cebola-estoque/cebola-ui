@@ -49,6 +49,7 @@ angular.module('cebola.services')
     create: function (organizationTemplate) {
       
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/organization.html',
         controller: OrganizationDialogCtrl,
         locals: {
@@ -64,6 +65,7 @@ angular.module('cebola.services')
       }
       
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/organization.html',
         controller: OrganizationDialogCtrl,
         locals: {

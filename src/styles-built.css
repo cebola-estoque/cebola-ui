@@ -649,14 +649,18 @@ md-menu-item > button.md-button {
   background-color: #54AB55;
 }
 
-#app-header-right a:after {
+/*#app-header-right a:after {
   content: url('/resources/img/arrow.png');
   position: absolute;
+
   height: 16px;
   width: 16px;
+
   left: 100%;
   top: 22px;
+  
 }
+*/
 
 #app-header-right {
   padding-right: 40px;

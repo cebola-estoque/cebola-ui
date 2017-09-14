@@ -312,6 +312,7 @@ angular.module('cebola.services')
       shipmentTemplate = shipmentTemplate || {};
 
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/shipment/exit.html',
         controller: ExitShipmentDialog,
         locals: {
@@ -326,6 +327,7 @@ angular.module('cebola.services')
       }
 
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/shipment/exit.html',
         controller: ExitShipmentDialog,
         locals: {
@@ -336,6 +338,7 @@ angular.module('cebola.services')
 
     finish: function (shipment) {
       return $mdDialog.show({
+        multiple: true,
         templateUrl: 'templates/dialogs/shipment/finish-exit.html',
         controller: FinishExitShipmentDialogCtrl,
         locals: {

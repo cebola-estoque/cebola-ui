@@ -1,59 +1,51 @@
 angular.module('cebola.services')
-.factory('cebolaAPI', function ($http, CONFIG) {
+.factory('cebolaAPI', function ($http, CONFIG, accountAPI) {
   
-  var api = {};
+  var cebolaAPI = {};
   
   var API_URI = CONFIG.cebolaApiURI;
   
   /**
    * Product model API
    */
-  api.productModel = {};
-  api.productModel.create = function (productModel) {
+  cebolaAPI.productModel = {};
+  cebolaAPI.productModel.create = function (headers, productModel) {
     
     return $http.post(API_URI + '/product-models', productModel, {
-      headers: {
-        // Authorization ...
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
     
   };
-  api.productModel.list = function (query) {
+  cebolaAPI.productModel.list = function (headers, query) {
     
     query = query || {};
     
     return $http.get(API_URI + '/product-models', {
       params: query,
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.productModel.search = function (searchText, query) {
+  cebolaAPI.productModel.search = function (headers, searchText, query) {
     query = query || {};
     
     query.q = searchText;
     
-    return api.productModel.list(query);
+    return cebolaAPI.productModel.list(query);
   };
-  api.productModel.update = function (productModelId, productModel) {
+  cebolaAPI.productModel.update = function (headers, productModelId, productModel) {
     return $http.put(API_URI + '/product-model/' + productModelId, productModel, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
   };
-  api.productModel.delete = function (productModelId) {
+  cebolaAPI.productModel.delete = function (headers, productModelId) {
     return $http.delete(API_URI + '/product-model/' + productModelId, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
@@ -63,20 +55,18 @@ angular.module('cebola.services')
   /**
    * Organizations API
    */
-  api.organization = {};
-  api.organization.create = function (organization) {
+  cebolaAPI.organization = {};
+  cebolaAPI.organization.create = function (headers, organization) {
     
     return $http.post(API_URI + '/organizations', organization, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
     
   };
-  api.organization.list = function (query) {
+  cebolaAPI.organization.list = function (headers, query) {
     
     query = query || {};
     
@@ -86,39 +76,33 @@ angular.module('cebola.services')
     
     return $http.get(API_URI + '/organizations', {
       params: query,
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
     
   };
-  api.organization.search = function (searchText, query) {
+  cebolaAPI.organization.search = function (headers, searchText, query) {
     query = query || {};
     
     query.q = searchText;
     
-    return api.organization.list(query);
+    return cebolaAPI.organization.list(query);
   };
-  api.organization.update = function (organizationId, organizationData) {
+  cebolaAPI.organization.update = function (headers, organizationId, organizationData) {
     
     return $http.put(API_URI + '/organization/' + organizationId, organizationData, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
     
   };
-  api.organization.delete = function (organizationId) {
+  cebolaAPI.organization.delete = function (headers, organizationId) {
     return $http.delete(API_URI + '/organization/' + organizationId, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
@@ -128,59 +112,52 @@ angular.module('cebola.services')
   /**
    * Shipments API
    */
-  api.shipment = {};
-  api.shipment.scheduleEntry = function (supplier, shipmentData, allocationsData) {
+  cebolaAPI.shipment = {};
+  cebolaAPI.shipment.scheduleEntry = function (headers, supplier, shipmentData, allocationsData) {
     
     shipmentData.supplier = supplier;
     shipmentData.allocations = allocationsData;
     
     return $http.post(API_URI + '/shipments/entries', shipmentData, {
-      headers: {
-        // Authorization ...
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
     
   };
-  api.shipment.listEntries = function (query) {
+  cebolaAPI.shipment.listEntries = function (headers, query) {
     return $http.get(API_URI + '/shipments/entries', {
       params: query,
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.scheduleExit = function (recipient, shipmentData, allocationsData) {
+  cebolaAPI.shipment.scheduleExit = function (headers, recipient, shipmentData, allocationsData) {
     shipmentData.recipient = recipient;
     shipmentData.allocations = allocationsData;
     
     return $http.post(API_URI + '/shipments/exits', shipmentData, {
-      headers: {
-        // Authorization ...
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.listExits = function (query) {
+  cebolaAPI.shipment.listExits = function (headers, query) {
     return $http.get(API_URI + '/shipments/exits', {
       params: query,
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.getById = function (shipmentId) {
+  cebolaAPI.shipment.getById = function (headers, shipmentId) {
     return $http.get(API_URI + '/shipment/' + shipmentId, {
+      headers: headers,
       params: {
         withRecords: 'true'
       },
@@ -215,106 +192,89 @@ angular.module('cebola.services')
       return shipmentData;
     });
   };
-  api.shipment.cancel = function (shipmentId) {
+  cebolaAPI.shipment.cancel = function (headers, shipmentId) {
     return $http.delete(API_URI + '/shipment/' + shipmentId, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.update = function (shipmentId, shipmentData) {
+  cebolaAPI.shipment.update = function (headers, shipmentId, shipmentData) {
     return $http.put(API_URI + '/shipment/' + shipmentId, shipmentData, {
-      headers: {
-        // Authorization
-      }
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.createAllocations = function (shipmentId, allocations) {
+  cebolaAPI.shipment.createAllocations = function (headers, shipmentId, allocations) {
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/allocations',
       allocations,
       {
-        headers: {
-          // Authorization
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.updateAllocations = function (shipmentId, allocations) {
+  cebolaAPI.shipment.updateAllocations = function (headers, shipmentId, allocations) {
     return $http.put(
       API_URI + '/shipment/' + shipmentId + '/allocations', allocations,
       {
-        headers: {
-          // Authorization
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.cancelAllocations = function (shipmentId, allocations) {
+  cebolaAPI.shipment.cancelAllocations = function (headers, shipmentId, allocations) {
     return $http.delete(
       API_URI + '/shipment/' + shipmentId + '/allocations',
       {
         data: allocations,
-        headers: {
-          // Authorization
-          'Content-Type': 'application/json'
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.effectivateAllocation = function (shipmentId, allocationId, quantity) {
+  cebolaAPI.shipment.effectivateAllocation = function (headers, shipmentId, allocationId, quantity) {
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/allocation/' + allocationId + '/effectivate',
       {
         quantity: quantity
       },
       {
-        headers: {
-          // Autohrizaiton
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.createOperations = function (shipmentId, operations) {
+  cebolaAPI.shipment.createOperations = function (headers, shipmentId, operations) {
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/operations',
       operations,
       {
-        headers: {
-          // Authorization
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
       return res.data;
     });
   };
-  api.shipment.finish = function (shipmentId, finishData) {
+  cebolaAPI.shipment.finish = function (headers, shipmentId, finishData) {
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/finish',
       finishData,
       {
-        headers: {
-          // Authorization
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
@@ -325,37 +285,34 @@ angular.module('cebola.services')
   /**
    * Operation API
    */
-  api.operation = {};
-  api.operation.list = function (query) {
+  cebolaAPI.operation = {};
+  cebolaAPI.operation.list = function (headers, query) {
     return $http.get(API_URI + '/operations', {
       params: query,
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.operation.createLoss = function (operationData) {
+  cebolaAPI.operation.createLoss = function (headers, operationData) {
     return $http.post(
       API_URI + '/operations/loss',
       operationData,
       {
-        headers: {
-
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
       return res.data;
     });
   };
-  api.operation.createCorrection = function (operationData) {
+  cebolaAPI.operation.createCorrection = function (headers, operationData) {
     return $http.post(
       API_URI + '/operations/correction',
       operationData,
       {
-        headers: {
-
-        }
+        headers: headers,
       }
     )
     .then(function (res) {
@@ -366,38 +323,51 @@ angular.module('cebola.services')
   /**
    * Inventory API
    */
-  api.inventory = {};
-  api.inventory.summary = function (query) {
+  cebolaAPI.inventory = {};
+  cebolaAPI.inventory.summary = function (headers, query) {
     query = query || {};
     
     return $http.get(API_URI + '/inventory/summary', {
       // auth
       params: query,
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.inventory.availabilitySummary = function (date) {
+  cebolaAPI.inventory.availabilitySummary = function (headers, date) {
     return $http.get(API_URI + '/inventory/availability-summary', {
       // auth
       params: {
         date: date,
       },
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
-  api.inventory.shipmentSummary = function (shipmentId) {
+  cebolaAPI.inventory.shipmentSummary = function (headers, shipmentId) {
     return $http.get(API_URI + '/inventory/shipment/' + shipmentId, {
-      // auth
+      headers: headers,
     })
     .then(function (res) {
       return res.data;
     });
   };
+
+  /**
+   * Add headers
+   */
+  Object.keys(cebolaAPI).forEach(function (section) {
+    Object.keys(cebolaAPI[section]).forEach(function (method) {
+      var fn = cebolaAPI[section][method];
+      cebolaAPI[section][method] = accountAPI.injectAuthorizationHeader(fn);
+    });
+  });
+
   
-  return api;
+  return cebolaAPI;
   
 });

@@ -95,7 +95,7 @@
   background-color: var(--green);
 }
 
-#app-header-right a:after {
+/*#app-header-right a:after {
   content: url('/resources/img/arrow.png');
   position: absolute;
 
@@ -106,7 +106,7 @@
   top: 22px;
   
 }
-
+*/
 #app-header-right {
   padding-right: 40px; /* alinhado com conteudo body */
   height: 60px;

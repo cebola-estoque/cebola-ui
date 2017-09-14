@@ -94,9 +94,9 @@
     </div>
     
     <div id="app-header-right" class="hidden-on-print">
-<!--     <a ng-click="setUserName()">
-      {{ user.name || 'usuário' }}
-    </a> -->
+    <a href="#" ng-click="logOut()">
+      Sair
+    </a>
     </div>
   </header>
   
@@ -122,9 +122,8 @@
   <!-- config -->
   <script>
     window.CONFIG = {
-      // cebolaApiURI: 'http://104.196.65.249',
-      cebolaApiURI: 'http://localhost:4000',
-      // cebolaApiURI: 'https://glacial-journey-19231.herokuapp.com/',
+      accountApiURI: 'http://localhost:4000/account',
+      cebolaApiURI: 'http://localhost:4000/public',
     };
   </script>
 
@@ -149,6 +148,7 @@
   <!-- services -->
   <script src="scripts/services/index.js"></script>
   <script src="scripts/services/util.js"></script>
+  <script src="scripts/services/account-api.js"></script>
   <script src="scripts/services/cebola-api.js"></script>
   <script src="scripts/services/dialogs/shipment/entry.js"></script>
   <script src="scripts/services/dialogs/shipment/exit.js"></script>
@@ -157,6 +157,7 @@
   <script src="scripts/services/dialogs/product-model.js"></script>
   <script src="scripts/services/dialogs/organization.js"></script>
   <script src="scripts/services/dialogs/annotation.js"></script>
+  <script src="scripts/services/dialogs/temporary-password.js"></script>
   <script src="scripts/services/actions/entry-shipment.js"></script>
   <script src="scripts/services/actions/exit-shipment.js"></script>
 
