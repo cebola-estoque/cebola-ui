@@ -269,6 +269,25 @@ table.sub-table tr td {
   border: none;
 }
 
+table.cebola-summarized-table {
+  width: 100%;
+}
+
+table.cebola-summarized-table tr > th {
+  text-align: left;
+  padding: 5px 5px;
+}
+
+table.cebola-summarized-table tr > td {
+  /* tr borders cannot be styled directly */
+  /* border: 1px magenta dashed; */
+  text-align: left;
+  /*border-bottom: #ECECEC 1px solid;*/
+  position: relative;
+  padding: 5px 5px;
+  box-sizing: border-box;
+}
+
 .dialog {
   min-width: 400px;
   font-size: 14px;
@@ -469,12 +488,8 @@ table.sub-table tr td {
 
 /* elements */
 
-.shipment-dialog .cancelled {
-  opacity: 0.5;
-}
-
-.shipment-dialog .cancelled input {
-  text-decoration: line-through;
+.shipment-dialog .form-section {
+  margin-bottom: 30px;
 }
 
 .shipment-dialog .shipment-product-list {
@@ -488,6 +503,16 @@ table.sub-table tr td {
   padding-right: 20px;
   padding-bottom: 10px;
   box-sizing: border-box;
+}
+
+.shipment-dialog .cebola-summarized-table thead th:first-child,
+.shipment-dialog .cebola-summarized-table tr td:first-child {
+  padding-left: 0;
+}
+
+.shipment-dialog .cebola-summarized-table thead th:last-child,
+.shipment-dialog .cebola-summarized-table tr td:last-child {
+  padding-right: 0;
 }
 
 md-menu-item {

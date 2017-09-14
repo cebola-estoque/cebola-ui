@@ -10,6 +10,8 @@ angular.module('cebola.services')
    */
   cebolaAPI.productModel = {};
   cebolaAPI.productModel.create = function (headers, productModel) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
     
     return $http.post(API_URI + '/product-models', productModel, {
       headers: headers,
@@ -17,9 +19,10 @@ angular.module('cebola.services')
     .then(function (res) {
       return res.data;
     });
-    
   };
   cebolaAPI.productModel.list = function (headers, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
     
     query = query || {};
     
@@ -32,6 +35,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.productModel.search = function (headers, searchText, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     query = query || {};
     
     query.q = searchText;
@@ -39,11 +45,17 @@ angular.module('cebola.services')
     return cebolaAPI.productModel.list(query);
   };
   cebolaAPI.productModel.update = function (headers, productModelId, productModel) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.put(API_URI + '/product-model/' + productModelId, productModel, {
       headers: headers,
     })
   };
   cebolaAPI.productModel.delete = function (headers, productModelId) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.delete(API_URI + '/product-model/' + productModelId, {
       headers: headers,
     })
@@ -57,6 +69,8 @@ angular.module('cebola.services')
    */
   cebolaAPI.organization = {};
   cebolaAPI.organization.create = function (headers, organization) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
     
     return $http.post(API_URI + '/organizations', organization, {
       headers: headers,
@@ -67,6 +81,8 @@ angular.module('cebola.services')
     
   };
   cebolaAPI.organization.list = function (headers, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
     
     query = query || {};
     
@@ -84,6 +100,9 @@ angular.module('cebola.services')
     
   };
   cebolaAPI.organization.search = function (headers, searchText, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     query = query || {};
     
     query.q = searchText;
@@ -91,6 +110,8 @@ angular.module('cebola.services')
     return cebolaAPI.organization.list(query);
   };
   cebolaAPI.organization.update = function (headers, organizationId, organizationData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
     
     return $http.put(API_URI + '/organization/' + organizationId, organizationData, {
       headers: headers,
@@ -101,6 +122,9 @@ angular.module('cebola.services')
     
   };
   cebolaAPI.organization.delete = function (headers, organizationId) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.delete(API_URI + '/organization/' + organizationId, {
       headers: headers,
     })
@@ -114,6 +138,8 @@ angular.module('cebola.services')
    */
   cebolaAPI.shipment = {};
   cebolaAPI.shipment.scheduleEntry = function (headers, supplier, shipmentData, allocationsData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
     
     shipmentData.supplier = supplier;
     shipmentData.allocations = allocationsData;
@@ -127,6 +153,9 @@ angular.module('cebola.services')
     
   };
   cebolaAPI.shipment.listEntries = function (headers, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.get(API_URI + '/shipments/entries', {
       params: query,
       headers: headers,
@@ -136,6 +165,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.scheduleExit = function (headers, recipient, shipmentData, allocationsData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     shipmentData.recipient = recipient;
     shipmentData.allocations = allocationsData;
     
@@ -147,6 +179,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.listExits = function (headers, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.get(API_URI + '/shipments/exits', {
       params: query,
       headers: headers,
@@ -156,6 +191,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.getById = function (headers, shipmentId) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.get(API_URI + '/shipment/' + shipmentId, {
       headers: headers,
       params: {
@@ -193,6 +231,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.cancel = function (headers, shipmentId) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.delete(API_URI + '/shipment/' + shipmentId, {
       headers: headers,
     })
@@ -201,6 +242,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.update = function (headers, shipmentId, shipmentData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.put(API_URI + '/shipment/' + shipmentId, shipmentData, {
       headers: headers,
     })
@@ -209,6 +253,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.createAllocations = function (headers, shipmentId, allocations) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/allocations',
       allocations,
@@ -221,6 +268,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.updateAllocations = function (headers, shipmentId, allocations) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.put(
       API_URI + '/shipment/' + shipmentId + '/allocations', allocations,
       {
@@ -232,6 +282,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.cancelAllocations = function (headers, shipmentId, allocations) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.delete(
       API_URI + '/shipment/' + shipmentId + '/allocations',
       {
@@ -244,6 +297,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.effectivateAllocation = function (headers, shipmentId, allocationId, quantity) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/allocation/' + allocationId + '/effectivate',
       {
@@ -258,6 +314,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.createOperations = function (headers, shipmentId, operations) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/operations',
       operations,
@@ -270,6 +329,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.shipment.finish = function (headers, shipmentId, finishData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.post(
       API_URI + '/shipment/' + shipmentId + '/finish',
       finishData,
@@ -287,6 +349,9 @@ angular.module('cebola.services')
    */
   cebolaAPI.operation = {};
   cebolaAPI.operation.list = function (headers, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.get(API_URI + '/operations', {
       params: query,
       headers: headers,
@@ -296,6 +361,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.operation.createLoss = function (headers, operationData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.post(
       API_URI + '/operations/loss',
       operationData,
@@ -308,6 +376,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.operation.createCorrection = function (headers, operationData) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.post(
       API_URI + '/operations/correction',
       operationData,
@@ -325,6 +396,9 @@ angular.module('cebola.services')
    */
   cebolaAPI.inventory = {};
   cebolaAPI.inventory.summary = function (headers, query) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     query = query || {};
     
     return $http.get(API_URI + '/inventory/summary', {
@@ -337,6 +411,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.inventory.availabilitySummary = function (headers, date) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+
     return $http.get(API_URI + '/inventory/availability-summary', {
       // auth
       params: {
@@ -349,6 +426,9 @@ angular.module('cebola.services')
     });
   };
   cebolaAPI.inventory.shipmentSummary = function (headers, shipmentId) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+    
     return $http.get(API_URI + '/inventory/shipment/' + shipmentId, {
       headers: headers,
     })

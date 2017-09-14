@@ -1,0 +1,23 @@
+table.cebola-summarized-table {
+  width: 100%;
+}
+
+table.cebola-summarized-table tr > th {
+  text-align: left;
+  padding: 5px 5px;
+}
+
+
+table.cebola-summarized-table tr > td {
+  /* tr borders cannot be styled directly */
+  /* border: 1px magenta dashed; */
+  
+  text-align: left;
+  
+  /*border-bottom: #ECECEC 1px solid;*/
+  position: relative;
+  
+  padding: 5px 5px;
+  
+  box-sizing: border-box;
+}

@@ -288,9 +288,7 @@ angular.module('cebola.services')
    * Shipment finishing controller
    */
   function FinishExitShipmentDialogCtrl($scope, shipment) {
-
-    console.log(shipment);
-    $scope.shipment = shipment;
+    $scope.shipment = angular.copy(shipment);
 
     // get the differences between allocation and effectivation
     $scope.allocatedAndEffectivatedDifferences = shipment.allocations.active.filter((allocation) => {
@@ -303,7 +301,15 @@ angular.module('cebola.services')
     };
     
     $scope.submit = function () {
-      $mdDialog.hide($scope.annotations);
+
+      var finishedShipment = angular.copy($scope.shipment);
+
+      delete finishedShipment.allocations;
+      delete finishedShipment.standaloneOperations;
+      delete finishedShipment.scheduledFor;
+      delete finishedShipment.supplier;
+
+      $mdDialog.hide(finishedShipment);
     };
   }
 

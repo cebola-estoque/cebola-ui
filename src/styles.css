@@ -6,7 +6,8 @@
 
 /* modules */
 @import 'styles/modules/tabs.css';
-@import 'styles/modules/tables.css';
+@import 'styles/modules/cebola-table.css';
+@import 'styles/modules/cebola-summarized-table.css';
 @import 'styles/modules/dialogs.css';
 @import 'styles/modules/forms.css';
 @import 'styles/modules/print.css';

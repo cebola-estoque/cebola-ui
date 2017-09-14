@@ -38,6 +38,7 @@ angular.module('cebola.services')
     
     return cebolaAPI.shipment.getById(sourceEntryShipment._id)
       .then(function (fullSourceEntryShipment) {
+        console.log(fullSourceEntryShipment);
         return uiDialogEntryShipment.edit(fullSourceEntryShipment);
       })
       .then(function (data) {
@@ -46,6 +47,11 @@ angular.module('cebola.services')
         var promises = [];
 
         if (data.allocationsToCancel.length > 0) {
+
+          console.log(data);
+
+          // throw new Error('qweqwe');
+
           promises.push(
             cebolaAPI.shipment.cancelAllocations(
               sourceEntryShipment._id,
