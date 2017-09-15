@@ -131,20 +131,23 @@ angular.module('cebola.controllers')
 .controller('ExitShipmentPrintCtrl', function (
   $scope,
   $stateParams,
-  $rootScope,
-  cebolaAPI,
-  uiAllocationDialog,
-  uiOperationDialog,
-  uiDialogEntryShipment,
-  entryShipmentActions
+  $filter,
+  cebolaAPI
 ) {
-  $rootScope.pageMode = 'print';
-  
   $scope.loadShipment = function () {
     $scope.shipment = {};
     
     return cebolaAPI.shipment.getById($stateParams.exitShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
+
+      var appTitle = [
+        'Recibo',
+        '#' + shipment.number,
+        shipment.recipient.name,
+        $filter('date')(shipment.scheduledFor, 'dd/MM/yyyy'),
+      ].join(' ');
+
+      $scope.setAppTitle(appTitle);
 
       /**
        * Compute totals

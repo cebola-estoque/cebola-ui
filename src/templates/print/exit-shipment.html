@@ -110,19 +110,19 @@
           </td>
           <!-- <td>{{ allocation.product.measureUnit }}</td> -->
           <td>
-            {{ allocation.product.model.netWeight / 1000 | number:3 }}
+            {{ allocation.product.model.netWeight / 1000 | number:2 }}
           </td>
           <td>
-            {{ allocation.product.model.netWeight * (-1 * allocation.effectivatedQuantity) / 1000 | number:3 }}
+            {{ allocation.product.model.netWeight * (-1 * allocation.effectivatedQuantity) / 1000 | number:2 }}
           </td>
           <td>
-            {{ allocation.product.model.weight / 1000 | number:3 }}
+            {{ allocation.product.model.weight / 1000 | number:2 }}
           </td>
           <td>
-            {{ allocation.product.model.weight * (-1 * allocation.effectivatedQuantity) / 1000 | number:3 }}
+            {{ allocation.product.model.weight * (-1 * allocation.effectivatedQuantity) / 1000 | number:2 }}
           </td>
           <td>
-            {{ (allocation.product.model.width / 100) * (allocation.product.model.height / 100) * (allocation.product.model.depth / 100) * (-1 * allocation.effectivatedQuantity) | number:3 }}
+            {{ (allocation.product.model.width / 100) * (allocation.product.model.height / 100) * (allocation.product.model.depth / 100) * (-1 * allocation.effectivatedQuantity) | number:2 }}
           </td>
         </tr>
 
@@ -173,14 +173,14 @@
           <td></td>
           <td></td> -->
           <td>
-            <strong>{{ totalNetWeight / 1000 | number:3 }}</strong>
+            <strong>{{ totalNetWeight / 1000 | number:2 }}</strong>
           </td>
           <td></td>
           <td>
-            <strong>{{ totalWeight / 1000 | number:3 }}</strong>
+            <strong>{{ totalWeight / 1000 | number:2 }}</strong>
           </td>
           <td>
-            <strong>{{ totalVolume | number:3}}</strong>
+            <strong>{{ totalVolume | number:2}}</strong>
           </td>
         </tr>
       </tbody>

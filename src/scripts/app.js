@@ -48,7 +48,8 @@
             controller: 'InventoryCtrl',
             templateUrl: 'templates/tabs/inventory.html',
           }
-        }
+        },
+        appTitle: 'Cebola - Inventário',
       })
       .state('inventory.detail', {
         url: '/:productModelId',
@@ -241,21 +242,22 @@
     };
 
     /**
-     * Body classes
+     * State attributes
      */
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-      STATE_CHANGE_COUNT += 1;
-
-      if (angular.isDefined(toState.bodyClasses)) {
-        $scope.bodyClasses = toState.bodyClasses;
-        return;
-      }
-
-      $scope.bodyClasses = '';
+      $scope.bodyClasses = toState.bodyClasses || '';
+      $scope.appTitle    = toState.appTitle || 'Cebola';
     });
 
     $rootScope.logOut = function () {
       accountAPI.logOut();
+    };
+
+    /**
+     * Application methods
+     */
+    $scope.setAppTitle = function (title) {
+      $scope.appTitle = title;
     };
 
 
