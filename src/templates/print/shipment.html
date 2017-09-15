@@ -1,0 +1,44 @@
+<div class="print-container">
+
+  <header>
+    
+  </header>
+
+  <main>
+
+    <table class="cebola-print-table">
+      <thead>
+        <th>Cód.</th>
+        <th class="table-col-300">Produto</th>
+        <th>CDE</th>
+        <th>Validade</th>
+        <!-- <th>Quantidade alocada</th> -->
+        <th>Quant.</th>
+        <!-- <th>Unidade</th> -->
+        <th>Peso líq. unitário</th>
+        <th>Peso líq. Total</th>
+        <th>Peso bruto unitário</th>
+        <th>Peso bruto Total</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="allocation in shipment.allocations.active">
+          <td>
+            S{{ shipment.number }}-{{ allocation.number }}
+          </td>
+          <td class="table-col-300">{{ allocation.product.model.description }}</td>
+          <td>{{ allocation.product.sourceShipment.documents.CDE }}</td>
+          <td>{{ allocation.product.expiry | date:'dd/MM/YY' }}</td>
+          <!-- <td>{{ allocation.allocatedQuantity }}</td> -->
+          <td>{{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}</td>
+          <!-- <td>{{ allocation.product.measureUnit }}</td> -->
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </main>
+
+</div>

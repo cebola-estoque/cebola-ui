@@ -130,43 +130,6 @@ table.cebola-table tr > td > dl > div > dd {
   text-align: right;
 }
 
-table.cebola-table .table-col-50 {
-  width: 50px;
-}
-table.cebola-table .table-col-100 {
-  width: 100px;
-}
-table.cebola-table .table-col-150 {
-  width: 150px;
-}
-table.cebola-table .table-col-200 {
-  width: 200px;
-}
-table.cebola-table .table-col-250 {
-  width: 250px;
-}
-table.cebola-table .table-col-300 {
-  width: 300px;
-}
-table.cebola-table .table-col-350 {
-  width: 350px;
-}
-table.cebola-table .table-col-400 {
-  width: 400px;
-}
-table.cebola-table .table-col-450 {
-  width: 450px;
-}
-table.cebola-table .table-col-500 {
-  width: 500px;
-}
-table.cebola-table .table-col-550 {
-  width: 550px;
-}
-table.cebola-table .table-col-600 {
-  width: 600px;
-}
-
 .md-button.md-default-theme.md-accent[disabled] md-icon, 
 .md-button.md-accent[disabled] md-icon, 
 .md-button.md-default-theme.md-fab[disabled] md-icon, 

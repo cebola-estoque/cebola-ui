@@ -80,6 +80,19 @@
           entryShipment: null,
         }
       })
+      .state('entry-shipments.detail.print', {
+        url: '/imprimir',
+        views: {
+          'body@': {
+            controller: 'EntryShipmentPrintCtrl',
+            templateUrl: 'templates/print/shipment.html',
+          }
+        },
+        params: {
+          entryShipment: null,
+        },
+        bodyClasses: 'print-mode',
+      })
       .state('exit-shipments', {
         url: '/saidas',
         views: {
@@ -97,6 +110,19 @@
             templateUrl: 'templates/tabs/exit-shipment-detail.html',
           }
         }
+      })
+      .state('exit-shipments.detail.print', {
+        url: '/imprimir',
+        views: {
+          'body@': {
+            controller: 'ExitShipmentPrintCtrl',
+            templateUrl: 'templates/print/exit-shipment.html',
+          }
+        },
+        params: {
+          exitShipment: null,
+        },
+        bodyClasses: 'print-mode',
       })
       .state('operations', {
         url: '/operacoes',
@@ -203,7 +229,6 @@
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
       STATE_CHANGE_COUNT += 1;
-      // console.log('stateChangeSuccess', STATE_CHANGE_COUNT)
     });
 
     $rootScope.goBack = function () {
@@ -215,9 +240,25 @@
       }
     };
 
+    /**
+     * Body classes
+     */
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+      STATE_CHANGE_COUNT += 1;
+
+      if (angular.isDefined(toState.bodyClasses)) {
+        $scope.bodyClasses = toState.bodyClasses;
+        return;
+      }
+
+      $scope.bodyClasses = '';
+    });
+
     $rootScope.logOut = function () {
       accountAPI.logOut();
     };
+
+
   });
   
 })();

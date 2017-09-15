@@ -1,0 +1,25 @@
+table.cebola-print-table {
+  width: 100%;
+  background-color: white;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+
+table.cebola-print-table th,
+table.cebola-print-table td {
+  border: 1px gray solid;
+  font-size: 12px;
+
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+table.cebola-print-table td {
+  white-space: nowrap;
+}
+
+table.cebola-print-table tr.highlight,
+table.cebola-print-table th.highlight,
+table.cebola-print-table td.highlight {
+  background-color: var(--light-green);
+}

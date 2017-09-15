@@ -1,0 +1,239 @@
+<div class="print-container">
+
+
+  <div
+    class="print-actions hidden-on-print">
+    <a
+      class="md-button md-fab"
+      href="#!/saidas/{{ shipment._id }}">
+      <md-icon md-font-set="material-icons">
+        keyboard_backspace
+      </md-icon>
+    </a>
+    <md-button
+      class="md-fab"
+      aria-label="Imprimir"
+      ng-click="print()">
+      <md-icon md-font-set="material-icons">print</md-icon>
+    </md-button>
+  </div>
+
+  <header>
+    <div>
+      <img class="print-logo" src="resources/img/logo-mesa-brasil.png">
+    </div>
+    <div>
+      <h1>Recibo de transferência de doação de alimentos</h1>
+      <h2>N<sup>o</sup> {{ shipment.number }}</h2>
+    </div>
+    <div>
+      CECAM - CENTRO DE CAPTAÇÃO E ARMAZENAGEM MESA BRASIL<br>
+      Tel.: 2607-8870<br>
+      CNPJ: 03.667.884/0045-41
+    </div>
+  </header>
+
+  <main>
+
+    <table class="cebola-print-table">
+      <thead>
+        <th>Receptor</th>
+        <th>{{ shipment.recipient.document.type }}</th>
+        <th class="highlight">Data de retirada</th>
+        <th>Identificação do veículo</th>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            {{ shipment.recipient.name }}
+          </td>
+          <td>
+            {{ shipment.recipient.document.value }}
+          </td>
+          <td class="highlight">
+            {{ shipment.scheduledFor | date:'dd/MM/yyyy' }}
+          </td>
+          <td>
+            {{ shipment.documents.vehicleId }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="cebola-print-table">
+      <thead>
+        <tr>
+          <th rowspan="2">Cód.</th>
+          <th rowspan="2" class="table-col-300">Produto</th>
+          <th rowspan="2" style="min-width: 75px;">CDE</th>
+          <th rowspan="2">Validade</th>
+          <!-- <th>Quantidade alocada</th> -->
+          <th rowspan="2">Quant.</th>
+          <!-- <th>Unidade</th> -->
+          <th colspan="2">Peso líq. (KG)</th>
+          <!-- <th>Peso líq. total (KG)</th> -->
+          <th colspan="2">Peso bruto (KG)</th>
+          <!-- <th>Peso bruto total (KG)</th> -->
+          <th rowspan="2">Volume (m<sup>3</sup>)</th>
+        </tr>
+        <tr>
+          <!-- <th>Cód.</th> -->
+          <!-- <th class="table-col-300">Produto</th> -->
+          <!-- <th>CDE</th> -->
+          <!-- <th>Validade</th> -->
+          <!-- <th>Quantidade alocada</th> -->
+          <!-- <th>Quant.</th> -->
+          <!-- <th>Unidade</th> -->
+          <th>Unitário</th>
+          <th>Total</th>
+          <th>Unitário</th>
+          <th>Total</th>
+          <!-- <th>Volume (m<sup>3</sup>)</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="allocation in shipment.allocations.finished">
+          <td>
+            S{{ shipment.number }}-{{ allocation.number }}
+          </td>
+          <td class="table-col-300">{{ allocation.product.model.description }}</td>
+          <td>
+            {{ allocation.product.sourceShipment.documents.CDE }}
+          </td>
+          <td>
+            {{ allocation.product.expiry | date:'dd/MM/yy' }}
+          </td>
+          <!-- <td>{{ allocation.allocatedQuantity }}</td> -->
+          <td>
+            {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          </td>
+          <!-- <td>{{ allocation.product.measureUnit }}</td> -->
+          <td>
+            {{ allocation.product.model.netWeight / 1000 | number:3 }}
+          </td>
+          <td>
+            {{ allocation.product.model.netWeight * (-1 * allocation.effectivatedQuantity) / 1000 | number:3 }}
+          </td>
+          <td>
+            {{ allocation.product.model.weight / 1000 | number:3 }}
+          </td>
+          <td>
+            {{ allocation.product.model.weight * (-1 * allocation.effectivatedQuantity) / 1000 | number:3 }}
+          </td>
+          <td>
+            {{ (allocation.product.model.width / 100) * (allocation.product.model.height / 100) * (allocation.product.model.depth / 100) * (-1 * allocation.effectivatedQuantity) | number:3 }}
+          </td>
+        </tr>
+
+        <!-- some blank rows for manual usage -->
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+        <!-- totals -->
+        <tr>
+          <td colspan="6" style="text-align: right;">Total:</td>
+<!--           <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td> -->
+          <td>
+            <strong>{{ totalNetWeight / 1000 | number:3 }}</strong>
+          </td>
+          <td></td>
+          <td>
+            <strong>{{ totalWeight / 1000 | number:3 }}</strong>
+          </td>
+          <td>
+            <strong>{{ totalVolume | number:3}}</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="cebola-print-table">
+      <tbody>
+        <tr>
+          <td colspan="2" class="highlight">
+            <label><strong>Observações:</strong></label>
+            <div>
+              {{ shipment.annotations }}
+            </div>
+            <div class="written-input-container"></div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <label><strong>Transportadora:</strong></label>
+            <div class="written-input-container"></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 50%">
+
+          </td>
+          <td style="width: 50%">
+            <label>Recebi e confferi as mercadorias descritas neste documento:</label>
+            <div class="written-input-container"></div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Nome do Responsável pela <strong>Expedição</strong>:</label>
+            <div class="written-input-container"></div>
+          </td>
+          <td>
+            <label>Nome do Responsável pelo <strong>Recebimento</strong>:</label>
+            <div class="written-input-container"></div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Assinatura:</label>
+            <div class="written-input-container"></div>
+          </td>
+          <td>
+            <label>Assinatura:</label>
+            <div class="written-input-container"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+</div>

@@ -16,6 +16,17 @@
   </div>
   
   <div class="right">
+    <a
+      ng-if="shipment.status.value === 'finished'"
+      class="md-button"
+      href="#!/saidas/{{ shipment._id }}/imprimir">
+      <md-icon
+        style="color: white"
+        md-font-set="material-icons">
+        print
+      </md-icon>
+      Imprimir recibo
+    </a>
     <md-button
       ng-click="editShipment()">
       Editar saída

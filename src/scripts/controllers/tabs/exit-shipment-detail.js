@@ -126,4 +126,51 @@ angular.module('cebola.controllers')
   };
   // initialize
   $scope.loadShipment();
+})
+
+.controller('ExitShipmentPrintCtrl', function (
+  $scope,
+  $stateParams,
+  $rootScope,
+  cebolaAPI,
+  uiAllocationDialog,
+  uiOperationDialog,
+  uiDialogEntryShipment,
+  entryShipmentActions
+) {
+  $rootScope.pageMode = 'print';
+  
+  $scope.loadShipment = function () {
+    $scope.shipment = {};
+    
+    return cebolaAPI.shipment.getById($stateParams.exitShipmentId).then(function (shipment) {
+      $scope.shipment = shipment;
+
+      /**
+       * Compute totals
+       */
+      $scope.totalNetWeight = shipment.allocations.finished.reduce(function (res, allocation) {
+        var allocationNetWeight = allocation.product.model.netWeight * (-1 * allocation.effectivatedQuantity);
+        return res + allocationNetWeight
+      }, 0);
+
+      $scope.totalWeight = shipment.allocations.finished.reduce(function (res, allocation) {
+        var allocationWeight = allocation.product.model.weight * (-1 * allocation.effectivatedQuantity);
+        return res + allocationWeight
+      }, 0);
+
+      $scope.totalVolume = shipment.allocations.finished.reduce(function (res, allocation) {
+        var modelVolume = (allocation.product.model.width / 100) * (allocation.product.model.height / 100) * (allocation.product.model.depth / 100);
+        var allocationVolume = modelVolume * (-1 * allocation.effectivatedQuantity);
+        return res + allocationVolume;
+      }, 0);
+    });
+  };
+
+  $scope.print = function () {
+    window.print();
+  };
+
+  $scope.loadShipment();
 });
+

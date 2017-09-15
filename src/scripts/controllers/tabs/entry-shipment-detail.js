@@ -171,4 +171,30 @@ angular.module('cebola.controllers')
   
   // initialize
   $scope.loadShipment();
+})
+
+.controller('EntryShipmentPrintCtrl', function (
+  $scope,
+  $stateParams,
+  $rootScope,
+  cebolaAPI,
+  uiAllocationDialog,
+  uiOperationDialog,
+  uiDialogEntryShipment,
+  entryShipmentActions
+) {
+  $rootScope.pageMode = 'print';
+
+
+  
+  $scope.loadShipment = function () {
+    $scope.shipment = {};
+    
+    return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
+      $scope.shipment = shipment;
+    });
+  };
+
+  $scope.loadShipment();
 });
+
