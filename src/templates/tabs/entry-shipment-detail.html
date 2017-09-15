@@ -49,15 +49,23 @@
     </div>
     <div>
       <div class="shipment-info">
-        <strong>CDE:</strong> {{ shipment.documents.CDE }}<span ng-if="!shipment.documents.CDE">-</span>
+        <strong>CDE:</strong> {{ shipment.documents.CDE || '-' }}
+        <md-icon
+          ng-if="!shipment.documents.CDE"
+          md-font-set="material-icons">
+          warning
+          <md-tooltip md-direction="top">
+            CDE não informado
+          </md-tooltip>
+        </md-icon>
       </div>
       
       <div class="shipment-info">
-        <strong>Nota fiscal:</strong> {{ shipment.documents.NF }}<span ng-if="!shipment.documents.NF">-</span>
+        <strong>Nota fiscal:</strong> {{ shipment.documents.NF || '-' }}
       </div>
       
       <div class="shipment-info">
-        <strong>Identificação do veículo:</strong> {{ shipment.documents.vehicleId }}<span ng-if="!shipment.documents.vehicleId">-</span>
+        <strong>Identificação do veículo:</strong> {{ shipment.documents.vehicleId || '-' }}
       </div>
     </div>
   </div>

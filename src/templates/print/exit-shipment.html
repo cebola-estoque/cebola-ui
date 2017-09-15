@@ -52,7 +52,7 @@
             {{ shipment.recipient.document.value }}
           </td>
           <td class="highlight">
-            {{ shipment.scheduledFor | date:'dd/MM/yyyy' }}
+            {{ shipment.scheduledFor | date:'dd/MM/yyyy hh:mm' }}
           </td>
           <td>
             {{ shipment.documents.vehicleId }}
