@@ -23,3 +23,18 @@ table.cebola-print-table th.highlight,
 table.cebola-print-table td.highlight {
   background-color: var(--light-green);
 }
+
+table.cebola-print-table td.labelled-cell {
+  position: relative;
+
+  padding-top: 30px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table.cebola-print-table td.labelled-cell > label {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}

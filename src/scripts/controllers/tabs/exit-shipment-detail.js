@@ -1,6 +1,7 @@
 angular.module('cebola.controllers')
 .controller('ExitShipmentDetailCtrl', function (
   $scope,
+  $state,
   $stateParams,
   $mdDialog,
   cebolaAPI,
@@ -17,7 +18,10 @@ angular.module('cebola.controllers')
     });
   };
   
-  $scope.finishShipment = function () {
+  $scope.finishShipment = function (options) {
+
+    options = options || {};
+
     return uiDialogExitShipment.finish($scope.shipment)
       .then((finishedShipment) => {
         return cebolaAPI.shipment.update(
@@ -30,6 +34,14 @@ angular.module('cebola.controllers')
       })
       .then(function (shipment) {
         return $scope.loadShipment();
+      })
+      .then(function (shipment) {
+        if (options.print) {
+          $state.go('exit-shipments.detail.print', {
+            exitShipmentId: $scope.shipment._id,
+            exitShipment: $scope.shipment,
+          });
+        }
       })
       .catch(function (err) {
         if (!err) {

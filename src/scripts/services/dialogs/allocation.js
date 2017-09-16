@@ -8,9 +8,18 @@ angular.module('cebola.services')
     $scope.cancel = function() {
       $mdDialog.cancel();
     };
+
+    $scope.confirmAndPrint = function () {
+      $mdDialog.hide({
+        quantity: $scope.quantityToEffectivate,
+        print: true,
+      });
+    }
     
     $scope.submit = function () {
-      $mdDialog.hide($scope.quantityToEffectivate);
+      $mdDialog.hide({
+        quantity: $scope.quantityToEffectivate,
+      });
     };
   }
 
@@ -23,6 +32,7 @@ angular.module('cebola.services')
     };
     
     $scope.submit = function () {
+      // TODO: normalize format as the entry allocation dialog
       $mdDialog.hide(-1 * $scope.quantityToEffectivate);
     };
   }

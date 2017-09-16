@@ -82,6 +82,13 @@ angular.module('cebola.controllers')
       exitShipment: exitShipment,
     });
   };
+
+  $scope.printExitShipmentReceipt = function (exitShipment) {
+    $state.go('exit-shipments.detail.print', {
+      exitShipmentId: exitShipment._id,
+      exitShipment: exitShipment,
+    });
+  };
   
   // filters
   $scope.isPendingExitShipment = function (exitShipment, index, array) {

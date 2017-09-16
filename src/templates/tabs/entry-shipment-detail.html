@@ -80,7 +80,7 @@
         <th class="table-col-350">Produtos agendados</th>
         <th>Validade</th>
         <th>Qtde prevista</th>
-        <th class="table-col-350">Qtde confirmada</th>
+        <th class="table-col-450">Qtde confirmada</th>
         <th class="table-col-50 hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
@@ -113,7 +113,13 @@
               </td>
               <td>|</td>
               <td>
-                Código: E{{ shipment.number }}-{{ allocation.number }}-{{ op.number }}
+                Código: {{ op | code:'operation' }}
+              </td>
+              <td>
+                <a
+                  href="#!/entradas/{{ shipment._id }}/operacoes/{{ op._id }}">
+                  Imprimir ficha
+                </a>
               </td>
             </tr>
           </table>
@@ -169,6 +175,27 @@
         </td>
         <td>
           {{ operation.quantity }} {{ operation.product.measureUnit }}
+          <table class="sub-table">
+            <tr>
+              <td>
+                {{ operation.createdAt | date:'dd/MMM, HH:mm' }} 
+              </td>
+              <td>|</td>
+              <td>
+                {{ operation.quantity }} {{ operation.product.measureUnit }}
+              </td>
+              <td>|</td>
+              <td>
+                Código: {{ operation | code:'operation' }}
+              </td>
+              <td>
+                <a
+                  href="#!/entradas/{{ shipment._id }}/operacoes/{{ operation._id }}">
+                  Imprimir ficha
+                </a>
+              </td>
+            </tr>
+          </table>
         </td>
         <td class="hidden-on-print">
           <!-- actions -->
@@ -185,11 +212,11 @@
     class="cebola-table product-table">
     <thead>
       <tr>
-        <th>Produtos finalizados</th>
+        <th class="table-col-350">Produtos finalizados</th>
         <th>Validade</th>
         <th>Qtde prevista</th>
-        <th>Qtde confirmada</th>
-        <th><!-- action placeholder --></th>
+        <th class="table-col-450">Qtde confirmada</th>
+        <th class="table-col-50 hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>
@@ -210,6 +237,27 @@
         </td>
         <td>
           {{ allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          <table class="sub-table">
+            <tr ng-repeat="op in allocation.operations.active">
+              <td>
+                {{ op.createdAt | date:'dd/MMM, HH:mm' }} 
+              </td>
+              <td>|</td>
+              <td>
+                {{ op.quantity }} {{ op.product.measureUnit }}
+              </td>
+              <td>|</td>
+              <td>
+                Código: {{ op | code:'operation' }}
+              </td>
+              <td>
+                <a
+                  href="#!/entradas/{{ shipment._id }}/operacoes/{{ op._id }}">
+                  Imprimir ficha
+                </a>
+              </td>
+            </tr>
+          </table>
         </td>
         <td>
           <!-- actions -->
@@ -226,11 +274,11 @@
     class="cebola-table product-table">
     <thead>
       <tr>
-        <th>Produtos cancelados</th>
+        <th class="table-col-350">Produtos cancelados</th>
         <th>Validade</th>
         <th>Qtde prevista</th>
-        <th>Qtde confirmada</th>
-        <th><!-- action placeholder --></th>
+        <th class="table-col-450">Qtde confirmada</th>
+        <th class="table-col-50 hidden-on-print"><!-- action placeholder --></th>
       </tr>
     </thead>
     <tbody>

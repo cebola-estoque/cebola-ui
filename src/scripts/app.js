@@ -94,6 +94,20 @@
         },
         bodyClasses: 'print-mode',
       })
+      .state('entry-shipments.detail.print-operation', {
+        url: '/operacoes/:operationId',
+        views: {
+          'body@': {
+            controller: 'EntryShipmentOperationPrintCtrl',
+            templateUrl: 'templates/print/entry-operation.html',
+          }
+        },
+        params: {
+          entryShipment: null,
+          entryOperation: null,
+        },
+        bodyClasses: 'print-mode',
+      })
       .state('exit-shipments', {
         url: '/saidas',
         views: {
@@ -117,7 +131,7 @@
         views: {
           'body@': {
             controller: 'ExitShipmentPrintCtrl',
-            templateUrl: 'templates/print/exit-shipment.html',
+            templateUrl: 'templates/print/exit-shipment-receipt.html',
           }
         },
         params: {

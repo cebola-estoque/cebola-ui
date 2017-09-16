@@ -33,7 +33,7 @@
     </md-button>
     <md-button
       ng-if="shipment.status.value === 'in-progress'"
-      ng-click="finishShipment()">
+      ng-click="finishShipment({ print: true })">
       Finalizar saída
     </md-button>
   </div>

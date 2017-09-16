@@ -1,0 +1,126 @@
+<div class="print-container landscape">
+
+  <div
+    class="print-actions hidden-on-print">
+    <md-button
+      class="md-fab"
+      aria-label="Back"
+      ng-click="goBack()">
+      <md-icon md-font-set="material-icons">keyboard_backspace</md-icon>
+    </md-button>
+    <md-button
+      class="md-fab"
+      aria-label="Imprimir"
+      ng-click="print()">
+      <md-icon md-font-set="material-icons">print</md-icon>
+    </md-button>
+  </div>
+
+  <table
+    class="cebola-print-table">
+    <thead>
+      <tr>
+        <td colspan="5" style="font-weight: bold; font-size: 16px; border-right: none;">
+          GSAL - Gerência de saúde e alimentação<br>
+          CECAM - Centro de captação e armazenagem Mesa Brasil
+        </td>
+        <td style="border-left: none; text-align: right;">
+          <img style="height: 50px;" src="resources/img/logo-mesa-brasil.png">
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2" class="labelled-cell">
+          <label>Código</label>
+          <div style="font-size: 100px; font-weight: bold;">
+            {{ operation | code:'operation' }}
+          </div>
+        </td>
+        <td colspan="4" class="labelled-cell">
+          <label>Produto</label>
+          <div style="font-size: 40px; font-weight: bold; white-space: normal;">
+            {{ operation.product.model.description }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="labelled-cell">
+          <label>Validade</label>
+          <div style="font-size: 60px; font-weight: bold;">
+            {{ operation.product.expiry | date:'dd/MM/yy' }}
+          </div>
+        </td>
+        <td colspan="2" class="labelled-cell">
+          <label>Quantidade</label>
+          <div style="font-size: 60px; font-weight: bold;">
+            {{ operation.quantity }} {{ operation.product.measureUnit }}
+          </div>
+        </td>
+        <td colspan="2" class="labelled-cell">
+          <label>Saldo</label>
+          <div>
+            
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="labelled-cell">
+          <label>Data recebimento</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ operation.createdAt | date:'dd/MM/yy' }}
+          </div>
+        </td>
+        <td class="labelled-cell table-col-150">
+          <label>Lastro</label>
+          <div>
+          </div>
+        </td>
+        <td class="labelled-cell">
+          <label>P.L. (KG) Unit.</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ operation.product.model.netWeight / 1000 | number:3 }}
+          </div>
+        </td>
+        <td class="labelled-cell">
+          <label>P.L. (KG) Total</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ (operation.product.model.netWeight / 1000) * operation.quantity | number:3 }}
+          </div>
+        </td>
+        <td class="labelled-cell">
+          <label>P.B (KG) Unit</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ (operation.product.model.weight / 1000) | number:3 }}
+          </div>
+        </td>
+        <td class="labelled-cell">
+          <label>P.B (KG) Total</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ (operation.product.model.weight / 1000) * operation.quantity | number:3 }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="labelled-cell">
+          <label>Destino</label>
+          <div>
+            
+          </div>
+        </td>
+        <td colspan="2" class="labelled-cell">
+          <label>Doador</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ operation.product.sourceShipment.supplier.name }}
+          </div>
+        </td>
+        <td colspan="2" class="labelled-cell">
+          <label>CDE</label>
+          <div style="font-size: 20px; font-weight: bold;">
+            {{ operation.product.sourceShipment.documents.CDE }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

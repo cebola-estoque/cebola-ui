@@ -2,6 +2,7 @@ angular.module('cebola.controllers')
 .controller('EntryShipmentDetailCtrl', function (
   $scope,
   $stateParams,
+  $state,
   $mdDialog,
   cebolaAPI,
   uiAllocationDialog,
@@ -43,15 +44,20 @@ angular.module('cebola.controllers')
   };
   
   $scope.effectivateEntryAllocation = function (allocation) {
+
+    var _shouldPrint = false;
+
     return uiAllocationDialog.effectivateEntry(allocation)
     .catch(function () {
       // user cancelled
       throw new Error('CANCELLED');
     })
-    .then(function (quantity) {
-      console.log('effectivate: ', quantity);
+    .then(function (data) {
+      console.log('effectivate: ', data.quantity);
+
+      _shouldPrint = data.print;
       
-      var effectivationExcess = quantity - (allocation.allocatedQuantity - allocation.effectivatedQuantity);
+      var effectivationExcess = data.quantity - (allocation.allocatedQuantity - allocation.effectivatedQuantity);
       
       if (effectivationExcess > 0) {
         
@@ -68,23 +74,32 @@ angular.module('cebola.controllers')
           throw err;
         })
         .then(function () {
-          return quantity;
+          return data;
         });
         
       } else {
-        return quantity;
+        return data;
       }
     })
-    .then((quantity) => {
+    .then((data) => {
       return cebolaAPI.shipment.effectivateAllocation(
         allocation.shipment._id,
         allocation._id,
-        quantity
+        data.quantity
       );
     })
     .then(function (operation) {
       // reload the shipment
-      return $scope.loadShipment();
+      return $scope.loadShipment().then(function () {
+        if (_shouldPrint) {
+          return $state.go('entry-shipments.detail.print-operation', {
+            entryShipment: $scope.shipment,
+            entryShipmentId: $scope.shipment._id,
+            entryOperation: operation,
+            operationId: operation._id,
+          });
+        }
+      });
     })
     .catch(function (err) {
       if (err.cancelled) {
@@ -183,9 +198,6 @@ angular.module('cebola.controllers')
   uiDialogEntryShipment,
   entryShipmentActions
 ) {
-  $rootScope.pageMode = 'print';
-
-
   
   $scope.loadShipment = function () {
     $scope.shipment = {};
@@ -196,5 +208,44 @@ angular.module('cebola.controllers')
   };
 
   $scope.loadShipment();
-});
+})
 
+.controller('EntryShipmentOperationPrintCtrl', function (
+  $scope,
+  $stateParams,
+  cebolaAPI
+) {
+  $scope.loadShipment = function () {
+    $scope.shipment = {};
+    
+    return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
+      $scope.shipment = shipment;
+
+      var shipmentActiveAllocations = shipment.allocations && shipment.allocations.active ?
+        shipment.allocations.active : [];
+
+      var shipmentFinishedAllocations = shipment.allocations && shipment.allocations.finished ?
+        shipment.allocations.finished : [];
+
+      var shipmentActiveOperations = shipmentActiveAllocations
+        .concat(shipmentFinishedAllocations)
+        .reduce(function (acc, alloc) {
+          return acc.concat(alloc.operations.active);
+        }, []);
+
+      if (shipment.standaloneOperations && shipment.standaloneOperations.active) {
+        shipmentActiveOperations = shipmentActiveOperations.concat(shipment.standaloneOperations.active);
+      }
+
+      $scope.operation = shipmentActiveOperations.find(function (op) {
+        return op._id === $stateParams.operationId;
+      });
+    });
+  };
+  
+  $scope.print = function () {
+    window.print();
+  };
+
+  $scope.loadShipment();
+});

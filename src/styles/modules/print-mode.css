@@ -19,22 +19,41 @@ body.print-mode #app-body {
   /*border: 1px black solid;*/
 
   box-sizing: border-box;
-  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+}
 
+.print-container.portrait {
+  max-width: 900px;
   padding-bottom: 50px;
   padding-top: 50px;
 }
 
+.print-container.landscape {
+  width: 100%;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .print-container > .print-actions {
   position: fixed;
-  top: 100px;
-  right: 100px;
+  z-index: 10;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.print-container.portrait > .print-actions {
+  top: 100px;
+  right: 100px;
+}
+
+.print-container.landscape > .print-actions {
+  top: 100px;
+  right: 40px;
 }
 
 .print-container .print-logo {
@@ -113,4 +132,7 @@ body.print-mode #app-body {
     padding: 0 !important;
   }
 }
+
+
+
 

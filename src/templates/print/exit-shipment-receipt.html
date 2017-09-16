@@ -1,15 +1,13 @@
-<div class="print-container">
-
+<div class="print-container portrait">
 
   <div
     class="print-actions hidden-on-print">
-    <a
-      class="md-button md-fab"
-      href="#!/saidas/{{ shipment._id }}">
-      <md-icon md-font-set="material-icons">
-        keyboard_backspace
-      </md-icon>
-    </a>
+    <md-button
+      class="md-fab"
+      aria-label="Back"
+      ng-click="goBack()">
+      <md-icon md-font-set="material-icons">keyboard_backspace</md-icon>
+    </md-button>
     <md-button
       class="md-fab"
       aria-label="Imprimir"
