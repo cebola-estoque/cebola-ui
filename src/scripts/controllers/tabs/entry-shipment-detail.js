@@ -39,6 +39,8 @@ angular.module('cebola.controllers')
           return;
         }
 
+        alert('Houve um erro desconhecido, por favor tente novamente');
+
         throw err;
       });
   };
@@ -47,12 +49,7 @@ angular.module('cebola.controllers')
 
     var _shouldPrint = false;
 
-    return uiAllocationDialog.effectivateEntry(allocation)
-    .catch(function () {
-      // user cancelled
-      throw new Error('CANCELLED');
-    })
-    .then(function (data) {
+    return uiAllocationDialog.effectivateEntry(allocation).then(function (data) {
       console.log('effectivate: ', data.quantity);
 
       _shouldPrint = data.print;
@@ -102,11 +99,11 @@ angular.module('cebola.controllers')
       });
     })
     .catch(function (err) {
-      if (err.cancelled) {
+      if (!err) {
         console.warn('user cancelled');
       } else {
-        // alert('error');
-        console.warn(err);
+        alert('Ocorreu um erro desconhecido, por favor tente novamente');
+        throw err;
       }
     });
   };
@@ -144,27 +141,6 @@ angular.module('cebola.controllers')
         alert('houve um erro ao cancelar a carga');
         throw err;
       });
-
-    // return $mdDialog.show(
-    //   $mdDialog.confirm()
-    //     .title('Uma entrada cancelada não poderá mais ser editada. Confirma cancelamento?')
-    //     .ok('Cancelar entrada')
-    //     .cancel('cancelar')
-    // )
-    // .then(function () {
-    //   return cebolaAPI.shipment.cancel($scope.shipment._id);
-    // })
-    // .then(function () {
-    //   return $scope.loadShipment();
-    //   // alert('CANCELLED!')
-    // })
-    // .catch(function (err) {
-    //   if (!err) {
-    //     return;
-    //   }
-
-    //   throw err;
-    // })
     
   };
 

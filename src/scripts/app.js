@@ -3,6 +3,7 @@
   var TRAILING_SLASH_RE = /\/$/;
 
   angular.module('cebola', [
+    'ngRaven',
     'ui.router',
     'ngMaterial',
     'ngMessages',
