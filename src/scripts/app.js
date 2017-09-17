@@ -192,8 +192,25 @@
   .config(function($httpProvider) {
     // alternatively, register the interceptor via an anonymous factory
     $httpProvider.interceptors.push(function($q, $rootScope) {
+
+      var HTTP_PENDING_REQUEST_COUNT = 0;
+
+      function incrementHttpPendingCount() {
+        ++HTTP_PENDING_REQUEST_COUNT;
+      }
+
+      function decrementHttpPendingCount() {
+        --HTTP_PENDING_REQUEST_COUNT;
+      }
+
+      function isLoading() {
+        return HTTP_PENDING_REQUEST_COUNT > 0;
+      }
+
       return {
         request: function(config) {
+
+          incrementHttpPendingCount();
 
           $rootScope.$httpGlobalLoading = true;
 
@@ -202,16 +219,17 @@
 
         // optional method
         requestError: function(rejection) {
-          // do something on error
-          
-          $rootScope.$httpGlobalLoading = false;
+
+          decrementHttpPendingCount();
+          $rootScope.$httpGlobalLoading = isLoading();
 
           return $q.reject(rejection);
         },
 
         response: function(response) {
 
-          $rootScope.$httpGlobalLoading = false;
+          decrementHttpPendingCount();
+          $rootScope.$httpGlobalLoading = isLoading();
 
           // same as above
           return response;
@@ -219,8 +237,9 @@
 
         // optional method
         responseError: function(rejection) {
-          // do something on error
-          $rootScope.$httpGlobalLoading = false;
+
+          decrementHttpPendingCount();
+          $rootScope.$httpGlobalLoading = isLoading();
 
           return $q.reject(rejection);
         }
