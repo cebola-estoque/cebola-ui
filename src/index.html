@@ -150,7 +150,9 @@
 
   <script>
     Raven
-      .config('https://829d9e452a2841dfb005cd4475e32c3c@sentry.io/217993')
+      .config('https://829d9e452a2841dfb005cd4475e32c3c@sentry.io/217993', {
+        environment: 'dev-local',
+      })
       .addPlugin(Raven.Plugins.Angular)
       .install();
   </script>

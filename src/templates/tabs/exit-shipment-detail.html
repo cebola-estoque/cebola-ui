@@ -101,7 +101,11 @@
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
             {{ allocation.product.sourceShipment.supplier.name }}<br>
-            CDE: {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            CDE:
+            <span
+              ng-class="{ 'warning-text': !allocation.product.sourceShipment.documents.CDE }">
+              {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            </span>
           </a>
         </td>
         <td>
@@ -132,15 +136,6 @@
           </dl> -->
 
           <!-- status icons -->
-          <md-icon
-            class="status-info"
-            ng-if="!allocation.product.sourceShipment.documents.CDE"
-            md-font-set="material-icons">
-            warning
-            <md-tooltip md-direction="top">
-              CDE não informado
-            </md-tooltip>
-          </md-icon>
           <md-icon
             class="status-info"
             ng-if="allocation.allocatedQuantity === allocation.effectivatedQuantity"
@@ -228,7 +223,11 @@
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
             {{ allocation.product.sourceShipment.supplier.name }}<br>
-            CDE: {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            CDE:
+            <span
+              ng-class="{ 'warning-text': !allocation.product.sourceShipment.documents.CDE }">
+              {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            </span>
           </a>
         </td>
         <td>
@@ -238,15 +237,6 @@
           {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
         </td>
         <td>
-          <md-icon
-            class="status-info"
-            ng-if="!allocation.product.sourceShipment.documents.CDE"
-            md-font-set="material-icons">
-            warning
-            <md-tooltip md-direction="top">
-              CDE não informado
-            </md-tooltip>
-          </md-icon>
           <!-- actions -->
         </td>
       </tr>
@@ -286,7 +276,11 @@
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
             {{ allocation.product.sourceShipment.supplier.name }}<br>
-            CDE: {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            CDE:
+            <span
+              ng-class="{ 'warning-text': !allocation.product.sourceShipment.documents.CDE }">
+              {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
+            </span>
           </a>
         </td>
         <td>
@@ -297,15 +291,6 @@
         </td>
         <td>
           <!-- actions -->
-          <md-icon
-            class="status-info"
-            ng-if="!allocation.product.sourceShipment.documents.CDE"
-            md-font-set="material-icons">
-            warning
-            <md-tooltip md-direction="top">
-              CDE não informado
-            </md-tooltip>
-          </md-icon>
         </td>
       </tr>
 

@@ -23,4 +23,14 @@ angular.module('cebola.services')
         break;
     }
   }
+})
+
+.filter('document', function () {
+  return function (shipment, documentName) {
+    if (shipment && shipment.document && shipment.document[documentName]) {
+      return shipment.document[documentName];
+    } else {
+      return '<span style="color: red;">não informado</span>';
+    }
+  }
 });

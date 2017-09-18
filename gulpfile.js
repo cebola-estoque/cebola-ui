@@ -57,6 +57,7 @@ gulp.task('distribute', ['css', 'prepare-index'], function () {
 gulp.task('prepare-index', ['css'], function () {
   return gulp.src('src/index.html')
     .pipe(replace('http://localhost:4000', 'https://glacial-journey-19231.herokuapp.com'))
+    .pipe(replace('dev-local', 'production'))
     .pipe(useref())
     .pipe(gulp.dest('dist'));
 });

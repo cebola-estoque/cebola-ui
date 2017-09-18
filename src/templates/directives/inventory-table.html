@@ -34,7 +34,11 @@
       <td>
         <a href="#!/entradas/{{ productSummary.product.sourceShipment._id }}">
           {{ productSummary.product.sourceShipment.supplier.name }}<br>
-          CDE: {{ productSummary.product.sourceShipment.documents.CDE || 'Não informado' }}
+          CDE:
+          <span
+            ng-class="{ 'warning-text': !productSummary.product.sourceShipment.documents.CDE }">
+            {{ productSummary.product.sourceShipment.documents.CDE || 'Não informado' }}
+          </span>
         </a>
       </td>
       <td>
