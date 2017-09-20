@@ -5,6 +5,8 @@ const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
+const uglify = require('gulp-uglify');
+const ngAnnotate = require('gulp-ng-annotate');
 
 const gulpIf = require('gulp-if');
 
@@ -66,9 +68,11 @@ gulp.task('prepare-index', ['css'], function () {
     .pipe(replace('http://localhost:4000', 'https://glacial-journey-19231.herokuapp.com'))
     .pipe(replace('dev-local', 'production'))
     .pipe(useref())
-    .pipe(gulpIf(isJs, babel({
+    .pipe(gulpIf('scripts-app.js', ngAnnotate()))
+    .pipe(gulpIf('scripts-app.js', babel({
       presets: ['env']
     })))
+    .pipe(gulpIf(isJs, uglify()))
     .pipe(gulp.dest('dist'));
 });
 
