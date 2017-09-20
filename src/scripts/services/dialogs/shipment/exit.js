@@ -291,7 +291,7 @@ angular.module('cebola.services')
     $scope.shipment = angular.copy(shipment);
 
     // get the differences between allocation and effectivation
-    $scope.allocatedAndEffectivatedDifferences = shipment.allocations.active.filter((allocation) => {
+    $scope.allocatedAndEffectivatedDifferences = shipment.allocations.active.filter(function (allocation) {
       return allocation.effectivatedQuantity !== allocation.allocatedQuantity; 
     });
 

@@ -8,7 +8,7 @@ angular.module('cebola.services')
   util.array = {};
 
   function arrayContains(container, item, identityFn) {
-    return container.some((cItem) => {
+    return container.some(function (cItem) {
       return identityFn(cItem, item);
     });
   }

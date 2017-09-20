@@ -23,7 +23,7 @@ angular.module('cebola.controllers')
     options = options || {};
 
     return uiDialogExitShipment.finish($scope.shipment)
-      .then((finishedShipment) => {
+      .then(function (finishedShipment) {
         return cebolaAPI.shipment.update(
           $scope.shipment._id,
           finishedShipment
@@ -84,7 +84,7 @@ angular.module('cebola.controllers')
         return quantity;
       }
     })
-    .then((quantity) => {
+    .then(function (quantity) {
       return cebolaAPI.shipment.effectivateAllocation(
         allocation.shipment._id,
         allocation._id,

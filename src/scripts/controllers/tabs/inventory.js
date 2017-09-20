@@ -20,14 +20,6 @@ angular.module('cebola.controllers')
           return productSummary.inStock === 0 && productSummary.allocatedForEntry > 0;
         })
       };
-
-      // console.log(summary.map(i => {
-      //   return {
-      //     inStock: i.inStock,
-      //     forExit: i.allocatedForExit,
-      //     forEntry: i.allocatedForEntry,
-      //   }
-      // }));
     });
   };
   

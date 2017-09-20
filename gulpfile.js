@@ -4,8 +4,15 @@ const useref = require('gulp-useref');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
+
+const gulpIf = require('gulp-if');
 
 const browserSync = require('browser-sync').create();
+
+function isJs(file) {
+  return /\.js$/.test(file.path);
+}
 
 gulp.task('css', function () {
   return gulp.src('src/styles.css')
@@ -59,6 +66,9 @@ gulp.task('prepare-index', ['css'], function () {
     .pipe(replace('http://localhost:4000', 'https://glacial-journey-19231.herokuapp.com'))
     .pipe(replace('dev-local', 'production'))
     .pipe(useref())
+    .pipe(gulpIf(isJs, babel({
+      presets: ['env']
+    })))
     .pipe(gulp.dest('dist'));
 });
 

@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "browser-sync": "^2.18.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-if": "^2.0.2",
     "gulp-myth": "^1.1.0",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-rename": "^1.2.2",
