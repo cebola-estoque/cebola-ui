@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="{{ rowClass }}" ng-repeat="productSummary in data">
+    <tr class="{{ rowClass }}" ng-repeat="productSummary in data | orderBy:productSummary.product.expiry">
       <td class="table-col-300">
         <div class="product-description">
           <div class="product-image-wrapper">
