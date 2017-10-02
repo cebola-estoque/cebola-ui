@@ -51,7 +51,12 @@ angular.module('cebola.services')
    */
   util.product = {};
   util.product.isValid = function (product) {
-    return product.model._id && product.measureUnit && product.expiry;
+    return product.model &&
+           product.model._id &&
+           product.measureUnit &&
+           product.expiry &&
+           product.sourceShipment &&
+           product.sourceShipment._id;
   }
   util.product.isSameModel = function (modelA, modelB) {
     return modelA._id === modelB._id;
@@ -65,6 +70,9 @@ angular.module('cebola.services')
 
     return expiryA.getTime() === expiryB.getTime();
   };
+  util.product.isSameSourceShipment = function (sourceShipmentA, sourceShipmentB) {
+    return sourceShipmentA._id.toString() === sourceShipmentB._id.toString();
+  };
   util.product.isSame = function (productA, productB) {
     if (!util.product.isValid(productA) || !util.product.isValid(productB)) {
       throw new Error('invalid products');
@@ -72,7 +80,8 @@ angular.module('cebola.services')
 
     return util.product.isSameModel(productA.model, productB.model) &&
            util.product.isSameMeasureUnit(productA.measureUnit, productB.measureUnit) &&
-           util.product.isSameExpiry(productA.expiry, productB.expiry);
+           util.product.isSameExpiry(productA.expiry, productB.expiry) &&
+           util.product.isSameSourceShipment(productA.sourceShipment, productB.sourceShipment);
   };
 
   return util;
