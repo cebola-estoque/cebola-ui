@@ -46,6 +46,13 @@ angular.module('cebola.services')
     $scope.removePhoto = function () {
       $scope.productModel.image = null;
     };
+
+    $scope.addProductModelCategory = function () {
+      $scope.productModel.categories = $scope.productModel.categories || [];
+      $scope.productModel.categories.push({
+        name: undefined
+      });
+    };
     
     $scope.submit = function () {
       $mdDialog.hide($scope.productModel);

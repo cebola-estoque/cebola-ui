@@ -33,6 +33,9 @@
       'CAIXA',
       'UNIDADE',
     ],
+    DEFAULT_PRODUCT_MODEL_CATEGORIES: [
+    
+    ],
   })
 
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {

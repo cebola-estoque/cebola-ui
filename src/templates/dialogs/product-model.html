@@ -32,7 +32,9 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>SKU do produto</label>
-            <input ng-model="productModel.sku">
+            <input
+              required
+              ng-model="productModel.sku">
           </md-input-container>
         </div>
         
@@ -113,6 +115,29 @@
               ng-min="0"
               ng-model="productModel.depth">
           </md-input-container>
+        </div>
+
+        <label>Categorias</label>
+        <div>
+          <div layout-gt-sm="row">
+            <md-input-container
+              class="md-block"
+              flex-gt-sm
+              ng-repeat="category in productModel.categories">
+              <input
+                type="text"
+                name="productModelCategories"
+                list="product-model-categories-list"
+                ng-model="category.name">
+            </md-input-container>
+          </div>
+
+          <md-button
+            type="button"
+            class="md-raised"
+            ng-click="addProductModelCategory()">
+            Adicionar categoria
+          </md-button>
         </div>
       </section>
     

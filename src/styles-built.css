@@ -678,12 +678,15 @@ md-menu-item > button.md-button {
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .product-description > .product-image-wrapper > img {
-  height: 50px;
-  width: auto;
-  max-width: 100%;
+  height: auto;
+  width: 100%;
   mix-blend-mode: multiply;
 }
 

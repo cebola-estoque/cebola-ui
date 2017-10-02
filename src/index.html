@@ -118,6 +118,11 @@
       ng-repeat="measureUnit in CONFIG.DEFAULT_MEASURE_UNITS"
       value="{{ measureUnit }}">
   </datalist>
+  <datalist id="product-model-categories-list">
+    <option
+      ng-repeat="productModelCategory in CONFIG.DEFAULT_PRODUCT_MODEL_CATEGORIES"
+      value="{{ productModelCategory }}">
+  </datalist>
   
   <!-- config -->
   <script>

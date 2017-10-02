@@ -18,7 +18,7 @@
   <table class="cebola-table" id="product-models-table">
     <thead>
       <tr>
-        <th class="table-col-50">No.</th>
+        <!-- <th class="table-col-50">No.</th> -->
         <th class="table-col-350">Produto</th>
         <th>SKU</th>
         <th>Dimensões (m)</th>
@@ -31,7 +31,7 @@
     <tbody>
       <tr 
         ng-if="productModels && productModels.length === 0">
-        <td colspan="6">
+        <td colspan="5">
           Não há produtos cadastrados
           <md-button
             class="md-raised"
@@ -41,10 +41,10 @@
         </td>
       </tr>
       <tr ng-repeat="productModel in productModels">
-        <td>
+        <!-- <td>
           #{{ productModel.number }}
         </td>
-        <td class="image-column">
+ -->        <td class="image-column">
           <div class="product-description">
             <div class="product-image-wrapper">
               <img ng-src="{{ productModel.image.url }}">
@@ -61,7 +61,7 @@
           <span ng-if="productModel.width && productModel.height && productModel.depth">
             {{ productModel.height / 100 }} x 
             {{ productModel.width / 100 }} x 
-            {{ productModel.width / 100 }}
+            {{ productModel.depth / 100 }}
           </span>
           <span ng-if="!(productModel.width && productModel.height && productModel.depth)">-</span>
         </td>
