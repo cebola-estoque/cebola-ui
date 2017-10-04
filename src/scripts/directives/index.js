@@ -59,6 +59,24 @@ angular.module('cebola.directives', [])
       $scope.isExitAllocationRecord = function (record) {
         return record.kind === 'ProductAllocation' && record.type === 'exit';
       };
+
+      /**
+       * Parameter used for ordering table
+       */
+      $scope.orderByParameter = '-product.expiry';
+
+      $scope.setOrderByParameter = function (parameter) {
+        var isNegative = /^-/.test(parameter);
+        var rawParameter = parameter.replace(/^-/, '');
+
+        if ($scope.orderByParameter === parameter) {
+          // toggle
+          $scope.orderByParameter = isNegative ? rawParameter : '-' + rawParameter;
+        } else {
+          // change
+          $scope.orderByParameter = parameter;
+        }
+      }
     },
     templateUrl: 'templates/directives/inventory-table.html',
   }

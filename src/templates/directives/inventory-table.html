@@ -4,12 +4,61 @@
   class="cebola-table">
   <thead>
     <tr>
-      <th class="table-col-300">{{ title }}</th>
-      <th class="table-col-100">Validade</th>
-      <th>Origem</th>
-      <th>Em estoque</th>
-      <th>À chegar</th>
-      <th>À sair</th>
+      <th
+        class="table-col-300 sort-control"
+        ng-class="{
+          'sort-asc': orderByParameter === 'product.model.description',
+          'sort-desc': orderByParameter === '-product.model.description',
+        }"
+        ng-click="setOrderByParameter('-product.model.description')">
+        {{ title }}
+      </th>
+      <th
+        class="table-col-100 sort-control"
+        ng-class="{
+          'sort-asc': orderByParameter === 'product.expiry',
+          'sort-desc': orderByParameter === '-product.expiry',
+        }"
+        ng-click="setOrderByParameter('-product.expiry')">
+        Validade
+      </th>
+      <th
+        class="sort-control"
+        ng-class="{
+          'sort-asc': orderByParameter === 'product.sourceShipment.supplier.name',
+          'sort-desc': orderByParameter === '-product.sourceShipment.supplier.name',
+        }"
+        ng-click="setOrderByParameter('-product.sourceShipment.supplier.name')">
+        Origem
+      </th>
+      <th
+        class="sort-control"
+        ng-class="{
+          'sort-asc': orderByParameter === 'inStock',
+          'sort-desc': orderByParameter === '-inStock',
+        }"
+        ng-click="setOrderByParameter('-inStock')">
+        Em estoque
+      </th>
+      <th
+        class="sort-control"
+        ng-class="{
+          'sort-asc': orderByParameter === 'allocatedForEntry',
+          'sort-desc': orderByParameter === '-allocatedForEntry',
+        }"
+        ng-click="setOrderByParameter('-allocatedForEntry')">
+        À chegar
+      </th>
+      <th
+        class="sort-control"
+        ng-class="{
+          'sort-asc': orderByParameter === '-allocatedForExit',
+          'sort-desc': orderByParameter === 'allocatedForExit',
+        }"
+        ng-click="setOrderByParameter('allocatedForExit')">
+        <!-- allocatedForExit sorting is all inverted -->
+        À sair
+      </th>
       <th
         class="table-col-50 hidden-on-print">
         <!-- action placeholder -->
@@ -17,7 +66,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="{{ rowClass }}" ng-repeat="productSummary in data | orderBy:productSummary.product.expiry">
+    <tr class="{{ rowClass }}" ng-repeat="productSummary in data | orderBy:orderByParameter">
       <td class="table-col-300">
         <div class="product-description">
           <div class="product-image-wrapper">

@@ -72,6 +72,40 @@ table.cebola-table tr > th {
   padding: 10px 10px;
 }
 
+table.cebola-table tr > th.sort-control {
+  position: relative;
+}
+
+table.cebola-table tr > th.sort-control:hover {
+  cursor: pointer;
+}
+
+table.cebola-table tr > th.sort-control::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  
+  border-top: 4px solid var(--purple);
+  
+  display: none;
+}
+
+table.cebola-table tr > th.sort-control.sort-asc::before {
+  transform: translateY(-50%) rotate(180deg);
+
+  display: block;
+}
+
+table.cebola-table tr > th.sort-control.sort-desc::before {
+  display: block;
+}
+
 table.cebola-table tr > td {
   /* tr borders cannot be styled directly */
   /* border: 1px magenta dashed; */
