@@ -225,6 +225,42 @@
               ng-disabled="dialogOptions.productType === 'in-stock'"
               ng-model="operation.product.measureUnit">
           </md-input-container>
+
+                
+          <!--
+            product.unitPrice
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Preço unitário (R$)</label>
+            <input
+              ng-disabled="dialogOptions.productType === 'in-stock'"
+              type="text"
+              ng-model="operation.product.unitPrice.value"
+              ng-min="0"
+              min="0">
+          </md-input-container>
+
+          <!--
+            Total price. Used for display only
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Total</label>
+            <input
+              disabled
+              type="text"
+              value="{{ operation.quantity * operation.product.unitPrice.value || 0 | currency:'R$ '}}">
+          </md-input-container>
+          
+          <!--
+            Display the CDE
+          -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>CDE</label>
+            <input
+              value="{{ operation.product.sourceShipment.documents.CDE || 'não informado' }}"
+              disabled>
+          </md-input-container>
+
         </div>
 
         <div layout-gt-sm="row" ng-if="dialogOptions.productType">

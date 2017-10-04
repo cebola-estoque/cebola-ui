@@ -53,12 +53,16 @@ angular.module('cebola.services')
             model: productSummary.product.model,
             measureUnit: productSummary.product.measureUnit,
             expiry: new Date(productSummary.product.expiry),
+            sourceShipment: productSummary.product.sourceShipment,
+            unitPrice: productSummary.product.unitPrice,
             
             inStock: productSummary.inStock,
             allocatedForEntry: productSummary.allocatedForEntry,
             allocatedForExit: productSummary.allocatedForExit,
           };
         });
+
+        console.log(availableProducts);
         
         return $filter('filter')(availableProducts, {
           model: {
@@ -67,6 +71,16 @@ angular.module('cebola.services')
         });
       });
     };
+
+    /**
+     * Change dialogOptions.productType when correctionType is modified
+     * to 'loss'
+     */
+    $scope.$watch('dialogOptions.correctionType', function (newCorrectionType) {
+      if (newCorrectionType === 'loss') {
+        $scope.dialogOptions.productType = 'in-stock';
+      }
+    });
 
     /**
      * Reset the operation product data in case
@@ -78,7 +92,7 @@ angular.module('cebola.services')
         // change ocurred
         $scope.operation.product = undefined;
       }
-    })
+    });
     
     // dialog methods
     $scope.cancel = function() {

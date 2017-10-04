@@ -11,7 +11,7 @@
     </md-button>
 
     <h1 class="tab-title">
-      Saída #{{ shipment.number }} ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM, HH:mm' }} | {{ shipment.recipient.name }}
+      Saída #{{ shipment.number }} ({{ shipment.status.value | translate }}) {{ shipment.scheduledFor | date:'dd/MMM/yyyy, HH:mm' }} | {{ shipment.recipient.name }}
     </h1>
   </div>
   
@@ -77,8 +77,9 @@
     class="cebola-table product-table">
     <thead>
       <tr>
-        <th class="table-col-350">Produtos agendados</th>
+        <th class="table-col-300">Produtos agendados</th>
         <th>Validade</th>
+        <th>Preço Unitário</th>
         <th class="table-col-150">Origem</th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
@@ -96,7 +97,10 @@
           </div>
         </td>
         <td>
-          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
+          {{ allocation.product.expiry | date:'dd/MMM/yyyy/yyyy' }}
+        </td>
+        <td>
+          {{ allocation.product.unitPrice.value | currency:'R$ ' }}
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
@@ -116,7 +120,7 @@
           <table class="sub-table">
             <tr ng-repeat="op in allocation.operations.active">
               <td>
-                {{ op.createdAt | date:'dd/MMM, HH:mm' }} 
+                {{ op.createdAt | date:'dd/MMM/yyyy, HH:mm' }} 
               </td>
               <td>|</td>
               <td>
@@ -131,7 +135,7 @@
 
 <!--           <dl>
             <div ng-repeat="op in allocation.operations.active">
-              {{ op.createdAt | date:'dd/MMM, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }} | Código: S{{ shipment.number }}/{{ op.number }}
+              {{ op.createdAt | date:'dd/MMM/yyyy, HH:mm' }} | {{ -1 * op.quantity }} {{ op.product.measureUnit }} | Código: S{{ shipment.number }}/{{ op.number }}
             </div>
           </dl> -->
 
@@ -201,6 +205,7 @@
       <tr>
         <th class="table-col-350">Produtos finalizados</th>
         <th>Validade</th>
+        <th>Preço unitário</th>
         <th class="table-col-150">Origem</th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
@@ -218,7 +223,10 @@
           </div>
         </td>
         <td>
-          {{ allocation.product.expiry | date:'dd/MMM' }}
+          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
+        </td>
+        <td>
+          {{ allocation.product.unitPrice.value | currency:'R$ ' }}
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
@@ -254,6 +262,7 @@
       <tr>
         <th class="table-col-350">Produtos cancelados</th>
         <th>Validade</th>
+        <th>Preço unitário</th>
         <th class="table-col-150">Origem</th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
@@ -271,7 +280,10 @@
           </div>
         </td>
         <td>
-          {{ allocation.product.expiry | date:'dd/MMM' }}
+          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
+        </td>
+        <td>
+          {{ allocation.product.unitPrice.value | currency:'R$ ' }}
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">

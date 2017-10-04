@@ -68,6 +68,7 @@
           <th rowspan="2">Validade</th>
           <!-- <th>Quantidade alocada</th> -->
           <th rowspan="2">Quant.</th>
+          <th colspan="2" ="2">Valor</th>
           <!-- <th>Unidade</th> -->
           <th colspan="2">Peso líq. (KG)</th>
           <!-- <th>Peso líq. total (KG)</th> -->
@@ -83,6 +84,8 @@
           <!-- <th>Quantidade alocada</th> -->
           <!-- <th>Quant.</th> -->
           <!-- <th>Unidade</th> -->
+          <th>Unitário</th>
+          <th>Total</th>
           <th>Unitário</th>
           <th>Total</th>
           <th>Unitário</th>
@@ -105,6 +108,12 @@
           <!-- <td>{{ allocation.allocatedQuantity }}</td> -->
           <td>
             {{ -1 * allocation.effectivatedQuantity }} {{ allocation.product.measureUnit }}
+          </td>
+          <td>
+            {{ allocation.product.unitPrice.value | currency:'R$ ' }}
+          </td>
+          <td>
+            {{ allocation.product.unitPrice.value * (-1 * allocation.effectivatedQuantity) | currency:'R$ ' }}
           </td>
           <!-- <td>{{ allocation.product.measureUnit }}</td> -->
           <td>
@@ -136,21 +145,27 @@
           <td></td>
           <td></td>
           <td></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
           <td></td>
           <td></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -165,11 +180,10 @@
         <!-- totals -->
         <tr>
           <td colspan="6" style="text-align: right;">Total:</td>
-<!--           <td></td>
+          <td>
+            <strong>{{ totalValue | currency:'R$ ' }}</strong>
+          </td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td> -->
           <td>
             <strong>{{ totalNetWeight / 1000 | number:2 }}</strong>
           </td>

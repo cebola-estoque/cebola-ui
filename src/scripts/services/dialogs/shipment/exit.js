@@ -226,6 +226,7 @@ angular.module('cebola.services')
             measureUnit: productSummary.product.measureUnit,
             expiry: new Date(productSummary.product.expiry),
             sourceShipment: productSummary.product.sourceShipment,
+            unitPrice: productSummary.product.unitPrice,
             
             inStock: productSummary.inStock,
             allocatedForEntry: productSummary.allocatedForEntry,

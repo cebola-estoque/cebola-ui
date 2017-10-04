@@ -164,6 +164,11 @@ angular.module('cebola.controllers')
       /**
        * Compute totals
        */
+      $scope.totalValue = shipment.allocations.finished.reduce(function (res, allocation) {
+        var allocationValue = allocation.product.unitPrice.value * (-1 * allocation.effectivatedQuantity);
+        return res + allocationValue
+      }, 0);
+
       $scope.totalNetWeight = shipment.allocations.finished.reduce(function (res, allocation) {
         var allocationNetWeight = allocation.product.model.netWeight * (-1 * allocation.effectivatedQuantity);
         return res + allocationNetWeight

@@ -146,7 +146,7 @@
     </thead>
     <tbody>
       <tr
-        ng-repeat="exitShipment in exitShipments | filter:isFinishedExitShipment | orderBy:'scheduledFor'"
+        ng-repeat="exitShipment in exitShipments | filter:isFinishedExitShipment | orderBy:'-scheduledFor'"
         class="shipment-row"
         ng-class="{ 'highlight': exitShipment._highlight,
                     'scheduled': exitShipment.status.value === 'scheduled',

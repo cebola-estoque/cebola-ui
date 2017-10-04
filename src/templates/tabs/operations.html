@@ -23,6 +23,7 @@
         <th>Produto</th>
         <th>Validade</th>
         <th>Unidade de medida</th>
+        <th>Preço unitário</th>
         <th>Origem</th>
         <th>Quantidade</th>
         <th>Data</th>
@@ -58,6 +59,7 @@
             <input ng-model="search.product.measureUnit" type="text">
           </md-input-container>
         </td>
+        <td></td>
         <td>
           <md-input-container>
             <label>Origem</label>
@@ -84,6 +86,7 @@
         <td>{{ operation.product.model.description }}</td>
         <td>{{ operation.product.expiry | date:'dd/MMM/yyyy' }}</td>
         <td>{{ operation.product.measureUnit }}</td>
+        <td>{{ operation.product.unitPrice.value | currency:'R$ ' }}</td>
         <td>
           <a href="#!/entradas/{{ operation.product.sourceShipment._id }}">
             Entrada #{{ operation.product.sourceShipment.number }}

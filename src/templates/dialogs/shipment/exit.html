@@ -269,6 +269,35 @@
                 </md-input-container>
                 
                 <!--
+                  product.unitPrice
+                -->
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Preço unitário (R$)</label>
+                  <input
+                    disabled
+                    type="text"
+                    value="R$ {{ allocation.product.unitPrice.value | number:2 || 0 }}">
+                  <!-- <input
+                    ng-disabled="_editability < 2"
+                    type="number"
+                    step="0.01"
+                    ng-model="allocation.product.unitPrice.value"
+                    ng-min="0"
+                    min="0"> -->
+                </md-input-container>
+
+                <!--
+                  Total price. Used for display reasons only
+                -->
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Total</label>
+                  <input
+                    disabled
+                    type="text"
+                    value="R$ {{ allocation.allocatedQuantity * allocation.product.unitPrice.value | number:2 || 0 }}">
+                </md-input-container>
+                
+                <!--
                   Display the CDE
                 -->
                 <md-input-container class="md-block" flex-gt-sm>
