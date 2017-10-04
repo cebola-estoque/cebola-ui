@@ -140,7 +140,61 @@ angular.module('cebola.controllers')
   $scope.loadShipment();
 })
 
-.controller('ExitShipmentPrintCtrl', function (
+.controller('ExitShipmentPrintSummaryCtrl', function (
+  $scope,
+  $stateParams,
+  $filter,
+  cebolaAPI
+) {
+  $scope.loadShipment = function () {
+    $scope.shipment = {};
+    
+    return cebolaAPI.shipment.getById($stateParams.exitShipmentId).then(function (shipment) {
+      $scope.shipment = shipment;
+
+      var appTitle = [
+        'Recibo',
+        '#' + shipment.number,
+        shipment.recipient.name,
+        $filter('date')(shipment.scheduledFor, 'dd/MM/yyyy'),
+      ].join(' ');
+
+      $scope.setAppTitle(appTitle);
+
+      /**
+       * Compute totals
+       */
+      $scope.totalValue = shipment.allocations.active.reduce(function (res, allocation) {
+        var allocationValue = allocation.product.unitPrice.value * (-1 * allocation.allocatedQuantity);
+        return res + allocationValue
+      }, 0);
+
+      $scope.totalNetWeight = shipment.allocations.active.reduce(function (res, allocation) {
+        var allocationNetWeight = allocation.product.model.netWeight * (-1 * allocation.allocatedQuantity);
+        return res + allocationNetWeight
+      }, 0);
+
+      $scope.totalWeight = shipment.allocations.active.reduce(function (res, allocation) {
+        var allocationWeight = allocation.product.model.weight * (-1 * allocation.allocatedQuantity);
+        return res + allocationWeight
+      }, 0);
+
+      $scope.totalVolume = shipment.allocations.active.reduce(function (res, allocation) {
+        var modelVolume = (allocation.product.model.width / 100) * (allocation.product.model.height / 100) * (allocation.product.model.depth / 100);
+        var allocationVolume = modelVolume * (-1 * allocation.allocatedQuantity);
+        return res + allocationVolume;
+      }, 0);
+    });
+  };
+
+  $scope.print = function () {
+    window.print();
+  };
+
+  $scope.loadShipment();
+})
+
+.controller('ExitShipmentPrintReceiptCtrl', function (
   $scope,
   $stateParams,
   $filter,

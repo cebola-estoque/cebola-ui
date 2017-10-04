@@ -17,9 +17,20 @@
   
   <div class="right">
     <a
+      ng-if="shipment.status.value !== 'finished' && shipment.status.value !== 'cancelled'"
+      class="md-button"
+      href="#!/saidas/{{ shipment._id }}/imprimir/resumo">
+      <md-icon
+        style="color: white"
+        md-font-set="material-icons">
+        print
+      </md-icon>
+      Imprimir resumo
+    </a>
+    <a
       ng-if="shipment.status.value === 'finished'"
       class="md-button"
-      href="#!/saidas/{{ shipment._id }}/imprimir">
+      href="#!/saidas/{{ shipment._id }}/imprimir/recibo">
       <md-icon
         style="color: white"
         md-font-set="material-icons">

@@ -45,6 +45,9 @@
      * URLs are in pt-BR
      */
     $stateProvider
+      /**
+       * Inventory routes
+       */
       .state('inventory', {
         url: '/inventario',
         views: {
@@ -64,6 +67,10 @@
           }
         }
       })
+
+      /**
+       * Entry shipment routes
+       */
       .state('entry-shipments', {
         url: '/entradas',
         views: {
@@ -112,6 +119,10 @@
         },
         bodyClasses: 'print-mode',
       })
+
+      /**
+       * Exit shiptment routes
+       */
       .state('exit-shipments', {
         url: '/saidas',
         views: {
@@ -130,11 +141,24 @@
           }
         }
       })
-      .state('exit-shipments.detail.print', {
-        url: '/imprimir',
+      .state('exit-shipments.detail.print-summary', {
+        url: '/imprimir/resumo',
         views: {
           'body@': {
-            controller: 'ExitShipmentPrintCtrl',
+            controller: 'ExitShipmentPrintSummaryCtrl',
+            templateUrl: 'templates/print/exit-shipment-summary.html',
+          }
+        },
+        params: {
+          exitShipment: null,
+        },
+        bodyClasses: 'print-mode',
+      })
+      .state('exit-shipments.detail.print-receipt', {
+        url: '/imprimir/recibo',
+        views: {
+          'body@': {
+            controller: 'ExitShipmentPrintReceiptCtrl',
             templateUrl: 'templates/print/exit-shipment-receipt.html',
           }
         },
@@ -143,6 +167,10 @@
         },
         bodyClasses: 'print-mode',
       })
+
+      /**
+       * Operations routes
+       */
       .state('operations', {
         url: '/operacoes',
         views: {
@@ -152,6 +180,10 @@
           }
         }
       })
+
+      /**
+       * Product model routes
+       */
       .state('products', {
         url: '/produtos',
         views: {
@@ -161,6 +193,10 @@
           }
         }
       })
+
+      /**
+       * Organization routes
+       */
       .state('organizations', {
         url: '/organization/:role',
         views: {
@@ -170,6 +206,10 @@
           }
         }
       })
+
+      /**
+       * Account routes
+       */
       .state('account', {
         url: '/minha-conta',
         controller: 'AccountCtrl',
