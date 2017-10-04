@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('ProductModelsCtrl', function ($scope, $mdDialog, uiProductModelDialog, cebolaAPI) {
+.controller('ProductModelsCtrl', function ($scope, $mdDialog, uiProductModelDialog, uiErrorDialog, cebolaAPI) {
   
   /**
    * Loads product models from server into the $scope
@@ -8,6 +8,13 @@ angular.module('cebola.controllers')
     return cebolaAPI.productModel.list(query)
       .then(function (productModels) {
         $scope.productModels = productModels;
+      })
+      .catch(function (err) {
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao carregar dados dos modelos de produtos. Por favor tente recarregar a página.',
+        });
+
+        throw err;
       });
   };
   
@@ -30,8 +37,12 @@ angular.module('cebola.controllers')
           // cancelled
           return;
         }
-        alert('product model edit error');
-        console.warn('product model edit error', err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao editar dados do modelo de produto. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
@@ -46,9 +57,6 @@ angular.module('cebola.controllers')
         .ok('delete')
         .cancel('cancel')
     )
-    .catch(function () {
-      console.log('cancelled');
-    })
     .then(function () {
       return cebolaAPI.productModel.delete(productModel._id);
     })
@@ -64,8 +72,16 @@ angular.module('cebola.controllers')
       }
     })
     .catch(function (err) {
-      alert('error deleting product model');
-      console.warn(err);
+      if (!err) {
+        // cancelled
+        return;
+      }
+
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao remover o modelo de produto. Por favor tente novamente.',
+      });
+
+      throw err;
     });
   };
   
@@ -83,12 +99,14 @@ angular.module('cebola.controllers')
       .catch(function (err) {
         if (!err) {
           // cancelled
-          console.log('cancelled')
           return;
         }
-        
-        alert('error creating product model')
-        console.warn('error creating product model', err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cadastrar o modelo de produto. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   

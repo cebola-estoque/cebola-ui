@@ -8,14 +8,20 @@ angular.module('cebola.controllers')
   uiAllocationDialog,
   uiOperationDialog,
   uiDialogEntryShipment,
+  uiErrorDialog,
   entryShipmentActions
 ) {
   
   $scope.loadShipment = function () {
-    $scope.shipment = {};
-    
     return cebolaAPI.shipment.getById($stateParams.entryShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados da entrada. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
   
@@ -39,7 +45,9 @@ angular.module('cebola.controllers')
           return;
         }
 
-        alert('Houve um erro desconhecido, por favor tente novamente');
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao finalizar a entrada. Por favor tente novamente.',
+        });
 
         throw err;
       });
@@ -64,12 +72,6 @@ angular.module('cebola.controllers')
             .ok('efetivar')
             .cancel('cancelar')
         )
-        .catch(function () {
-          // user cancelled
-          var err = new Error('UserCancelled');
-          err.cancelled = true;
-          throw err;
-        })
         .then(function () {
           return data;
         });
@@ -101,10 +103,14 @@ angular.module('cebola.controllers')
     .catch(function (err) {
       if (!err) {
         console.warn('user cancelled');
-      } else {
-        alert('Ocorreu um erro desconhecido, por favor tente novamente');
-        throw err;
+        return;
       }
+
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao efetivar a entrada. Por favor tente novamente.',
+      });
+
+      throw err;
     });
   };
 
@@ -123,6 +129,10 @@ angular.module('cebola.controllers')
           return;
         }
 
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cadastrar operação de entrada de produto não previsto. Por favor tente novamente.',
+        });
+
         throw err;
       })
   };
@@ -138,7 +148,10 @@ angular.module('cebola.controllers')
           return;
         }
 
-        alert('houve um erro ao cancelar a carga');
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cancelar a entrada. Por favor tente novamente.',
+        });
+
         throw err;
       });
     
@@ -150,13 +163,16 @@ angular.module('cebola.controllers')
         return $scope.loadShipment();
       })
       .catch(function (err) {
-        
         if (!err) {
           // user canceled
           return;
         }
-        
-        alert('there was an error editing the entry shipment');
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao editar os dados da entrada. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
@@ -189,6 +205,7 @@ angular.module('cebola.controllers')
 .controller('EntryShipmentOperationPrintCtrl', function (
   $scope,
   $stateParams,
+  uiErrorDialog,
   cebolaAPI
 ) {
   $scope.loadShipment = function () {
@@ -216,6 +233,13 @@ angular.module('cebola.controllers')
       $scope.operation = shipmentActiveOperations.find(function (op) {
         return op._id === $stateParams.operationId;
       });
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados da operação. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
   

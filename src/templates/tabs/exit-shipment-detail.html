@@ -1,6 +1,6 @@
 <header class="tab-header">
   
-  <div class="left">
+  <div class="left" ng-show="shipment">
     <md-button
       class="md-icon-button"
       aria-label="go back"
@@ -15,7 +15,7 @@
     </h1>
   </div>
   
-  <div class="right">
+  <div class="right" ng-show="shipment">
     <a
       ng-if="shipment.status.value !== 'finished' && shipment.status.value !== 'cancelled'"
       class="md-button"
@@ -52,7 +52,7 @@
 
 <section class="tab-body">
 
-  <div class="shipment-info-box">
+  <div class="shipment-info-box" ng-show="shipment">
     <div>
       <div class="shipment-info">
         <strong>No.</strong> #{{ shipment.number }} 

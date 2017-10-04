@@ -4,17 +4,24 @@ angular.module('cebola.controllers')
   $state,
   $stateParams,
   $mdDialog,
+  $q,
   cebolaAPI,
   uiAllocationDialog,
   uiDialogExitShipment,
+  uiErrorDialog,
   exitShipmentActions
 ) {
   
-  $scope.loadShipment = function () {
-    $scope.shipment = {};
-    
+  $scope.loadShipment = function () {    
     return cebolaAPI.shipment.getById($stateParams.exitShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados da saída. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
   
@@ -49,16 +56,16 @@ angular.module('cebola.controllers')
           return;
         }
 
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao finalizar a saída. Por favor tente novamente.',
+        });
+
         throw err;
       });
   };
 
   $scope.effectivateExitAllocation = function (allocation) {
     return uiAllocationDialog.effectivateExit(allocation)
-    .catch(function () {
-      // user cancelled
-      throw new Error('CANCELLED');
-    })
     .then(function (quantity) {
       console.log('effectivate: ', quantity);
 
@@ -68,8 +75,6 @@ angular.module('cebola.controllers')
       var toEffectivateQuantity = (allocation.allocatedQuantity - allocation.effectivatedQuantity);
       
       var effectivationExcess = -1 * (quantity - toEffectivateQuantity);
-      
-      console.log('effectivationExcess', effectivationExcess);
 
       if (effectivationExcess > 0) {
         $mdDialog.show(
@@ -78,30 +83,31 @@ angular.module('cebola.controllers')
             .ok('Ok')
         );
 
-        throw new Error('EffectivationExcess');
+        return $q.reject();
         
       } else {
-        return quantity;
+        return cebolaAPI.shipment.effectivateAllocation(
+          allocation.shipment._id,
+          allocation._id,
+          quantity
+        );
       }
-    })
-    .then(function (quantity) {
-      return cebolaAPI.shipment.effectivateAllocation(
-        allocation.shipment._id,
-        allocation._id,
-        quantity
-      );
     })
     .then(function (operation) {
       // reload the shipment
       return $scope.loadShipment();
     })
     .catch(function (err) {
-      if (err.cancelled) {
-        console.warn('user cancelled');
-      } else {
-        // alert('error');
-        console.warn(err);
+      if (!err) {
+        console.warn('cancelled');
+        return;
       }
+
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao efetivar a saída. Por favor tente novamente.',
+      });
+
+      throw err;
     });
   };
 
@@ -116,8 +122,12 @@ angular.module('cebola.controllers')
           // user canceled
           return;
         }
-        
-        alert('there was an error editing the exit shipment');
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao editar os dados da saída. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
 
@@ -132,6 +142,10 @@ angular.module('cebola.controllers')
           return;
         }
 
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cancelar a saída. Por favor tente novamente.',
+        });
+
         throw err;
       });
     
@@ -144,6 +158,7 @@ angular.module('cebola.controllers')
   $scope,
   $stateParams,
   $filter,
+  uiErrorDialog,
   cebolaAPI
 ) {
   $scope.loadShipment = function () {
@@ -184,6 +199,13 @@ angular.module('cebola.controllers')
         var allocationVolume = modelVolume * (-1 * allocation.allocatedQuantity);
         return res + allocationVolume;
       }, 0);
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados da saída. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
 
@@ -198,6 +220,7 @@ angular.module('cebola.controllers')
   $scope,
   $stateParams,
   $filter,
+  uiErrorDialog,
   cebolaAPI
 ) {
   $scope.loadShipment = function () {
@@ -238,6 +261,13 @@ angular.module('cebola.controllers')
         var allocationVolume = modelVolume * (-1 * allocation.effectivatedQuantity);
         return res + allocationVolume;
       }, 0);
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados da saída. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
 

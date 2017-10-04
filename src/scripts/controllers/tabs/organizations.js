@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('OrganizationsCtrl', function ($scope, $stateParams, $mdDialog, cebolaAPI, uiOrganizationDialog) {
+.controller('OrganizationsCtrl', function ($scope, $stateParams, $mdDialog, cebolaAPI, uiOrganizationDialog, uiErrorDialog) {
   
   var TAB_ROLE = $stateParams.role;
   
@@ -25,24 +25,23 @@ angular.module('cebola.controllers')
         }
       })
       .catch(function (err) {
-        
         if (!err) {
           // cancelled
           console.log('cancelled')
           return;
         }
-        
-        alert('error creating supplier organization');
-        console.warn(err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cadastrar a organização. Por favor tente novamente.',
+        });
+
+        // let error be reported
+        throw err;
       });
   };
   
   $scope.editOrganization = function (sourceOrganization) {
     return uiOrganizationDialog.edit(sourceOrganization)
-      .catch(function () {
-        // cancelled
-        console.log('cancelled');
-      })
       .then(function (updatedOrganization) {
         return cebolaAPI.organization.update(
           sourceOrganization._id,
@@ -69,8 +68,16 @@ angular.module('cebola.controllers')
         
       })
       .catch(function (err) {
-        alert('error updating supplier organization');
-        console.warn(err);
+        if (err) {
+          // cancelled
+          return;
+        }
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao editar os dados da organização. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
@@ -99,8 +106,16 @@ angular.module('cebola.controllers')
       }
     })
     .catch(function (err) {
-      alert('error deleting supplierOrganization');
-      console.warn(err);
+      if (err) {
+        // cancelled
+        return;
+      }
+
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao remover a organização. Por favor tente novamente.',
+      });
+
+      throw err;
     });
   };
   
@@ -110,6 +125,13 @@ angular.module('cebola.controllers')
     })
     .then(function (organizations) {
       $scope.organizations = organizations;
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados das organizações. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
   

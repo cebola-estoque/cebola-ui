@@ -1,6 +1,8 @@
 <header class="tab-header">
   
-  <div class="left">
+  <div
+    ng-show="shipment && shipment._id"
+    class="left">
     <md-button
       class="md-icon-button"
       aria-label="go back"
@@ -14,7 +16,9 @@
     </h1>
   </div>
   
-  <div class="right">
+  <div
+    ng-show="shipment && shipment._id"
+    class="right">
     <md-button
       ng-click="editShipment()">
       Editar entrada
@@ -29,7 +33,9 @@
 
 <section class="tab-body">
 
-  <div class="shipment-info-box">
+  <div
+    class="shipment-info-box"
+    ng-show="shipment && shipment._id">
     <div>
       <div class="shipment-info">
         <strong>No.</strong> #{{ shipment.number }} 
@@ -323,7 +329,7 @@
     </tbody>
   </table>
   
-  <div>
+  <div ng-show="shipment && shipment._id">
     <md-button
       class="md-raised"
       ng-if="shipment.status.value !== 'finished' && shipment.status.value !== 'cancelled'"

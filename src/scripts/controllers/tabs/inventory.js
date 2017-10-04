@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('InventoryCtrl', function ($scope, $filter, cebolaAPI, uiOperationDialog) {
+.controller('InventoryCtrl', function ($scope, $filter, cebolaAPI, uiOperationDialog, uiErrorDialog) {
   
   $scope.loadSummary = function () {
     return cebolaAPI.inventory.summary().then(function (summary) {
@@ -20,6 +20,14 @@ angular.module('cebola.controllers')
           return productSummary.inStock === 0 && productSummary.allocatedForEntry > 0;
         })
       };
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados do inventário. Por favor tente recarregar a página.',
+      });
+
+      // let error be reported to sentry
+      throw err;
     });
   };
   
@@ -65,7 +73,11 @@ angular.module('cebola.controllers')
           return;
         }
 
-        alert('houve um erro ao cadastrar a perda');
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um error ao cadastrar a perda. Por favor tente novamente.',
+        });
+
+        // let error be reported to sentry
         throw err;
       });
   };
@@ -86,7 +98,11 @@ angular.module('cebola.controllers')
           return;
         }
 
-        alert('houve um erro ao cadastrar a correção');
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um error ao cadastrar a correção. Por favor tente novamente.',
+        });
+
+        // let error be reported to sentry
         throw err;
       });
   };

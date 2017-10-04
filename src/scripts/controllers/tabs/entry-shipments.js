@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('EntryShipmentsCtrl', function ($scope, $q, $state, $timeout, cebolaAPI, entryShipmentActions) {
+.controller('EntryShipmentsCtrl', function ($scope, $q, $state, $timeout, cebolaAPI, entryShipmentActions, uiErrorDialog) {
   
   $scope.createEntryShipment = function () {
 
@@ -15,20 +15,29 @@ angular.module('cebola.controllers')
         $scope.entryShipments.push(entryShipment);
       })
       .catch(function (err) {
-        
         if (!err) {
           // user canceled
           return;
         }
-        
-        alert('there was an error creating the entry shipment');
-        console.warn(err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cadastrar nova entrada. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
   $scope.listEntryShipments = function () {
     return cebolaAPI.shipment.listEntries().then(function (entryShipments) {
       $scope.entryShipments = entryShipments;
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados das entradas. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
   
@@ -47,14 +56,16 @@ angular.module('cebola.controllers')
         $scope.entryShipments[index] = updatedEntryShipment;
       })
       .catch(function (err) {
-        
         if (!err) {
           // user canceled
           return;
         }
-        
-        alert('there was an error creating the entry shipment');
-        console.warn(err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao editar dados da entrada. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
@@ -65,10 +76,14 @@ angular.module('cebola.controllers')
       })
       .catch(function (err) {
         if (!err) {
+          // user canceled
           return;
         }
 
-        alert('houve um erro ao cancelar a carga');
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cancelar a entrada. Por favor tente novamente.',
+        });
+
         throw err;
       });
   };
@@ -94,5 +109,4 @@ angular.module('cebola.controllers')
   
   // initialize
   $scope.listEntryShipments();
-  
 });

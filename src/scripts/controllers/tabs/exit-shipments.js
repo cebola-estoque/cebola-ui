@@ -1,5 +1,5 @@
 angular.module('cebola.controllers')
-.controller('ExitShipmentsCtrl', function ($scope, $q, $state, $timeout, exitShipmentActions, uiDialogExitShipment, cebolaAPI) {
+.controller('ExitShipmentsCtrl', function ($scope, $q, $state, $timeout, exitShipmentActions, uiErrorDialog, cebolaAPI) {
   
   $scope.createExitShipment = function () {
     return exitShipmentActions.create()
@@ -20,15 +20,25 @@ angular.module('cebola.controllers')
           // user cancelled
           return;
         }
-        
-        alert('there was an error creating the exit shipment');
-        console.warn(err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cadastrar nova saída. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
   $scope.listExitShipments = function () {
     return cebolaAPI.shipment.listExits().then(function (exitShipments) {
       $scope.exitShipments = exitShipments;
+    })
+    .catch(function (err) {
+      uiErrorDialog.alert({
+        textContent: 'Ocorreu um erro ao carregar dados das saídas. Por favor tente recarregar a página.',
+      });
+
+      throw err;
     });
   };
   
@@ -52,9 +62,12 @@ angular.module('cebola.controllers')
           // user cancelled
           return;
         }
-        
-        alert('there was an error creating the exit shipment');
-        console.warn(err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao editar dados da saída. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
   
@@ -70,9 +83,12 @@ angular.module('cebola.controllers')
           // user cancelled
           return;
         }
-        
-        alert('there was an error cancelling the exit shipment');
-        console.warn(err);
+
+        uiErrorDialog.alert({
+          textContent: 'Ocorreu um erro ao cancelar a saída. Por favor tente novamente.',
+        });
+
+        throw err;
       });
   };
 
@@ -84,7 +100,14 @@ angular.module('cebola.controllers')
   };
 
   $scope.printExitShipmentReceipt = function (exitShipment) {
-    $state.go('exit-shipments.detail.print', {
+    $state.go('exit-shipments.detail.print-receipt', {
+      exitShipmentId: exitShipment._id,
+      exitShipment: exitShipment,
+    });
+  };
+
+  $scope.printExitShipmentSummary = function (exitShipment) {
+    $state.go('exit-shipments.detail.print-summary', {
       exitShipmentId: exitShipment._id,
       exitShipment: exitShipment,
     });
