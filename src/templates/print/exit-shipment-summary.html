@@ -66,6 +66,7 @@
           <th rowspan="2">Cód.</th>
           <th rowspan="2" class="table-col-300">Produto</th>
           <th rowspan="2" style="min-width: 75px;">CDE</th>
+          <th rowspan="2">Código de entrada</th>
           <th rowspan="2">Validade</th>
           <!-- <th>Quantidade alocada</th> -->
           <th rowspan="2">Quant. <em>Prevista</em></th>
@@ -81,6 +82,7 @@
           <!-- <th>Cód.</th> -->
           <!-- <th class="table-col-300">Produto</th> -->
           <!-- <th>CDE</th> -->
+          <!-- <th rowspan="2">Código de entrada</th> -->
           <!-- <th>Validade</th> -->
           <!-- <th>Quantidade alocada</th> -->
           <!-- <th>Quant.</th> -->
@@ -99,9 +101,14 @@
           <td>
             S{{ shipment.number }}-{{ allocation.number }}
           </td>
-          <td class="table-col-300">{{ allocation.product.model.description }}</td>
+          <td class="table-col-300 normal-wrap">{{ allocation.product.model.description }}</td>
           <td>
             {{ allocation.product.sourceShipment.documents.CDE }}
+          </td>
+          <td>
+            <div ng-repeat="op in allocation.product.operations | filter:isActiveEntryOperation">
+              {{ op | code:'entry-shipment-operation' }}
+            </div>
           </td>
           <td>
             {{ allocation.product.expiry | date:'dd/MM/yy' }}
@@ -148,23 +155,26 @@
           <td></td>
           <td></td>
           <td></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
           <td></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -180,7 +190,7 @@
         
         <!-- totals -->
         <tr>
-          <td colspan="6" style="text-align: right;">Total:</td>
+          <td colspan="7" style="text-align: right;">Total:</td>
           <td>
             <strong>{{ totalValue | currency:'R$ ' }}</strong>
           </td>

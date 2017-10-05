@@ -63,7 +63,7 @@ angular.module('cebola.directives', [])
       /**
        * Parameter used for ordering table
        */
-      $scope.orderByParameter = '-product.expiry';
+      $scope.orderByParameter = 'product.expiry';
 
       $scope.setOrderByParameter = function (parameter) {
         var isNegative = /^-/.test(parameter);
@@ -76,6 +76,10 @@ angular.module('cebola.directives', [])
           // change
           $scope.orderByParameter = parameter;
         }
+      }
+
+      $scope.isExpiredOrExpiringSoon = function (expiry) {
+        return moment(expiry).diff(new Date(), 'days') < 2;
       }
     },
     templateUrl: 'templates/directives/inventory-table.html',

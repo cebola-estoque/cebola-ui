@@ -7,15 +7,22 @@ angular.module('cebola.services')
     }
 
     switch (codeType) {
-      case 'operation':
-        var code = ['E' + input.product.sourceShipment.number];
-
-        if (input.sourceAllocation && input.sourceAllocation.number) {
-          code.push('A' + input.sourceAllocation.number);
-        }
-
-        code.push('O' + input.number);
-
+      case 'entry-shipment-operation':
+        var code = [
+          // use the sourceShipment as it is required
+          'E' + input.product.sourceShipment.number,
+          'O' + input.number
+        ];
+        
+        return code.join('-')
+        break;
+      case 'exit-shipment-operation':
+        var code = [
+          // the shipment in exit operations is required
+          'S' + input.shipment.number,
+          'O' + input.number
+        ];
+        
         return code.join('-')
         break;
       default:

@@ -475,6 +475,10 @@ table.cebola-print-table td {
   white-space: nowrap;
 }
 
+table.cebola-print-table td.normal-wrap {
+  white-space: normal;
+}
+
 table.cebola-print-table tr.highlight,
 table.cebola-print-table th.highlight,
 table.cebola-print-table td.highlight {

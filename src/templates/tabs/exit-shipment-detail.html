@@ -88,10 +88,9 @@
     class="cebola-table product-table">
     <thead>
       <tr>
-        <th class="table-col-300">Produtos agendados</th>
-        <th>Validade</th>
-        <th>Preço Unitário</th>
-        <th class="table-col-150">Origem</th>
+        <th class="table-col-350">Produtos agendados</th>
+        <th class="table-col-100">Origem</th>
+        <th class="table-col-100">Código de entrada</th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
         <th class="hidden-on-print table-col-50"><!-- action placeholder --></th>
@@ -104,14 +103,24 @@
             <div class="product-image-wrapper">
               <img ng-src="{{ allocation.product.model.image.url }}">
             </div>
-            {{ allocation.product.model.description }}
+
+            <div class="product-text-container">
+              <div>
+                {{ allocation.product.model.description }}
+              </div>
+              <div class="product-details">
+                <small>
+                  <label>Validade:</label>
+                  <strong>{{ allocation.product.expiry | date:'dd/MM/yyyy' }}</strong>
+                </small>
+                <br>
+                <small>
+                  <label>Valor unitário:</label>
+                  <strong>{{ allocation.product.unitPrice.value | currency:'R$ ' }}</strong>
+                </small>
+              </div>
+            </div>
           </div>
-        </td>
-        <td>
-          {{ allocation.product.expiry | date:'dd/MMM/yyyy/yyyy' }}
-        </td>
-        <td>
-          {{ allocation.product.unitPrice.value | currency:'R$ ' }}
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
@@ -122,6 +131,15 @@
               {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
             </span>
           </a>
+        </td>
+        <td>
+          <table class="sub-table">
+            <tr ng-repeat="op in allocation.product.operations | filter:isActiveEntryOperation">
+              <td>
+                {{ op | code:'entry-shipment-operation' }} 
+              </td>
+            </tr>
+          </table>
         </td>
         <td>
           {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
@@ -139,7 +157,7 @@
               </td>
               <td>|</td>
               <td>
-                Código: S{{ shipment.number }}-{{ allocation.number }}-{{ op.number }}
+                Código: {{ op | code:'exit-shipment-operation' }}
               </td>
             </tr>
           </table>
@@ -215,9 +233,8 @@
     <thead>
       <tr>
         <th class="table-col-350">Produtos finalizados</th>
-        <th>Validade</th>
-        <th>Preço unitário</th>
-        <th class="table-col-150">Origem</th>
+        <th class="table-col-100">Origem</th>
+        <th class="table-col-100">Código de entrada</th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
         <th><!-- action placeholder --></th>
@@ -230,14 +247,23 @@
             <div class="product-image-wrapper">
               <img ng-src="{{ allocation.product.model.image.url }}">
             </div>
-            {{ allocation.product.model.description }}
+            <div class="product-text-container">
+              <div>
+                {{ allocation.product.model.description }}
+              </div>
+              <div class="product-details">
+                <small>
+                  <label>Validade:</label>
+                  <strong>{{ allocation.product.expiry | date:'dd/MM/yyyy' }}</strong>
+                </small>
+                <br>
+                <small>
+                  <label>Valor unitário:</label>
+                  <strong>{{ allocation.product.unitPrice.value | currency:'R$ ' }}</strong>
+                </small>
+              </div>
+            </div>
           </div>
-        </td>
-        <td>
-          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
-        </td>
-        <td>
-          {{ allocation.product.unitPrice.value | currency:'R$ ' }}
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
@@ -248,6 +274,15 @@
               {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
             </span>
           </a>
+        </td>
+        <td>
+          <table class="sub-table">
+            <tr ng-repeat="op in allocation.product.operations | filter:isEntryOperation">
+              <td>
+                {{ op | code:'entry-shipment-operation' }} 
+              </td>
+            </tr>
+          </table>
         </td>
         <td>
           {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}
@@ -272,9 +307,8 @@
     <thead>
       <tr>
         <th class="table-col-350">Produtos cancelados</th>
-        <th>Validade</th>
-        <th>Preço unitário</th>
         <th class="table-col-150">Origem</th>
+        <th class="table-col-100"><!-- Código de entrada placeholder --></th>
         <th>Qtde prevista</th>
         <th class="table-col-350">Qtde confirmada</th>
         <th><!-- action placeholder --></th>
@@ -287,14 +321,23 @@
             <div class="product-image-wrapper">
               <img ng-src="{{ allocation.product.model.image.url }}">
             </div>
-            {{ allocation.product.model.description }}
+            <div class="product-text-container">
+              <div>
+                {{ allocation.product.model.description }}
+              </div>
+              <div class="product-details">
+                <small>
+                  <label>Validade:</label>
+                  <strong>{{ allocation.product.expiry | date:'dd/MM/yyyy' }}</strong>
+                </small>
+                <br>
+                <small>
+                  <label>Valor unitário:</label>
+                  <strong>{{ allocation.product.unitPrice.value | currency:'R$ ' }}</strong>
+                </small>
+              </div>
+            </div>
           </div>
-        </td>
-        <td>
-          {{ allocation.product.expiry | date:'dd/MMM/yyyy' }}
-        </td>
-        <td>
-          {{ allocation.product.unitPrice.value | currency:'R$ ' }}
         </td>
         <td>
           <a href="#!/entradas/{{ allocation.product.sourceShipment._id }}">
@@ -305,6 +348,9 @@
               {{ allocation.product.sourceShipment.documents.CDE || 'Não informado' }}
             </span>
           </a>
+        </td>
+        <td>
+          <!-- Código de entrada placeholder -->
         </td>
         <td>
           {{ -1 * allocation.allocatedQuantity }} {{ allocation.product.measureUnit }}

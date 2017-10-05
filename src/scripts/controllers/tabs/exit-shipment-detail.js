@@ -15,6 +15,8 @@ angular.module('cebola.controllers')
   $scope.loadShipment = function () {    
     return cebolaAPI.shipment.getById($stateParams.exitShipmentId).then(function (shipment) {
       $scope.shipment = shipment;
+
+      console.log(shipment)
     })
     .catch(function (err) {
       uiErrorDialog.alert({
@@ -150,6 +152,14 @@ angular.module('cebola.controllers')
       });
     
   };
+
+  /**
+   * Filtering helper functions
+   */
+  $scope.isActiveEntryOperation = function (op) {
+    return op && op.status.value === 'operation-active' && op.type === 'entry';
+  };
+
   // initialize
   $scope.loadShipment();
 })
@@ -211,6 +221,13 @@ angular.module('cebola.controllers')
 
   $scope.print = function () {
     window.print();
+  };
+  
+  /**
+   * Filtering helper functions
+   */
+  $scope.isActiveEntryOperation = function (op) {
+    return op && op.status.value === 'operation-active' && op.type === 'entry';
   };
 
   $scope.loadShipment();
