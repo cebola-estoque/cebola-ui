@@ -26,6 +26,8 @@
       window.CONFIG.cebolaApiURI.replace(TRAILING_SLASH_RE, ''),
     accountApiURI:
       window.CONFIG.accountApiURI.replace(TRAILING_SLASH_RE, ''),
+    cacheBustVersion:
+      window.CONFIG.cacheBustVersion,
     DEFAULT_MEASURE_UNITS: [
       'KG',
       'L',
@@ -232,7 +234,7 @@
   })
 
   // http interceptor that shows loading indicator on ajax request
-  .config(function($httpProvider) {
+  .config(function($httpProvider, CONFIG) {
     // alternatively, register the interceptor via an anonymous factory
     $httpProvider.interceptors.push(function($q, $rootScope) {
 
@@ -250,10 +252,21 @@
         return HTTP_PENDING_REQUEST_COUNT > 0;
       }
 
+      function isUIResource(url) {
+        return /^templates/.test(url);
+      }
+
       return {
         request: function(config) {
 
           incrementHttpPendingCount();
+
+          if (config.method === 'GET') {
+            if (isUIResource(config.url)) {
+              config.params = config.params || {}
+              config.params.cacheVersionBust = CONFIG.cacheBustVersion
+            }
+          }
 
           $rootScope.$httpGlobalLoading = true;
 
